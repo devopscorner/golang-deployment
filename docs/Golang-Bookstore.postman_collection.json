@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "da623423-28a9-41fe-a399-6c62bd878428",
+		"name": "Golang-Bookstore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List Books",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/books",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"books"
+					]
+				},
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Books 1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Mastering Go: Create Golang production applications using network libraries, concurrency, and advanced Go data structures\",\n    \"author\": \"Mihalis Tsoukalos\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/books",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"books"
+					]
+				},
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Books 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Introducing Go: Build Reliable, Scalable Programs\",\n    \"author\": \"Caleb Doxsey\"\n}\n"
+				},
+				"url": {
+					"raw": "localhost:8080/books",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"books"
+					]
+				},
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Books 3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Learning Functional Programming in Go: Change the way you approach your applications using functional programming in Go\",\n    \"author\": \"Lex Sheehan\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/books",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"books"
+					]
+				},
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Books 3 ",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Test Book\",\n    \"author\": \"Zeroc0D3 Lab\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/books/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"books",
+						"3"
+					]
+				},
+				"description": "localhost:8080/books/3"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Books 3",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Test Book\",\n    \"author\": \"Zeroc0D3 Lab\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/books/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"books",
+						"3"
+					]
+				},
+				"description": "localhost:8080/books/3"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

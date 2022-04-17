@@ -1,0 +1,109 @@
+replicaCount: 1
+
+secret:
+  enabled: false
+
+configMap:
+  enabled: true
+  name: "bookstore-api"
+  mountPath: /app/core/config
+  readOnly: true
+  data:
+    .app.config.json : |-
+      {
+          "AppName": "GO App",
+          "GRPCTimeout": 10,
+          "CacheExpiry": 300,
+          "CacheCleanup": 600,
+          "DefaultPageLimit": 3,
+          "ClientTimeout": 10
+      }
+    .env : |-
+      export GIN_MODE=release
+
+image:
+  repository: YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore
+  pullPolicy: Always
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: bookstore
+  namespace: devops-tools
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+
+container:
+  ports:
+    - name: http
+      containerPort: 8080
+      protocol: TCP
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/cors-allow-headers: '*'
+    nginx.ingress.kubernetes.io/cors-allow-methods: '*'
+    nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/whitelist-source-range: 32.0.0.0/32
+  hosts:
+    - host: bookstore.awscb.id
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: bookstore-api
+              servicePort: 80
+  tls: []
+
+
+application:
+  enabled: true
+  env:
+    - name: HELM_TEMPLATE_NAME
+      value: api
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 300Mi
+  requests:
+    cpu: 100m
+    memory: 150Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector:
+  enabled: true
+  select:
+    node: "devops-tools"
+
+tolerations: []
+
+affinity: {}
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}

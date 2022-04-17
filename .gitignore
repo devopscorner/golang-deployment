@@ -1,0 +1,76 @@
+#### Terraform .gitignore template
+## Comment path that would like to get ignored
+
+### Basic .gitignore
+# **/terraform.tfstate
+**/terraform.tfstate.backup
+**/terraform.tfplan
+**/.terraform/**
+**/terraform.tfstate.d/**
+**/*.tfplan
+**/terraform_plugins/**
+backend.hcl
+*.hcl
+*.lock.hcl
+# only for snd
+#backend.tf
+#*.tfvars
+
+### https://raw.githubusercontent.com/hashicorp/terraform/master/.gitignore
+*.dll
+*.exe
+.DS_Store
+example.tf
+terraform.tfplan
+terraform.tfstate
+tf.out
+.vagrant/
+*.backup
+./*.tfstate
+errored.tfstate
+.terraform/
+*.log
+*.bak
+*~
+.*.swp
+.idea
+*.iml
+*.test
+*.iml
+#.envrc
+
+### https://raw.github.com/github/gitignore/abad92dac5a4306f72242dae3bca6e277bce3615/Global/Vim.gitignore
+
+# swap
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+# session
+Session.vim
+# temporary
+.netrwhist
+*~
+# auto-generated tag files
+tags
+
+### Ignore .DS_Store on MAC
+.DS_Store
+.DS_Store?
+
+### Temporary dir for CodeDeploy
+build/
+.build
+dummy.zip
+
+terraform.tfstate*
+*.tgz
+*.pem
+*.pub
+*.env
+*.icloud
+*.id_rsa
+logs
+.idea
+dist
+
+terraform/modules/**
+test/**

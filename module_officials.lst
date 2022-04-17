@@ -1,0 +1,19 @@
+-b v6.7.0 https://github.com/terraform-aws-modules/terraform-aws-alb.git
+-b v5.1.1 https://github.com/terraform-aws-modules/terraform-aws-autoscaling.git
+-b v2.9.2 https://github.com/terraform-aws-modules/terraform-aws-cloudfront.git
+-b v2.4.1 https://github.com/terraform-aws-modules/terraform-aws-cloudwatch.git
+-b v1.2.2 https://github.com/terraform-aws-modules/terraform-aws-dynamodb-table.git
+-b v3.4.0 https://github.com/terraform-aws-modules/terraform-aws-ec2-instance.git
+-b v3.4.1 https://github.com/terraform-aws-modules/terraform-aws-ecs.git
+-b v18.7.2 https://github.com/terraform-aws-modules/terraform-aws-eks.git
+-b v3.0.1 https://github.com/terraform-aws-modules/terraform-aws-elb.git
+-b v4.13.1 https://github.com/terraform-aws-modules/terraform-aws-iam.git
+-b v2.34.0 https://github.com/terraform-aws-modules/terraform-aws-lambda.git
+-b v1.0.1 https://github.com/terraform-aws-modules/terraform-aws-key-pair.git
+https://github.com/terraform-aws-modules/terraform-aws-s3-object
+-b v4.1.2 https://github.com/terraform-aws-modules/terraform-aws-rds.git
+-b v2.5.0 https://github.com/terraform-aws-modules/terraform-aws-route53.git
+-b v2.14.1 https://github.com/terraform-aws-modules/terraform-aws-s3-bucket.git
+-b v4.8.0 https://github.com/terraform-aws-modules/terraform-aws-security-group.git
+-b v3.12.0 https://github.com/terraform-aws-modules/terraform-aws-vpc.git
+-b v2.11.1 https://github.com/terraform-aws-modules/terraform-aws-vpn-gateway.git

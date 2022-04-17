@@ -1,0 +1,14 @@
+-b 0.25.0 https://github.com/cloudposse/terraform-null-label.git
+-b v0.1.0 https://github.com/cloudposse/terraform-aws-budgets.git
+-b 0.22.3 https://github.com/cloudposse/terraform-aws-emr-cluster.git
+https://github.com/cloudposse/terraform-aws-glue.git
+https://github.com/cloudposse/terraform-aws-glue-job.git
+https://github.com/cloudposse/terraform-aws-glue-workflow.git
+https://github.com/cloudposse/terraform-aws-glue-trigger.git
+https://github.com/cloudposse/terraform-aws-glue-connection.git
+-b 0.2.0 https://github.com/cloudposse/terraform-aws-mwaa.git
+-b 0.3.0 https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.git
+-b 0.13.0 https://github.com/cloudposse/terraform-aws-route53-alias.git
+-b 0.47.1 https://github.com/cloudposse/terraform-aws-s3-bucket.git
+-b 0.26.0 https://github.com/cloudposse/terraform-aws-s3-log-storage.git
+-b 2.2.6 https://github.com/Young-ook/terraform-aws-spinnaker.git

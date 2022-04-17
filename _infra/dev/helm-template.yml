@@ -1,0 +1,16 @@
+---
+repositories:
+  - name: devopscorner-lab
+    url: s3://devopscorner-helm-chart/lab
+
+templates:
+  default: &default
+    namespace: devops-tools
+    version: "1.2.0-rc"
+
+releases:
+  - name: bookstore
+    chart: devopscorner-lab/api
+    values:
+      - ./helm-values.yml
+    <<: *default
