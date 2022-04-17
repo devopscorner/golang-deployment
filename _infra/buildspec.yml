@@ -54,7 +54,7 @@ phases:
       # ============= #
       #  Build Image  #
       #============== #
-      - make build-app ARGS=${STORE_AWS_ACCOUNT}
+      - make ecr-build-app ARGS=${STORE_AWS_ACCOUNT}
       # ============ #
       #  Tags Image  #
       #============= #
