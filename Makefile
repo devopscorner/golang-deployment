@@ -106,8 +106,8 @@ sub-all:
 # ========================= #
 #   BUILD CONTAINER GOAPP   #
 # ========================= #
-.PHONY: ecr-build-app
-build-app:
+.PHONY: build-app ecr-build-app
+ecr-build-app:
 	@echo "================================================="
 	@echo " Task      : Create Container GO Apps "
 	@echo " Date/Time : `date`"

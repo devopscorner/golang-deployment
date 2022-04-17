@@ -4,8 +4,8 @@ Kubernetes Deployment for Simple Golang API
 
 ![all contributors](https://img.shields.io/github/contributors/devopscorner/golang-deployment)
 ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-deployment?sort=semver)
-[![docker pulls](https://img.shields.io/docker/pulls/devopscorner/cicd.svg)](https://hub.docker.com/r/devopscorner/cicd/)
-[![docker image size](https://img.shields.io/docker/image-size/devopscorner/cicd.svg?sort=date)](https://hub.docker.com/r/devopscorner/cicd/)
+[![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore.svg)](https://hub.docker.com/r/devopscorner/bookstore/)
+[![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore.svg?sort=date)](https://hub.docker.com/r/devopscorner/bookstore/)
 ![download all](https://img.shields.io/github/downloads/devopscorner/golang-deployment/total.svg)
 ![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/1.0/total)
 ![view](https://views.whatilearened.today/views/github/devopscorner/golang-deployment.svg)
