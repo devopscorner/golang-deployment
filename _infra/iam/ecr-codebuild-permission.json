@@ -1,0 +1,35 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "CodeBuildAccessPrincipal",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "codebuild.amazonaws.com"
+            },
+            "Action": [
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+                "ecr:BatchCheckLayerAvailability"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "aws:SourceArn": "arn:aws:codebuild:ap-southeast-1:YOUR_AWS_ACCOUNT:project/*",
+                    "aws:SourceAccount": "YOUR_AWS_ACCOUNT"
+                }
+            }
+        },
+        {
+            "Sid": "CodeBuildAccessCrossAccount",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::YOUR_AWS_ACCOUNT:root"
+            },
+            "Action": [
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+                "ecr:BatchCheckLayerAvailability"
+            ]
+        }
+    ]
+}
