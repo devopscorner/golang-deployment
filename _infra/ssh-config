@@ -1,0 +1,17 @@
+#############################
+### Repository CodeCommit ###
+#############################
+Host git-codecommit.*.amazonaws.com
+    User YOUR_CODECOMIT_SSH_ID
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes
+
+###############################
+### Repository Azure DevOps ###
+###############################
+Host ssh.dev.azure.com
+    User git
+    #PubkeyAcceptedAlgorithms +ssh-rsa
+    #HostkeyAlgorithms +ssh-rsa
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes
