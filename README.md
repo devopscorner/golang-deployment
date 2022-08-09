@@ -17,25 +17,37 @@ Kubernetes Deployment for Simple Golang API
 ![stars](https://img.shields.io/github/stars/devopscorner/golang-deployment)
 [![license](https://img.shields.io/github/license/devopscorner/golang-deployment)](https://img.shields.io/github/license/devopscorner/golang-deployment)
 
+## Workflow
+
+- Documentation workflow (reproduce step) of this ci/cd pipeline, go to [this](WORKFLOW.md) link
+
 ## Development
+
 ### Prequests
-* Install jq libraries
+
+- Install jq libraries
+
   ```
   apt-get install -y jq
   ```
-* Install golang dependencies
+
+- Install golang dependencies
+
   ```
   go mod init
   go mod tidy
   ```
 
 ### Runnning
+
 ```
 go run main.go
 ```
 
 ## API Test
-* Get Books
+
+- Get Books
+
 ```
 GET    : /books
          curl --request GET \
@@ -43,7 +55,8 @@ GET    : /books
             --header 'Content-Type: application/json' | jq
 ```
 
-* Add Book 1
+- Add Book 1
+
 ```
 POST   : /books
          curl --request POST \
@@ -55,7 +68,8 @@ POST   : /books
             }' | jq
 ```
 
-* Add Book 2
+- Add Book 2
+
 ```
 POST   : /books
          curl --request POST \
@@ -67,7 +81,8 @@ POST   : /books
             }' | jq
 ```
 
-* Add Book 3
+- Add Book 3
+
 ```
 POST   : /books
          curl --request POST \
@@ -79,7 +94,8 @@ POST   : /books
             }' | jq
 ```
 
-* Edit Book 3
+- Edit Book 3
+
 ```
 PATCH   : /books/3
          curl --request PATCH \
@@ -91,7 +107,8 @@ PATCH   : /books/3
             }' | jq
 ```
 
-* Delete Book 3
+- Delete Book 3
+
 ```
 DELETE   : /books/3
          curl --request DELETE \
@@ -103,7 +120,7 @@ DELETE   : /books/3
 
 ### Versioning
 
-* Docker version
+- Docker version
 
   ```
   docker version
@@ -120,7 +137,7 @@ DELETE   : /books/3
   Experimental:      true
   ```
 
-* Docker-Compose version
+- Docker-Compose version
 
   ```
   docker-compose -v
@@ -128,7 +145,7 @@ DELETE   : /books/3
   Docker Compose version v2.2.3
   ```
 
-* AWS Cli
+- AWS Cli
 
   ```
   aws -v
@@ -136,7 +153,7 @@ DELETE   : /books/3
   Note: AWS CLI version 2, the latest major version of the AWS CLI, is now stable and recommended for general use. For more information, see the AWS CLI version 2 installation instructions at: <https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html>
   ```
 
-* Terraform Cli
+- Terraform Cli
 
   ```
   terraform version
@@ -150,7 +167,7 @@ DELETE   : /books/3
   - provider registry.terraform.io/hashicorp/time v0.7.2
   ```
 
-* Terraform Environment Cli
+- Terraform Environment Cli
 
   ```
   tfenv -v
@@ -162,16 +179,16 @@ DELETE   : /books/3
 
 Make sure that you didn't push sensitive information in this repository
 
-* [ ] AWS Credentials (AWS_ACCESS_KEY, AWS_SECRET_KEY)
-* [ ] AWS Account ID
-* [ ] AWS Resources ARN
-* [ ] Username & Password
-* [ ] Private (id_rsa) & Public Key (id_rsa.pub)
-* [ ] DNS Zone ID
-* [ ] APP & API Key
+- [ ] AWS Credentials (AWS_ACCESS_KEY, AWS_SECRET_KEY)
+- [ ] AWS Account ID
+- [ ] AWS Resources ARN
+- [ ] Username & Password
+- [ ] Private (id_rsa) & Public Key (id_rsa.pub)
+- [ ] DNS Zone ID
+- [ ] APP & API Key
 
 ## Copyright
 
-* Author: **Dwi Fahni Denni (@zeroc0d3)**
-* Vendor: **DevOps Corner Indonesia (devopscorner.id)**
-* License: **Apache v2**
+- Author: **Dwi Fahni Denni (@zeroc0d3)**
+- Vendor: **DevOps Corner Indonesia (devopscorner.id)**
+- License: **Apache v2**
