@@ -16,12 +16,12 @@ export CI_PROJECT_NAME ?= bookstore
 
 IMAGE          = $(CI_REGISTRY)/${CI_PROJECT_PATH}/${CI_PROJECT_NAME}
 DIR            = $(shell pwd)
-VERSION       ?= 1.3.0
+VERSION       ?= 1.5.0
 
 BASE_IMAGE     = alpine
-BASE_VERSION   = 3.15
+BASE_VERSION   = 3.16
 
-GO_APP        ?= goapp
+GO_APP        ?= bookstore
 SOURCES        = $(shell find . -name '*.go' | grep -v /vendor/)
 VERSION       ?= $(shell git describe --tags --always --dirty)
 GOPKGS         = $(shell go list ./ | grep -v /vendor/)
@@ -32,11 +32,6 @@ GOARCH        ?= amd64
 GOOS          ?= linux
 
 export PATH_APP=`pwd`
-export TF_PATH="terraform/environment/providers/aws/infra"
-export TF_CORE="$(TF_PATH)/core"
-export TF_RESOURCES="$(TF_PATH)/resources"
-export TF_STATE="$(TF_PATH)/tfstate"
-export TF_MODULES="terraform/modules/providers/aws"
 
 # ========================= #
 #   BUILD GO APP (Binary)   #
@@ -75,64 +70,50 @@ build:
 	@GOOS=$(GOOS) GOARCH=$(GOARCH) CGO_ENABLED=0 go build -o build/$(GO_APP) $(BUILD_FLAGS) ./main.go
 	@echo '- DONE -'
 
-# =============== #
-#   GET MODULES   #
-# =============== #
-.PHONY: sub-officials sub-community sub-all
-sub-officials:
-	@echo "============================================"
-	@echo " Task      : Get Official Submodules "
-	@echo " Date/Time : `date`"
-	@echo "============================================"
-	@mkdir -p $(TF_MODULES)/officials
-	@cd $(PATH_APP) && ./get-officials.sh
-
-sub-community:
-	@echo "============================================"
-	@echo " Task      : Get Community Submodules "
-	@echo " Date/Time : `date`"
-	@echo "============================================"
-	@mkdir -p $(TF_MODULES)/community
-	@cd $(PATH_APP) && ./get-community.sh
-
-sub-all:
-	@make sub-officials
-	@echo ''
-	@make sub-community
-	@echo ''
-	@echo '---'
-	@echo '- ALL DONE -'
-
-# ========================= #
-#   BUILD CONTAINER GOAPP   #
-# ========================= #
-.PHONY: ecr-build-app
-ecr-build-app:
+# ==================== #
+#   CLONE REPOSITORY   #
+# ==================== #
+.PHONY: git-clone
+git-clone:
 	@echo "================================================="
-	@echo " Task      : Create Container GO Apps "
+	@echo " Task      : Clone Repository Sources "
 	@echo " Date/Time : `date`"
 	@echo "================================================="
-	@cd ${PATH_DOCKER} && ./ecr-build-alpine.sh $(ARGS)
+	@./git-clone.sh $(SOURCE) $(TARGET)
+	@echo '- DONE -'
+
+# ========================= #
+#   BUILD CONTAINER CI/CD   #
+# ========================= #
+.PHONY: ecr-build-alpine
+ecr-build-alpine:
+	@echo "================================================="
+	@echo " Task      : Create Container CI/CD Alpine Image "
+	@echo " Date/Time : `date`"
+	@echo "================================================="
+	@cd ${PATH_DOCKER} && ./ecr-build-alpine.sh $(ARGS) $(CI_PATH)
 	@echo '- DONE -'
 
 # ======================== #
-#   TAGS CONTAINER GOAPP   #
+#   TAGS CONTAINER CI/CD   #
 # ======================== #
 .PHONY: ecr-tag-alpine
 ecr-tag-alpine:
 	@echo "================================================="
-	@echo " Task      : Set Tags Image GO App to ECR"
+	@echo " Task      : Set Tags Image Alpine to ECR"
 	@echo " Date/Time : `date`"
 	@echo "================================================="
-	@cd ${PATH_DOCKER} && ./ecr-tag-alpine.sh $(ARGS)
+	@cd ${PATH_DOCKER} && ./ecr-tag-alpine.sh $(ARGS) $(CI_PATH)
+	@echo '- DONE -'
 
 # ======================== #
-#   PUSH CONTAINER GOAPP   #
+#   PUSH CONTAINER CI/CD   #
 # ======================== #
 .PHONY: ecr-push-alpine
 ecr-push-alpine:
 	@echo "================================================="
-	@echo " Task      : Push Image GO App to ECR"
+	@echo " Task      : Push Image Alpine to ECR"
 	@echo " Date/Time : `date`"
 	@echo "================================================="
-	@cd ${PATH_DOCKER} && ./ecr-push-alpine.sh $(ARGS)
+	@cd ${PATH_DOCKER} && ./ecr-push-alpine.sh $(ARGS) $(TAGS)
+	@echo '- DONE -'

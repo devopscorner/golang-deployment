@@ -9,10 +9,9 @@ set -e
 
 export AWS_ACCOUNT_ID=$1
 export CI_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.ap-southeast-1.amazonaws.com"
-export CI_PROJECT_PATH="devopscorner"
-export CI_PROJECT_NAME="bookstore"
+export CI_ECR_PATH=$2
 
-export IMAGE="$CI_REGISTRY/$CI_PROJECT_PATH/$CI_PROJECT_NAME"
+export IMAGE="$CI_REGISTRY/$CI_ECR_PATH"
 export TAG="alpine"
 
 echo "============="
@@ -24,4 +23,4 @@ echo '- DONE -'
 echo ''
 
 echo " Build Image => $IMAGE:$TAG"
-docker build . -t $IMAGE:$TAG
+docker build -f Dockerfile -t $IMAGE:$TAG .

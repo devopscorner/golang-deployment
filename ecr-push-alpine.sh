@@ -8,6 +8,7 @@
 set -e
 
 export AWS_ACCOUNT_ID=$1
+export TAGS_ID=$2
 
 echo "============="
 echo "  Login ECR  "
@@ -17,7 +18,7 @@ echo $PASSWORD | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.
 echo '- DONE -'
 echo ''
 
-docker images --format "{{.Repository}}:{{.Tag}}" > list_images.txt
+docker images --format "{{.Repository}}:{{.Tag}}" | grep ${TAGS_ID} > list_images.txt
 IMAGES=`cat list_images.txt`
 for IMG in $IMAGES; do
   echo "Docker Push => $IMG"

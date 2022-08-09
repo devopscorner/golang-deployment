@@ -9,15 +9,13 @@ set -e
 
 export AWS_ACCOUNT_ID=$1
 export CI_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.ap-southeast-1.amazonaws.com"
-export CI_PROJECT_PATH="devopscorner"
-export CI_PROJECT_NAME="bookstore"
+export CI_ECR_PATH=$2
 
-export IMAGE="$CI_REGISTRY/$CI_PROJECT_PATH/$CI_PROJECT_NAME"
+export IMAGE="$CI_REGISTRY/$CI_ECR_PATH"
 export BASE_IMAGE="$IMAGE:alpine"
+export COMMIT_HASH=`git log -1 --format=format:"%H"`
 export TAGS="latest \
-  alpine-latest \
-  alpine-3.15
-"
+  ${COMMIT_HASH}"
 
 for TAG in $TAGS; do
   echo "Docker Tags => $IMAGE:$TAG"
