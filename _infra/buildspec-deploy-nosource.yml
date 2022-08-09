@@ -1,0 +1,91 @@
+version: 0.2
+
+env:
+  # ==================== #
+  #  Ref: SECRET CONFIG  #
+  # ==================== #
+  parameter-store:
+    BUILDNUMBER: /devopscorner/cicd/staging/repo/bookstore/buildnumber
+    STORE_AWS_ACCOUNT: /devopscorner/cicd/staging/credentials/aws_account
+    STORE_AWS_ACCESS_KEY: /devopscorner/cicd/staging/credentials/aws_access_key
+    STORE_AWS_SECRET_KEY: /devopscorner/cicd/staging/credentials/aws_secret_key
+    STORE_REPO_URL: /devopscorner/cicd/staging/repo/bookstore/url
+    STORE_REPO_BRANCH: /devopscorner/cicd/staging/repo/bookstore/branch
+    STORE_REPO_FOLDER: /devopscorner/cicd/staging/repo/bookstore/folder
+    STORE_EKS_CLUSTER: /devopscorner/cicd/staging/eks_cluster
+    STORE_BASE64_PUB_KEY: /devopscorner/cicd/staging/credentials/base64_pub_key
+    STORE_BASE64_PRIV_KEY: /devopscorner/cicd/staging/credentials/base64_priv_key
+    STORE_BASE64_PEM_KEY: /devopscorner/cicd/staging/credentials/base64_pem_key
+    STORE_BASE64_SSH_CONFIG: /devopscorner/cicd/staging/credentials/base64_ssh_config
+    STORE_BASE64_KNOWN_HOSTS: /devopscorner/cicd/staging/credentials/known_hosts
+    STORE_BASE64_KUBECONFIG: /devopscorner/cicd/staging/credentials/base64_kube_config
+
+  # ===================================== #
+  #  Ref: Pipeline Environment Variables  #
+  # ===================================== #
+  variables:
+    ENV_CICD: "dev"
+    AWS_DEFAULT_REGION: "ap-southeast-1"
+    INFRA_CICD: "terraform/environment/providers/aws/infra/resources"
+    INFRA_CICD_PATH: "bookstore"
+    INFRA_ECR_PATH: "devopscorner/bookstore"
+
+phases:
+  pre_build:
+    commands:
+      # ======================= #
+      #  Setup Auth Repository  #
+      # ======================= #
+      - mkdir -p ~/.ssh
+      - echo "${STORE_BASE64_PUB_KEY}" | base64 -d > ~/.ssh/id_rsa.pub
+      - echo "${STORE_BASE64_PRIV_KEY}" | base64 -d > ~/.ssh/id_rsa
+      - echo "${STORE_BASE64_KNOWN_HOSTS}" | base64 -d > ~/.ssh/known_hosts
+      - echo "${STORE_BASE64_SSH_CONFIG}" | base64 -d > ~/.ssh/config
+      - chmod 400 ~/.ssh/id_rsa*
+      - chmod 400 ~/.ssh/config*
+      - chmod 644 ~/.ssh/known_hosts
+      - eval "$(ssh-agent -s)"
+      - ssh-add ~/.ssh/id_rsa
+      # =========================== #
+      #  Using Spesific Repository  #
+      # =========================== #
+      - GIT_SSH_COMMAND='ssh -i ~/.ssh/id_rsa -o IdentitiesOnly=yes -F /dev/null' git clone --depth 5 ${STORE_REPO_URL}
+      - echo '- DONE -'
+  build:
+    commands:
+      # ========================= #
+      #  Refactoring AWS Account  #
+      # ========================= #
+      - cd ${STORE_REPO_FOLDER} && find ./ -type f -exec sed -i "s/YOUR_AWS_ACCOUNT/${STORE_AWS_ACCOUNT}/g" {} \;
+      # ================== #
+      #  Helm Repo Update  #
+      # ================== #
+      - AWS_REGION=ap-southeast-1 helm repo add smm-staging s3://smm-helm-chart/staging
+      - AWS_REGION=ap-southeast-1 helm repo add smm-prod s3://smm-helm-chart/prod
+      - helm repo update
+      # ============ #
+      #  Deploy K8S  #
+      # ============ #
+      - cd _infra/${ENV_CICD}
+      - aws eks update-kubeconfig --region ap-southeast-1 --name ${STORE_EKS_CLUSTER}
+      - kubectl version
+      - kubectl config use-context arn:aws:eks:ap-southeast-1:${STORE_AWS_ACCOUNT}:cluster/${STORE_EKS_CLUSTER}
+      - kubectl get ns -A
+      - helmfile --version
+      - helmfile -f helm-template.yml apply
+      - echo '-- ALL DONE --'
+
+artifacts:
+  files:
+    - _infra/*
+    - build/*
+    - controllers/*
+    - models/*
+    - Dockerfile
+    - ecr-build-alpine.sh
+    - ecr-push-alpine.sh
+    - ecr-tag-alpine.sh
+    - go.mod
+    - go.sum
+    - main.go
+  name: "artifact-$(date '+%Y%m%d-%H%M%S')"
