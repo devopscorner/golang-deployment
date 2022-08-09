@@ -60,8 +60,8 @@ phases:
       # ================== #
       #  Helm Repo Update  #
       # ================== #
-      - AWS_REGION=ap-southeast-1 helm repo add smm-staging s3://smm-helm-chart/staging
-      - AWS_REGION=ap-southeast-1 helm repo add smm-prod s3://smm-helm-chart/prod
+      - AWS_REGION=ap-southeast-1 helm repo add devopscorner-staging s3://devopscorner-helm-chart/staging
+      - AWS_REGION=ap-southeast-1 helm repo add devopscorner-prod s3://devopscorner-helm-chart/prod
       - helm repo update
       # ============ #
       #  Deploy K8S  #
