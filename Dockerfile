@@ -1,5 +1,5 @@
 ### Builder ###
-FROM golang:1.17-alpine3.15 as builder
+FROM golang:1.18-alpine3.15 as builder
 
 WORKDIR /go/src/app
 ENV GIN_MODE=release
@@ -19,7 +19,7 @@ RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
         go build -mod=readonly -ldflags="-s -w" -o goapp
 
 ### Binary ###
-FROM golang:1.17-alpine3.15
+FROM golang:1.18-alpine3.15
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
