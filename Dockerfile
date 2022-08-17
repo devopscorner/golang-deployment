@@ -1,5 +1,5 @@
 ### Builder ###
-FROM golang:1.17-alpine3.15 as builder
+FROM golang:1.18-alpine3.16 as builder
 
 WORKDIR /go/src/app
 ENV GIN_MODE=release
@@ -19,7 +19,7 @@ RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
         go build -mod=readonly -ldflags="-s -w" -o goapp
 
 ### Binary ###
-FROM golang:1.17-alpine3.15
+FROM golang:1.18-alpine3.16
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
@@ -29,11 +29,11 @@ ARG GIT_URL
 ENV VENDOR="DevOpsCornerId"
 ENV AUTHOR="DevOpsCorner.id <support@devopscorner.id>"
 ENV IMG_NAME="alpine"
-ENV IMG_VERSION="3.15"
-ENV IMG_DESC="Docker Image Alpine 3.15"
+ENV IMG_VERSION="3.16"
+ENV IMG_DESC="Docker Image Alpine 3.16"
 ENV IMG_ARCH="amd64/x86_64"
 
-ENV ALPINE_VERSION="3.15"
+ENV ALPINE_VERSION="3.16"
 
 LABEL maintainer="$AUTHOR" \
         architecture="$IMG_ARCH" \
