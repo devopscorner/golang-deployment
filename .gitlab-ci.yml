@@ -17,8 +17,6 @@ variables:
 
 sync_repo:
   stage: Sync Repository
-  before_script:
-    - *preparation
   script:
     # Install urlencode function to encode reserved characters in passwords
     - sudo apt-get install gridsite-clients
