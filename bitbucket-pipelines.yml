@@ -1,0 +1,34 @@
+# Pipeline to automatically mirror
+# a BitBucket repository in AWS CodeCommit
+
+definitions:
+  services:
+    synch_repo:
+      environment:
+        BITBUCKET_REPO_URL: $(BITBUCKET_REPO_URL)
+        BITBUCKET_GIT_USERNAME: $(BITBUCKET_GIT_USERNAME)
+        BITBUCKET_GIT_PASSWORD: $(BITBUCKET_GIT_PASSWORD)
+        AWS_REPO_URL: $(AWS_REPO_URL)
+        AWS_GIT_USERNAME: $(AWS_GIT_USERNAME)
+        AWS_GIT_PASSWORD: $(AWS_GIT_PASSWORD)
+
+synchonize: &synchonize
+  step:
+    name: Sync Repository with AWS CodeCommit
+    deployment: staging
+    image: ubuntu-latest
+    trigger: manual
+    script:
+      # Install urlencode function to encode reserved characters in passwords
+      - sudo apt-get install gridsite-clients
+      # Create local mirror of Azure DevOps repository
+      - git clone --mirror https://${BITBUCKET_GIT_USERNAME}:$(urlencode ${BITBUCKET_GIT_PASSWORD})@${BITBUCKET_REPO_URL} repo-mirror
+      # Sync AWS CodeCommit repository
+      - cd repo-mirror
+      - git push --mirror https://${AWS_GIT_USERNAME}:$(urlencode ${AWS_GIT_PASSWORD})@${AWS_REPO_URL}
+    services:
+      - synch_repo
+
+pipelines:
+  default:
+    - <<: *synchonize
