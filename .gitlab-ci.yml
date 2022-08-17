@@ -1,0 +1,29 @@
+# Pipeline to automatically mirror
+# a GitLab repository in AWS CodeCommit
+
+image: ubuntu-latest
+
+stages:
+  - Sync Repository
+
+### VARIABLES ###
+variables:
+  GITLAB_REPO_URL: $(GITLAB_REPO_URL)
+  GITLAB_GIT_USERNAME: $(GITLAB_GIT_USERNAME)
+  GITLAB_GIT_PASSWORD: $(GITLAB_GIT_PASSWORD)
+  AWS_REPO_URL: $(AWS_REPO_URL)
+  AWS_GIT_USERNAME: $(AWS_GIT_USERNAME)
+  AWS_GIT_PASSWORD: $(AWS_GIT_PASSWORD)
+
+sync_repo:
+  stage: Sync Repository
+  before_script:
+    - *preparation
+  script:
+    # Install urlencode function to encode reserved characters in passwords
+    - sudo apt-get install gridsite-clients
+    # Create local mirror of Azure DevOps repository
+    - git clone --mirror https://${GITLAB_GIT_USERNAME}:$(urlencode ${GITLAB_GIT_PASSWORD})@${GITLAB_REPO_URL} repo-mirror
+    # Sync AWS CodeCommit repository
+    - cd repo-mirror
+    - git push --mirror https://${AWS_GIT_USERNAME}:$(urlencode ${AWS_GIT_PASSWORD})@${AWS_REPO_URL}
