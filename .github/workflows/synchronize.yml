@@ -1,0 +1,35 @@
+# Pipeline to automatically mirror
+# a GitHub repository in AWS CodeCommit
+
+name: Sync Repository with AWS CodeCommit
+
+on:
+  workflow_dispatch
+
+env:
+  GITHUB_REPO_URL: ${{ secrets.GITHUB_REPO_URL }}
+  GITHUB_GIT_USERNAME: ${{ secrets.GITHUB_GIT_USERNAME }}
+  GITHUB_GIT_PASSWORD: ${{ secrets.GITHUB_GIT_PASSWORD }}
+  AWS_REPO_URL: ${{ secrets.AWS_REPO_URL }}
+  AWS_GIT_USERNAME: ${{ secrets.AWS_GIT_USERNAME }}
+  AWS_GIT_PASSWORD: ${{ secrets.AWS_GIT_PASSWORD }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Parse clone count using REST API
+        run: |
+
+          # Install urlencode function to encode reserved characters in passwords
+          sudo apt-get install gridsite-clients
+
+          # Create local mirror of Azure DevOps repository
+          git clone --mirror https://${GITHUB_GIT_USERNAME}:$(urlencode ${GITHUB_GIT_PASSWORD})@${GITHUB_REPO_URL} repo-mirror
+
+          # Sync AWS CodeCommit repository
+          cd repo-mirror
+          git push --mirror https://${AWS_GIT_USERNAME}:$(urlencode ${AWS_GIT_PASSWORD})@${AWS_REPO_URL}
