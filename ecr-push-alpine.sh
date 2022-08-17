@@ -8,13 +8,14 @@
 set -e
 
 export AWS_ACCOUNT_ID=$1
+export AWS_DEFAULT_REGION="ap-southeast-1"
 export TAGS_ID=$2
 
 echo "============="
 echo "  Login ECR  "
 echo "============="
-PASSWORD=`aws ecr get-login-password --region ap-southeast-1`
-echo $PASSWORD | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.ap-southeast-1.amazonaws.com
+PASSWORD=`aws ecr get-login-password --region ${AWS_DEFAULT_REGION}`
+echo $PASSWORD | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
 echo '- DONE -'
 echo ''
 

@@ -8,7 +8,8 @@
 set -e
 
 export AWS_ACCOUNT_ID=$1
-export CI_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.ap-southeast-1.amazonaws.com"
+export AWS_DEFAULT_REGION="ap-southeast-1"
+export CI_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
 export CI_ECR_PATH=$2
 
 export IMAGE="$CI_REGISTRY/$CI_ECR_PATH"

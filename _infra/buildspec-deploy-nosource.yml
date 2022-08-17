@@ -60,16 +60,16 @@ phases:
       # ================== #
       #  Helm Repo Update  #
       # ================== #
-      - AWS_REGION=ap-southeast-1 helm repo add devopscorner-staging s3://devopscorner-helm-chart/staging
-      - AWS_REGION=ap-southeast-1 helm repo add devopscorner-prod s3://devopscorner-helm-chart/prod
+      - AWS_REGION=${AWS_DEFAULT_REGION} helm repo add devopscorner-staging s3://devopscorner-helm-chart/staging
+      - AWS_REGION=${AWS_DEFAULT_REGION} helm repo add devopscorner-prod s3://devopscorner-helm-chart/prod
       - helm repo update
       # ============ #
       #  Deploy K8S  #
       # ============ #
       - cd _infra/${ENV_CICD}
-      - aws eks update-kubeconfig --region ap-southeast-1 --name ${STORE_EKS_CLUSTER}
+      - aws eks update-kubeconfig --region ${AWS_DEFAULT_REGION} --name ${STORE_EKS_CLUSTER}
       - kubectl version
-      - kubectl config use-context arn:aws:eks:ap-southeast-1:${STORE_AWS_ACCOUNT}:cluster/${STORE_EKS_CLUSTER}
+      - kubectl config use-context arn:aws:eks:${AWS_DEFAULT_REGION}:${STORE_AWS_ACCOUNT}:cluster/${STORE_EKS_CLUSTER}
       - kubectl get ns -A
       - helmfile --version
       - helmfile -f helm-template.yml apply
