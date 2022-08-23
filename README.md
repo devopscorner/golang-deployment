@@ -21,10 +21,10 @@ Kubernetes Deployment for Simple Golang API
 
 | Image name | Size |
 |------------|------|
-| `devopscorner/bookstore:latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/latest.svg?label=Image%20size&style=flat-square&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=latest) |
-| `devopscorner/bookstore:alpine` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine.svg?label=Image%20size&style=flat-square&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine) |
-| `devopscorner/bookstore:alpine-latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine-latest.svg?label=Image%20size&style=flat-square&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine-latest) |
-| `devopscorner/bookstore:alpine-3.15` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine-3.15.svg?label=Image%20size&style=flat-square&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine-3.15) |
+| `devopscorner/bookstore:latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/latest.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=latest) |
+| `devopscorner/bookstore:alpine` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine) |
+| `devopscorner/bookstore:alpine-latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine-latest.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine-latest) |
+| `devopscorner/bookstore:alpine-3.15` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine-3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine-3.15) |
 
 ## Workflow
 
