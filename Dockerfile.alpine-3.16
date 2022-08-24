@@ -15,7 +15,7 @@ RUN apk add --no-cache \
 COPY . /go/src/app
 
 RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
-        cd /go/src/app && \
+    cd /go/src/app && \
         go build -mod=readonly -ldflags="-s -w" -o goapp
 
 ### Binary ###
