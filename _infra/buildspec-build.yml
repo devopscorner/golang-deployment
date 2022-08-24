@@ -76,9 +76,12 @@ artifacts:
     - controllers/*
     - models/*
     - Dockerfile
-    - ecr-build-alpine.sh
-    - ecr-push-alpine.sh
-    - ecr-tag-alpine.sh
+    - dockerhub-build.sh
+    - dockerhub-push.sh
+    - dockerhub-tag.sh
+    - ecr-build.sh
+    - ecr-push.sh
+    - ecr-tag.sh
     - go.mod
     - go.sum
     - main.go
