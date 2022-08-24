@@ -18,8 +18,9 @@ IMAGE          = $(CI_REGISTRY)/${CI_PROJECT_PATH}/${CI_PROJECT_NAME}
 DIR            = $(shell pwd)
 VERSION       ?= 1.5.0
 
-BASE_IMAGE     = alpine
-BASE_VERSION   = 3.16
+export BASE_IMAGE=alpine
+export BASE_VERSION=3.16
+export ALPINE_VERSION=3.16
 
 GO_APP        ?= bookstore
 SOURCES        = $(shell find . -name '*.go' | grep -v /vendor/)
@@ -79,41 +80,59 @@ git-clone:
 	@echo " Task      : Clone Repository Sources "
 	@echo " Date/Time : `date`"
 	@echo "================================================="
-	@./git-clone.sh $(SOURCE) $(TARGET)
+	@sh ./git-clone.sh $(SOURCE) $(TARGET)
 	@echo '- DONE -'
 
-# ========================= #
-#   BUILD CONTAINER CI/CD   #
-# ========================= #
-.PHONY: ecr-build-alpine
-ecr-build-alpine:
-	@echo "================================================="
-	@echo " Task      : Create Container CI/CD Alpine Image "
+# ========================== #
+#   BUILD CONTAINER GO-APP   #
+# ========================== #
+.PHONY: dockerhub-build-alpine ecr-build-alpine
+dockerhub-build-alpine:
+	@echo "========================================================"
+	@echo " Task      : Create Container GO-APP Alpine Image "
 	@echo " Date/Time : `date`"
-	@echo "================================================="
-	@cd ${PATH_DOCKER} && ./ecr-build-alpine.sh $(ARGS) $(CI_PATH)
-	@echo '- DONE -'
+	@echo "========================================================"
+	@sh ./dockerhub-build.sh alpine Dockerfile ${ALPINE_VERSION}
 
-# ======================== #
-#   TAGS CONTAINER CI/CD   #
-# ======================== #
-.PHONY: ecr-tag-alpine
+ecr-build-alpine:
+	@echo "========================================================"
+	@echo " Task      : Create Container GO-APP Alpine Image "
+	@echo " Date/Time : `date`"
+	@echo "========================================================"
+	@sh ./ecr-build.sh $(ARGS) alpine Dockerfile ${ALPINE_VERSION}
+
+# ========================= #
+#   TAGS CONTAINER GO-APP   #
+# ========================= #
+.PHONY: tag-dockerhub-alpine tag-ecr-alpine
+dockerhub-tag-alpine:
+	@echo "========================================================"
+	@echo " Task      : Set Tags Image Alpine to DockerHub"
+	@echo " Date/Time : `date`"
+	@echo "========================================================"
+	@sh ./dockerhub-tag.sh alpine ${ALPINE_VERSION}
+
 ecr-tag-alpine:
-	@echo "================================================="
+	@echo "========================================================"
 	@echo " Task      : Set Tags Image Alpine to ECR"
 	@echo " Date/Time : `date`"
-	@echo "================================================="
-	@cd ${PATH_DOCKER} && ./ecr-tag-alpine.sh $(ARGS) $(CI_PATH)
-	@echo '- DONE -'
+	@echo "========================================================"
+	@sh ./ecr-tag.sh $(ARGS) alpine ${ALPINE_VERSION} $(CI_PATH)
 
-# ======================== #
-#   PUSH CONTAINER CI/CD   #
-# ======================== #
-.PHONY: ecr-push-alpine
+# ========================= #
+#   PUSH CONTAINER GO-APP   #
+# ========================= #
+.PHONY: dockerhub-push-alpine ecr-push-alpine
+dockerhub-push-alpine:
+	@echo "========================================================"
+	@echo " Task      : Push Image Alpine to DockerHub"
+	@echo " Date/Time : `date`"
+	@echo "========================================================"
+	@sh ./dockerhub-push.sh alpine $(CI_PATH)
+
 ecr-push-alpine:
-	@echo "================================================="
+	@echo "========================================================"
 	@echo " Task      : Push Image Alpine to ECR"
 	@echo " Date/Time : `date`"
-	@echo "================================================="
-	@cd ${PATH_DOCKER} && ./ecr-push-alpine.sh $(ARGS) $(TAGS)
-	@echo '- DONE -'
+	@echo "========================================================"
+	@sh ./ecr-push.sh $(ARGS) alpine $(CI_PATH)

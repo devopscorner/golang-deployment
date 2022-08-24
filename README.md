@@ -6,9 +6,8 @@ Kubernetes Deployment for Simple Golang API
 ![all contributors](https://img.shields.io/github/contributors/devopscorner/golang-deployment)
 ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-deployment?sort=semver)
 [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore.svg)](https://hub.docker.com/r/devopscorner/bookstore/)
-[![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore.svg?sort=date)](https://hub.docker.com/r/devopscorner/bookstore/)
 ![download all](https://img.shields.io/github/downloads/devopscorner/golang-deployment/total.svg)
-![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/2.1/total)
+![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/2.2/total)
 ![view](https://views.whatilearened.today/views/github/devopscorner/golang-deployment.svg)
 ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://github.com/devopscorner/golang-deployment/blob/master/clone.json?raw=True&logo=github)
 ![issues](https://img.shields.io/github/issues/devopscorner/golang-deployment)
@@ -17,9 +16,24 @@ Kubernetes Deployment for Simple Golang API
 ![stars](https://img.shields.io/github/stars/devopscorner/golang-deployment)
 [![license](https://img.shields.io/github/license/devopscorner/golang-deployment)](https://img.shields.io/github/license/devopscorner/golang-deployment)
 
-## Workflow
+## Available Tags
 
-- Documentation workflow (reproduce step) of this ci/cd pipeline, go to [this](WORKFLOW.md) link
+### Alpine
+
+| Image name | Size |
+|------------|------|
+| `devopscorner/bookstore:latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/latest.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=latest) |
+| `devopscorner/bookstore:alpine` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine) |
+| `devopscorner/bookstore:alpine-latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine-latest.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine-latest) |
+| `devopscorner/bookstore:alpine-3.15` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine-3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine-3.15) |
+| `devopscorner/bookstore:go1.18-alpine3.15` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.18-alpine3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.18-alpine3.15) |
+| `devopscorner/bookstore:alpine-3.16` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine-3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine-3.16) |
+| `devopscorner/bookstore:go1.18-alpine3.16` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.18-alpine3.16.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.18-alpine3.16) |
+
+## Documentation
+
+- Build, Tag & Push container image to **DockerHub**, go to [this](docs/Container-Image-DockerHub.md) link
+- Build, Tag & Push container image to **Amazon ECR (Elastic Container Registry)**, go to [this](docs/Container-Image-ECR.md) link
 
 ## Development
 

@@ -1,6 +1,15 @@
 ## Changelog GO App
 
+### version 2.2
+
+- Add multiple container registry (DockerHub & ECR) deployment
+- Update Golang version 1.18 for Alpine 3.15 & Alpine 3.16 container
+- Refactoring makefile for added multiple container registry
+- Add documentation for build, tag & push container image to **DockerHub**, go to [this](docs/Container-Image-DockerHub.md) link
+- Add documentation for build, tag & push container to **Amazon ECR (Elastic Container Registry)**, go to [this](docs/Container-Image-ECR.md) link
+
 ### version 2.1
+
 - Add Configuration Pipeline Synchronize for Mirroring Repository into AWS CodeCommit
   - [GitHub Repository](.github/workflows/synchronize.yml)
   - [GitLab Repository](.gitlab-ci.yml)
@@ -14,6 +23,7 @@
     ![Azure DevSecOps Pipeline](docs/assets/gitops-devsecops-azure.png)
 
 ### version 2.0
+
 - IAM Role sample for CodeBuild & CodePipeline
 - Buildspec CodePipeline for Build Container Image inside CodeBuild using Spesific CodeCommit
 - Buildspec CodePipeline for Deploy EKS Cluster inside CodeBuild using Spesific CodeCommit
@@ -24,6 +34,7 @@
 - Dynamic Tags with COMMIT_HASH
 
 ### version 1.0
+
 - Golang API Rest (bookstore)
 - Postman Collection
 - Container Builder GO
@@ -32,6 +43,7 @@
 - Buildspec for AWS CodeBuild & AWS CodePipeline
 
 ### version 0.1
+
 - First deployment GO Apps
 - Script build image
 - Script ecr-tag & ecr-push
