@@ -1,4 +1,4 @@
-# Golang Deployment
+# Golang Deployment - DockerHub
 
 Kubernetes Deployment for Simple Golang API
 
