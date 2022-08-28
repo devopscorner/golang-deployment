@@ -5,8 +5,9 @@
 - Add multiple container registry (DockerHub & ECR) deployment
 - Update Golang version 1.18 for Alpine 3.15 & Alpine 3.16 container
 - Refactoring makefile for added multiple container registry
-- Add documentation for build, tag & push container image to **DockerHub**, go to [this](docs/Container-Image-DockerHub.md) link
-- Add documentation for build, tag & push container to **Amazon ECR (Elastic Container Registry)**, go to [this](docs/Container-Image-ECR.md) link
+- Add documentation for build, tag & push container image to **DockerHub**, go to [this](docs/container-bookstore-dockerhub.md) link
+- Add documentation for build, tag & push container to **Amazon ECR (Elastic Container Registry)**, go to [this](docs/container-bookstore-ecr.md) link
+- Refactoring workflow documentation, go to [this](docs/workflow-cicd-bookstore-pipeline.md) link
 
 ### version 2.1
 

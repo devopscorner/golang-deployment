@@ -7,7 +7,7 @@ Kubernetes Deployment for Simple Golang API
 ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-deployment?sort=semver)
 [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore.svg)](https://hub.docker.com/r/devopscorner/bookstore/)
 ![download all](https://img.shields.io/github/downloads/devopscorner/golang-deployment/total.svg)
-![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/2.2/total)
+![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/2.3/total)
 ![view](https://views.whatilearened.today/views/github/devopscorner/golang-deployment.svg)
 ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://github.com/devopscorner/golang-deployment/blob/master/clone.json?raw=True&logo=github)
 ![issues](https://img.shields.io/github/issues/devopscorner/golang-deployment)
@@ -32,8 +32,10 @@ Kubernetes Deployment for Simple Golang API
 
 ## Documentation
 
-- Build, Tag & Push container image to **DockerHub**, go to [this](docs/Container-Image-DockerHub.md) link
-- Build, Tag & Push container image to **Amazon ECR (Elastic Container Registry)**, go to [this](docs/Container-Image-ECR.md) link
+- Index Documentation, go to [this](docs/README.md) link
+- Build, Tag & Push container image to **DockerHub**, go to [this](docs/container-bookstore-dockerhub.md) link
+- Build, Tag & Push container image to **Amazon ECR (Elastic Container Registry)**, go to [this](docs/container-bookstore-ecr.md) link
+- Workflow CI/CD Pipeline, go to [this](docs/workflow-cicd-pipeline.md) link
 
 ## Development
 
