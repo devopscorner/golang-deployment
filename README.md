@@ -35,7 +35,7 @@ Kubernetes Deployment for Simple Golang API
 - Index Documentation, go to [this](docs/README.md) link
 - Build, Tag & Push container image to **DockerHub**, go to [this](docs/container-bookstore-dockerhub.md) link
 - Build, Tag & Push container image to **Amazon ECR (Elastic Container Registry)**, go to [this](docs/container-bookstore-ecr.md) link
-- Workflow CI/CD Pipeline, go to [this](docs/workflow-cicd-pipeline.md) link
+- Workflow CI/CD Pipeline, go to [this](docs/workflow-cicd-bookstore-pipeline.md) link
 
 ## Development
 
