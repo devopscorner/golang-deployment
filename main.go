@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/zeroc0d3/go-bookstore/controllers"
-	"github.com/zeroc0d3/go-bookstore/models"
+	"github.com/devopscorner/golang-deployment/controllers"
+	"github.com/devopscorner/golang-deployment/models"
 
 	"github.com/gin-gonic/gin"
 )
