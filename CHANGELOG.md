@@ -1,5 +1,14 @@
 ## Changelog GO App
 
+### version 3.0
+
+- Upgrade golang version 1.19
+- Update Dockerfile for using golang version 1.19 (`golang:1.19.2-alpine3.15` & `golang:1.19.2-alpine3.16`)
+- Added docker-compose configuration & running script docker-compose
+- Upgrade dependencies golang `go.mod` & `go.sum`
+- Refactoring source code (moving) dependencies to `devopscorner/golang-deployment`
+- Update `gorm` model & sqlite connection driver
+
 ### version 2.2
 
 - Add multiple container registry (DockerHub & ECR) deployment
