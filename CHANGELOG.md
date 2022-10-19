@@ -9,6 +9,11 @@
 - Refactoring source code (moving) dependencies to `devopscorner/golang-deployment`
 - Update `gorm` model & sqlite connection driver
 
+### version 2.3
+
+- All features in version 2.2
+- Refactoring path & references docs
+
 ### version 2.2
 
 - Add multiple container registry (DockerHub & ECR) deployment
