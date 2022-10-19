@@ -8,7 +8,7 @@
 set -e
 
 # export CI_PROJECT_PATH="devopscorner"
-# export CI_PROJECT_NAME="terraform-infra"
+# export CI_PROJECT_NAME="golang-deployment"
 
 # export IMAGE="$CI_PROJECT_PATH/$CI_PROJECT_NAME"
 export IMAGE=$4
