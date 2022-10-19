@@ -1,0 +1,74 @@
+version: '3.7'
+
+#================================================================================================
+# NETWORK SETUP
+#================================================================================================
+networks:
+  devopscorner_net:
+    name: devopscorner_net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.148.148.0/16
+
+#================================================================================================
+# VOLUME SETUP
+#================================================================================================
+volumes:
+  vol_portainer:
+    driver: ${VOLUMES_DRIVER:-local}
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_PORTAINER:-/opt/data/docker/portainer2.9}
+  vol_go_bookstore:
+    driver: ${VOLUMES_DRIVER:-local}
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_GO_BOOKSTORE:-/opt/data/docker/go-bookstore}
+
+services:
+  #================================================================================================
+  # PORTAINER
+  #================================================================================================
+  portainer:
+    image: dockerframework/portainer:${PORTAINER_VERSION:-2.9}
+    container_name: ${CONTAINER_PORTAINER:-devopscorner_portainer}
+    restart: unless-stopped
+    ports:
+      - "${PORT_PORTAINER:-5212}:9000"
+    volumes:
+    # - /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
+    # - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
+      - vol_portainer:/data
+    environment:
+      - PORTAINER_TEMPLATE=generic
+      - PORTAINER_VERSION=${PORTAINER_VERSION:-2.9}
+    privileged: true
+    networks:
+      devopscorner_net:
+        ipv4_address: ${CONTAINER_IP_PORTAINER:-172.148.148.5}
+
+  #================================================================================================
+  # GOLANG-BOOKSTORE
+  #================================================================================================
+  go-bookstore:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${CONTAINER_GO_BOOKSTORE:-devopscorner_go_bookstore}
+    restart: unless-stopped
+    ports:
+      - "${PORT_GO_BOOKSTORE:-8080}:8080"
+  # volumes:
+  #   - /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
+  #   - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
+    environment:
+      - TZ="Asia/Jakarta"
+      - ALPINE_VERSION=${ALPINE_VERSION:-3.16}
+    privileged: true
+    tty: true
+    networks:
+      devopscorner_net:
+        ipv4_address: ${CONTAINER_IP_GO_BOOKSTORE:-172.148.148.225}
