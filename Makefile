@@ -31,6 +31,7 @@ LDFLAGS       ?= -X github.com/devopscorner/golang-deployment/config.Version=$(V
 TAG           ?= "v0.1.0"
 GOARCH        ?= amd64
 GOOS          ?= linux
+GO111MODULE   ?= on
 
 export PATH_APP=`pwd`
 
@@ -57,7 +58,7 @@ check:
 # build: build/$(BINARY)
 
 # build/$(BINARY): $(SOURCES)
-# 	GOOS=$(GOOS) GOARCH=$(GOARCH) CGO_ENABLED=0 go build -o build/$(BINARY) $(BUILD_FLAGS) -ldflags "$(LDFLAGS)" .
+# 	GO111MODULE=$(GO111MODULE) GOOS=$(GOOS) GOARCH=$(GOARCH) CGO_ENABLED=0 go build -o build/$(BINARY) $(BUILD_FLAGS) -ldflags "$(LDFLAGS)" .
 
 tag:
 	git tag $(TAG)
@@ -68,7 +69,25 @@ build:
 	@echo " Date/Time : `date`"
 	@echo "============================================"
 	@echo ">> Build GO Apps... "
-	@GOOS=$(GOOS) GOARCH=$(GOARCH) CGO_ENABLED=0 go build -o build/$(GO_APP) $(BUILD_FLAGS) ./main.go
+	@GO111MODULE=$(GO111MODULE) GOOS=$(GOOS) GOARCH=$(GOARCH) CGO_ENABLED=0 go build -o build/$(GO_APP) $(BUILD_FLAGS) -ldflags "$(LDFLAGS)" ./main.go
+	@echo '- DONE -'
+
+build-mac-darwin:
+	@echo "============================================"
+	@echo " Task      : Build Binary GO APP "
+	@echo " Date/Time : `date`"
+	@echo "============================================"
+	@echo ">> Build GO Apps... "
+	@GO111MODULE=$(GO111MODULE) GOOS="darwin" GOARCH=$(GOARCH) CGO_ENABLED=0 go build -o build/$(GO_APP) $(BUILD_FLAGS) -ldflags "$(LDFLAGS)" ./main.go
+	@echo '- DONE -'
+
+build-mac-arm:
+	@echo "============================================"
+	@echo " Task      : Build Binary GO APP "
+	@echo " Date/Time : `date`"
+	@echo "============================================"
+	@echo ">> Build GO Apps... "
+	@GO111MODULE=$(GO111MODULE) GOOS="arm" GOARCH=$(GOARCH) CGO_ENABLED=0 go build -o build/$(GO_APP) $(BUILD_FLAGS) -ldflags "$(LDFLAGS)" ./main.go
 	@echo '- DONE -'
 
 # ==================== #
@@ -92,14 +111,14 @@ dockerhub-build-alpine:
 	@echo " Task      : Create Container GO-APP Alpine Image "
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
-	@sh ./dockerhub-build.sh alpine Dockerfile ${ALPINE_VERSION}
+	@sh ./dockerhub-build.sh alpine Dockerfile ${ALPINE_VERSION} ${CI_PROJECT_PATH}/${CI_PROJECT_NAME}
 
 ecr-build-alpine:
 	@echo "========================================================"
 	@echo " Task      : Create Container GO-APP Alpine Image "
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
-	@sh ./ecr-build.sh $(ARGS) alpine Dockerfile ${ALPINE_VERSION}
+	@sh ./ecr-build.sh $(ARGS) alpine Dockerfile ${ALPINE_VERSION} ${IMAGE}
 
 # ========================= #
 #   TAGS CONTAINER GO-APP   #
