@@ -1,5 +1,5 @@
 ### Builder ###
-FROM golang:1.19.2-alpine3.15 as builder
+FROM golang:1.19.3-alpine3.15 as builder
 
 WORKDIR /go/src/app
 ENV GIN_MODE=release
@@ -12,14 +12,14 @@ RUN apk add --no-cache \
         make \
         bash
 
-COPY . /go/src/app
+COPY src /go/src/app
 
 RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
     cd /go/src/app && \
         go build -mod=readonly -ldflags="-s -w" -o goapp
 
 ### Binary ###
-FROM golang:1.18-alpine3.15
+FROM golang:1.19.3-alpine3.15
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
