@@ -39,8 +39,8 @@ services:
     ports:
       - "${PORT_PORTAINER:-5212}:9000"
     volumes:
-    # - /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
-    # - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
+    # - /etc/localtime:/etc/localtime:ro          ## Do not use it in mac
+      - /var/run/docker.sock:/var/run/docker.sock ## Do not use it in k8s
       - vol_portainer:/data
     environment:
       - PORTAINER_TEMPLATE=generic
@@ -61,9 +61,9 @@ services:
     restart: unless-stopped
     ports:
       - "${PORT_GO_BOOKSTORE:-8080}:8080"
-  # volumes:
-  #   - /etc/localtime:/etc/localtime:ro           ## Do not use it in mac
-  #   - /var/run/docker.sock:/var/run/docker.sock  ## Do not use it in k8s
+    volumes:
+    # - /etc/localtime:/etc/localtime:ro          ## Do not use it in mac
+      - /var/run/docker.sock:/var/run/docker.sock ## Do not use it in k8s
     environment:
       - TZ="Asia/Jakarta"
       - ALPINE_VERSION=${ALPINE_VERSION:-3.16}

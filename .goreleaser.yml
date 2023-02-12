@@ -7,7 +7,7 @@ before:
 
 builds:
   - id: "go-bookstore"
-    main: ./main.go
+    main: ./src/main.go
     env:
       # - GOOS=linux
       # - GOARCH=amd64
