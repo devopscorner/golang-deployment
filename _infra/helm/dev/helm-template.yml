@@ -6,11 +6,17 @@ repositories:
 templates:
   default: &default
     namespace: devops-tools
-    version: "1.2.0-rc"
+    version: "1.4.0-rc"
 
 releases:
-  - name: bookstore
+  - name: bookstore-rest
     chart: devopscorner-lab/api
     values:
-      - ./helm-values.yml
+      - ./api-rest-values.yml
+    <<: *default
+
+  - name: bookstore-grpc
+    chart: devopscorner-lab/api
+    values:
+      - ./api-grpc-values.yml
     <<: *default
