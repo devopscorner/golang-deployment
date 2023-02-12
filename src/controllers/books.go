@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/devopscorner/golang-deployment/models"
+	"github.com/devopscorner/golang-deployment/src/models"
 	"github.com/gin-gonic/gin"
 )
 
