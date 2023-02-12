@@ -38,101 +38,17 @@ Kubernetes Deployment for Simple Golang API
 - Build, Tag & Push container image to **DockerHub**, go to [this](docs/container-bookstore-dockerhub.md) link
 - Build, Tag & Push container image to **Amazon ECR (Elastic Container Registry)**, go to [this](docs/container-bookstore-ecr.md) link
 - Workflow CI/CD Pipeline, go to [this](docs/workflow-cicd-bookstore-pipeline.md) link
+- GitOps & GitOps DevSecOps Flow (Azure DevOps Pipeline), go to [this](docs/gitops-devsecops-flow-azure.md) link
+- Deployments:
+  - **AWS Tools** (AWS CodeCommit, AWS CodeBuild & AWS CodePipeline), go to [this](docs/deployment-aws-tools.md) link
+  - **Azure DevOps Pipeline**, go to [this](docs/deployment-azure-devops.md) link
+  - **Bitbucket Pipeline**, go to [this](docs/deployment-bitbucket.md) link
+  - **GitHub Action**, go to [this](docs/deployment-github.md) link
+  - **GitLab CI/CD**, go to [this](docs/deployment-gitlab.md) link
 
-## Development
+## Reproduce Testing
 
-### Prequests
-
-- Install jq libraries
-
-  ```
-  apt-get install -y jq
-  ```
-
-- Install golang dependencies
-
-  ```
-  go mod init
-  go mod tidy
-  ```
-
-### Runnning
-
-```
-go run main.go
-```
-
-## API Test
-
-- Get Books
-
-```
-GET    : /books
-         curl --request GET \
-            --url 'http://localhost:8080/books' \
-            --header 'Content-Type: application/json' | jq
-```
-
-- Add Book 1
-
-```
-POST   : /books
-         curl --request POST \
-            --url 'http://localhost:8080/books' \
-            --header 'Content-Type: application/json' \
-            --data '{
-                "title": "Mastering Go: Create Golang production applications using network libraries, concurrency, and advanced Go data structures",
-                "author": "Mihalis Tsoukalos"
-            }' | jq
-```
-
-- Add Book 2
-
-```
-POST   : /books
-         curl --request POST \
-            --url 'http://localhost:8080/books' \
-            --header 'Content-Type: application/json' \
-            --data '{
-                "title": "Introducing Go: Build Reliable, Scalable Programs",
-                "author": "Caleb Doxsey"
-            }' | jq
-```
-
-- Add Book 3
-
-```
-POST   : /books
-         curl --request POST \
-            --url 'http://localhost:8080/books' \
-            --header 'Content-Type: application/json' \
-            --data '{
-                "title": "Learning Functional Programming in Go: Change the way you approach your applications using functional programming in Go",
-                "author": "Lex Sheehan"
-            }' | jq
-```
-
-- Edit Book 3
-
-```
-PATCH   : /books/3
-         curl --request PATCH \
-            --url 'http://localhost:8080/books/3' \
-            --header 'Content-Type: application/json' \
-            --data '{
-                "title": "Test Golang",
-                "author": "ZeroC0D3Lab"
-            }' | jq
-```
-
-- Delete Book 3
-
-```
-DELETE   : /books/3
-         curl --request DELETE \
-            --url 'http://localhost:8080/books/3' \
-            --header 'Content-Type: application/json' | jq
-```
+- RESTful API Testing, go to [this](docs/test-restul-api.md) link
 
 ## Tested Environment
 
@@ -144,15 +60,15 @@ DELETE   : /books/3
   docker version
 
   Client:
-  Cloud integration: v1.0.22
-  Version:           20.10.12
-  API version:       1.41
-  Go version:        go1.16.12
-  Git commit:        e91ed57
-  Built:             Mon Dec 13 11:46:56 2021
-  OS/Arch:           darwin/amd64
-  Context:           default
-  Experimental:      true
+    Cloud integration: v1.0.22
+    Version:           20.10.17-rd
+    API version:       1.41
+    Go version:        go1.17.11
+    Git commit:        c2e4e01
+    Built:             Fri Jul 22 18:31:17 2022
+    OS/Arch:           darwin/amd64
+    Context:           default
+    Experimental:      true
   ```
 
 - Docker-Compose version
@@ -160,15 +76,15 @@ DELETE   : /books/3
   ```
   docker-compose -v
   ---
-  Docker Compose version v2.2.3
+  Docker Compose version v2.11.1
   ```
 
 - AWS Cli
 
   ```
-  aws -v
+  aws --version
   ---
-  Note: AWS CLI version 2, the latest major version of the AWS CLI, is now stable and recommended for general use. For more information, see the AWS CLI version 2 installation instructions at: <https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html>
+  aws-cli/2.8.7 Python/3.9.11 Darwin/21.6.0 exe/x86_64 prompt/off
   ```
 
 - Terraform Cli
@@ -176,7 +92,7 @@ DELETE   : /books/3
   ```
   terraform version
   ---
-  Terraform v1.1.6
+  Terraform v1.3.5
   on darwin_amd64
   - provider registry.terraform.io/hashicorp/aws v3.74.3
   - provider registry.terraform.io/hashicorp/local v2.1.0
