@@ -40,5 +40,5 @@ Kubernetes Deployment for Simple Golang API
 
 ## Reproduce Testing
 
-- RESTful API Testing, detail [here](test-restul-api.md) link
+- RESTful API Testing, detail [here](test-restful-api.md) link
 - gRPC API Testing, detail [here](test-grpc-api.md) link

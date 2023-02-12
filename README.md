@@ -58,7 +58,7 @@ Kubernetes Deployment for Simple Golang API
 
 ## Reproduce Testing
 
-- RESTful API Testing, go to [this](docs/test-restul-api.md) link
+- RESTful API Testing, go to [this](docs/test-restful-api.md) link
 
 ## Tested Environment
 
