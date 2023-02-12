@@ -7,7 +7,7 @@ Kubernetes Deployment for Simple Golang API
 ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-deployment?sort=semver)
 [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore.svg)](https://hub.docker.com/r/devopscorner/bookstore/)
 ![download all](https://img.shields.io/github/downloads/devopscorner/golang-deployment/total.svg)
-![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/3.0/total)
+![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/3.1/total)
 ![view](https://views.whatilearened.today/views/github/devopscorner/golang-deployment.svg)
 ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://github.com/devopscorner/golang-deployment/blob/master/clone.json?raw=True&logo=github)
 ![issues](https://img.shields.io/github/issues/devopscorner/golang-deployment)
@@ -26,11 +26,21 @@ Kubernetes Deployment for Simple Golang API
 | `devopscorner/bookstore:alpine` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine) |
 | `devopscorner/bookstore:alpine-latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine-latest.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine-latest) |
 | `devopscorner/bookstore:alpine-3.15` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine-3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine-3.15) |
-| `devopscorner/bookstore:go1.18-alpine3.15` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.18-alpine3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.18-alpine3.15) |
 | `devopscorner/bookstore:go1.19-alpine3.15` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.19-alpine3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.19-alpine3.15) |
+| `devopscorner/bookstore:go1.19.3-alpine3.15` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.19.3-alpine3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.19.3-alpine3.15) |
 | `devopscorner/bookstore:alpine-3.16` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine-3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine-3.16) |
-| `devopscorner/bookstore:go1.18-alpine3.16` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.18-alpine3.16.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.18-alpine3.16) |
 | `devopscorner/bookstore:go1.19-alpine3.16` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.19-alpine3.16.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.19-alpine3.16) |
+| `devopscorner/bookstore:go1.19.5-alpine3.16` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.19.5-alpine3.16.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.19.5-alpine3.16) |
+| `devopscorner/bookstore:go1.19-alpine3.17` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.19-alpine3.17.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.19-alpine3.17) |
+| `devopscorner/bookstore:go1.19.5-alpine3.17` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.19.5-alpine3.17.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.19.5-alpine3.17) |
+
+
+### Alpine (Depreciated)
+| Image name | Size |
+|------------|------|
+| `devopscorner/bookstore:go1.18-alpine3.15` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.18-alpine3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.18-alpine3.15) |
+| `devopscorner/bookstore:go1.18-alpine3.16` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.18-alpine3.16.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.18-alpine3.16) |
+
 
 ## Documentation
 
