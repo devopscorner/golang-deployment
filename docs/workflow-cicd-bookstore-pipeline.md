@@ -45,8 +45,8 @@ Kubernetes Deployment for Simple Golang API
   - `Makefile`
 
 - Register Container Image GO App to Amazon ECR (Container Registry)
-- Create script for Building Container Image GO App (`_infra/buildspec-build.yml`)
-- Create script for Deployment Container Image GO App to EKS (`_infra/buildspec-deploy.yml`)
+- Create script for Building Container Image GO App (`.aws/buildspec-build.yml`)
+- Create script for Deployment Container Image GO App to EKS (`.aws/buildspec-deploy.yml`)
 - Setup Variable Environment / Using Config Secret with **AWS Systems Manager (Parameter Store)**
 
 - Create Pipeline with AWS CodePipeline
@@ -73,8 +73,8 @@ Kubernetes Deployment for Simple Golang API
   - Build Container
     - Environment Image: `aws/codebuild/amazonlinux2-x86_64-standard:4.0`
     - Environment Type: `Linux`
-    - Buildspec: `_infra/buildspec-build.yml`
+    - Buildspec: `.aws/buildspec-build.yml`
   - Deploy Container
     - Environment Image: `devopscorner/cicd:codebuild-4.0` or `YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/cicd:codebuild-4.0`
     - Environment Type: `Linux`
-    - Buildspec: `_infra/buildspec-deploy.yml`
+    - Buildspec: `.aws/buildspec-deploy.yml`

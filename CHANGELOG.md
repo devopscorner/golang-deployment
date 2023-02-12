@@ -1,5 +1,23 @@
 ## Changelog GO App
 
+### version 3.1
+
+- Upgrade golang version 1.19.5
+- Update `Dockerfile.alpine-3.15` for using golang version 1.19.3 for alpine-3.15 (`golang:1.19.3-alpine3.15`)
+- Update `Dockerfile.alpine-3.16` for using golang version 1.19.5 for alpine-3.16 (`golang:1.19.5-alpine3.16`)
+- Added `Dockerfile.alpine-3.17` for using golang version 1.19.5 for alpine-3.17 (`golang:1.19.5-alpine3.17`)
+- Upgrade dependencies golang `go.mod` & `go.sum`
+- Refactoring pattern source code (moving) to path "src"
+- Refactoring CI/CD pipeline with spesific grouping folder
+  - AWS CodePipeline (`.aws`)
+  - Azure DevOps (`.azure-devops`)
+  - Bitbucket (`.bitbucket`)
+  - GitHub (`.github`)
+  - GitLab (`.gitlab`)
+- Refactoring build, tag, push & pull script for DockerHub
+- Refactoring build, tag, push & pull script for ECR
+- Refactoring `makefile` script automation for build, tag, push & pull
+
 ### version 3.0
 
 - Upgrade golang version 1.19

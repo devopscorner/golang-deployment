@@ -28,3 +28,17 @@ Kubernetes Deployment for Simple Golang API
   - Build Container `devopscorner/bookstore` for ECR, detail [here](container-bookstore-ecr.md)
 
 - Workflow CI/CD Pipeline, detail [here](workflow-cicd-bookstore-pipeline.md)
+
+- GitOps & GitOps DevSecOps Flow (Azure DevOps Pipeline), detail [here](gitops-devsecops-flow-azure.md) link
+
+- Deployments:
+  - **AWS Tools** (AWS CodeCommit, AWS CodeBuild & AWS CodePipeline), detail [here](deployment-aws-tools.md) link
+  - **Azure DevOps Pipeline**, detail [here](deployment-azure-devops.md) link
+  - **Bitbucket Pipeline**, detail [here](deployment-bitbucket.md) link
+  - **GitHub Action**, detail [here](deployment-github.md) link
+  - **GitLab CI/CD**, detail [here](deployment-gitlab.md) link
+
+## Reproduce Testing
+
+- RESTful API Testing, detail [here](test-restful-api.md) link
+- gRPC API Testing, detail [here](test-grpc-api.md) link
