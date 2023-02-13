@@ -29,7 +29,7 @@ VERSION       ?= $(shell git describe --tags --always --dirty)
 GOPKGS         = $(shell go list ./ | grep -v /vendor/)
 BUILD_FLAGS   ?=
 LDFLAGS       ?= -X github.com/devopscorner/golang-deployment/config.Version=$(VERSION) -w -s
-TAG           ?= "v0.2.0"
+TAG           ?= "v0.3.0"
 GOARCH        ?= amd64
 GOOS          ?= linux
 GO111MODULE   ?= on
@@ -70,16 +70,18 @@ build:
 	@echo " Date/Time : `date`"
 	@echo "============================================"
 	@echo ">> Build GO Apps... "
+	@echo ">> GO111MODULE=$(GO111MODULE) GOOS=$(GOOS) GOARCH=$(GOARCH) CGO_ENABLED=0 go build -o build/$(GO_APP) $(BUILD_FLAGS) -ldflags "$(LDFLAGS)" ./main.go"
 	@cd src && GO111MODULE=$(GO111MODULE) GOOS=$(GOOS) GOARCH=$(GOARCH) CGO_ENABLED=0 go build -o build/$(GO_APP) $(BUILD_FLAGS) -ldflags "$(LDFLAGS)" ./main.go
 	@echo '- DONE -'
 
-build-mac-darwin:
+build-mac-amd:
 	@echo "============================================"
 	@echo " Task      : Build Binary GO APP "
 	@echo " Date/Time : `date`"
 	@echo "============================================"
 	@echo ">> Build GO Apps... "
-	@cd src && GO111MODULE=$(GO111MODULE) GOOS="darwin" GOARCH=$(GOARCH) CGO_ENABLED=0 go build -o build/$(GO_APP) $(BUILD_FLAGS) -ldflags "$(LDFLAGS)" ./main.go
+	@echo ">> GO111MODULE=$(GO111MODULE) GOOS=darwin GOARCH=amd64 go build -o build/$(GO_APP) $(BUILD_FLAGS) -ldflags "$(LDFLAGS)" ./main.go"
+	@cd src && GO111MODULE=$(GO111MODULE) GOOS=darwin GOARCH=amd64 go build -o build/$(GO_APP) $(BUILD_FLAGS) -ldflags "$(LDFLAGS)" ./main.go
 	@echo '- DONE -'
 
 build-mac-arm:
@@ -88,7 +90,8 @@ build-mac-arm:
 	@echo " Date/Time : `date`"
 	@echo "============================================"
 	@echo ">> Build GO Apps... "
-	@cd src && GO111MODULE=$(GO111MODULE) GOOS="arm" GOARCH=$(GOARCH) CGO_ENABLED=0 go build -o build/$(GO_APP) $(BUILD_FLAGS) -ldflags "$(LDFLAGS)" ./main.go
+	@echo ">> GO111MODULE=$(GO111MODULE) GOOS=darwin GOARCH=arm64 go build -o build/$(GO_APP) $(BUILD_FLAGS) -ldflags "$(LDFLAGS)" ./main.go"
+	@cd src && GO111MODULE=$(GO111MODULE) GOOS=darwin GOARCH=arm64 go build -o build/$(GO_APP) $(BUILD_FLAGS) -ldflags "$(LDFLAGS)" ./main.go
 	@echo '- DONE -'
 
 # ==================== #
