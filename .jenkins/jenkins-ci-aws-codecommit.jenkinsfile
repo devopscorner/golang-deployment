@@ -1,0 +1,176 @@
+def PATH_KUBECONFIG = '/home/ubuntu/.kube/config'
+def ECR_REPO = '0987612345.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore'
+def VCS_REPO = 'ssh://git-codecommit.ap-southeast-1.amazonaws.com/v1/repos/bookstore'
+def SPINNAKER_HOOK = 'https://spinnaker.awscb.id/webhooks/webhook/bookstore'
+def skipRemainingStages = false
+def nextVersionFromGit(scope) {
+
+    def latestVersion = sh(returnStdout: true, script: '''
+        git fetch origin --tags
+        check=`
+        latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
+        commitHash=$(git show-ref --dereference $latestTag | cut -d ' ' -f 1)
+        git show-ref --tags --dereference | grep $commitHash | cut -d ' ' -f2 | cut -d '/' -f3 | tail -n1
+        `
+        if [ -z $check ];then
+            git describe --abbrev=0 --tags || echo 1.0.0
+        else
+            if [ -z $(echo "$check" | grep "-") ];
+            then
+                echo $check
+            else
+                gitversion=`git describe --tags $(git rev-list --tags --max-count=2) | awk 'FNR==2{print $0}'`
+                echo $gitversion
+            fi
+        fi
+    ''').trim()
+
+    def (major, minor, patch) = latestVersion.tokenize('.').collect { it.toInteger() }
+    def nextVersion
+    switch (scope) {
+        case 'minor':
+            nextVersion = "${major}.${minor + 1}.0"
+            break
+        case 'patch':
+            nextVersion = "${major}.${minor}.${patch + 1}"
+            break
+        default:
+            nextVersion = "${major}.${minor}.${patch}"
+            break
+    }
+    nextVersion
+}
+
+def currentVersionFromGit() {
+    def currentVersion = sh(returnStdout: true, script: '''
+        git fetch origin --tags
+        git show-ref --tags --dereference | grep $(git log -n 1 --pretty=format:'%h') | cut -d ' ' -f2 | cut -d '/' -f3 | tail -n1 || echo 1.0.0
+    ''').trim()
+    currentVersion
+}
+
+def pushImage(tagName, repo ) {
+    withDockerRegistry(credentialsId: 'ecr:ap-southeast-1:devops', toolName: 'docker', url: 'https://'+ repo) {
+        docker.image(repo).push(tagName)
+    }
+}
+
+def pushTag(tagName) {
+    sh 'git tag ' + tagName
+    sh 'git push origin ' + tagName
+}
+
+node {
+    try {
+        stage('Init'){
+            def dockerHome = tool 'docker'
+            env.PATH = "${dockerHome}/bin:${env.PATH}"
+        }
+        script{
+            stage('Clone'){
+                if (env.MERGE_STATUS ==~ 'active'){
+                    checkout([$class: 'GitSCM', branches: [[name: env.REF]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', depth:2, noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'devopscorner-git', url: VCS_REPO]]])
+                } else {
+                    checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', depth:10, noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'devopscorner-git', url: VCS_REPO]]])
+                }
+                commitID = sh(returnStdout: true, script: '''
+                    git log -n 1 --pretty=format:'%h'
+                ''').trim()
+            }
+        }
+        script{
+            stage('Do build, push, & clean docker'){
+                tagExist = sh(returnStdout: true, script: '''
+                    git fetch origin --tags
+                    if [ -z $(git describe --tags --exact-match $(git log -n 1 --pretty=format:'%h')) ]; then
+                        echo ''
+                    else
+                        echo 'Exists'
+                    fi
+                ''').trim()
+
+                if (tagExist ==~ 'Exists') {
+                    skipRemainingStages = true
+                    currentBuild.result = 'ABORTED'
+                    error('Stopping pipeline, tag already exists!')
+                }
+
+                if (env.BRANCH ==~ 'feature/.*' && env.MERGE_STATUS ==~ 'completed') {
+                    pushTag(nextVersionFromGit('minor'))
+                } else if (env.BRANCH ==~ 'hotfix/.*' && env.MERGE_STATUS ==~ 'completed') {
+                    pushTag(nextVersionFromGit('patch'))
+                }
+
+                sh 'docker build -f Dockerfile -t ' + ECR_REPO + ' .'
+
+                if (env.BRANCH ==~ 'feature/.*' && env.MERGE_STATUS ==~ 'completed') {
+                    pushImage('latest', ECR_REPO)
+                    pushImage('v'+currentVersionFromGit(), ECR_REPO)
+                } else if (env.BRANCH ==~ 'feature/.*' && env.MERGE_STATUS ==~ 'active') {
+                    pushImage(env.BRANCH.tokenize('/').pop(), ECR_REPO)
+                } else if (env.BRANCH ==~ 'hotfix/.*' && env.MERGE_STATUS ==~ 'completed') {
+                    pushImage('latest', ECR_REPO)
+                    pushImage('v'+currentVersionFromGit(), ECR_REPO)
+                } else if (env.BRANCH ==~ 'hotfix/.*' && env.MERGE_STATUS ==~ 'active') {
+                    pushImage(env.BRANCH.tokenize('/').pop(), ECR_REPO)
+                } else {
+                    echo "BRANCH NAME IS NOT VALID! " + env.BRANCH
+                }
+            }
+        }
+
+        stage('Push helm artifact') {
+            if (skipRemainingStages) return
+
+            dir("_infra"){
+                sh 'aws s3 cp . s3://devopscorner-spinnaker-helm/bookstore/ --recursive'
+            }
+        }
+
+        stage('Delete preview env') {
+            if (skipRemainingStages) return
+
+            if (env.MERGE_STATUS ==~ 'completed' && env.EVENT_TYPE ==~ 'git.pullrequest.merged') {
+
+                sh label: 'send signal to spinnaker', script: '''
+
+                    curl --location --request POST ''' + SPINNAKER_HOOK + ''' \
+                        --header 'Content-Type: application/json' \
+                        --data '{
+                                    "eventType": "git.pullrequest.merged",
+                                    "resource": {
+                                        "status": "completed"
+                                    },
+                                    "parameters": {
+                                        "serviceSuffix": ''' + env.BRANCH.tokenize('/').pop() + '''
+                                    }
+                                }'
+                '''
+
+            }
+        }
+
+    } catch (err) {
+        if (skipRemainingStages) return
+
+        echo 'Error: ' + err.toString()
+        cleanWs()
+    }
+
+    stage('Cleaning up workspace') {
+        if (skipRemainingStages) return
+
+        cleanWs()
+    }
+
+    stage('Cleaning docker images'){
+        if (skipRemainingStages) return
+
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
+            sh '''
+                docker rmi -f $(sudo docker images | grep ''' + ECR_REPO + ''' | awk '{print $3}')
+                docker rmi -f $(sudo docker images --filter="dangling=true" -q --no-trunc)
+            '''
+        }
+    }
+}

@@ -1,0 +1,63 @@
+def PATH_KUBECONFIG = '/home/ubuntu/.kube/config'
+def ECR_REPO = '0987612345.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore'
+def VCS_REPO = 'git@github.com:devopscorner/golang-deployment.git'
+
+node {
+    try {
+        stage('Init'){
+            def dockerHome = tool 'docker'
+            env.PATH = "${dockerHome}/bin:${env.PATH}"
+        }
+        stage('Clone'){
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', depth: 2, noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'devopscorner-git', url: GIT_REPO]]])
+            commitID = sh(returnStdout: true, script: '''
+                git log -n 1 --pretty=format:'%h'
+            ''').trim()
+        }
+        script{
+            stage('Do build, push, & clean docker'){
+
+                sh 'docker build -f Dockerfile -t ' + ECR_REPO + ' .'
+
+                withDockerRegistry(credentialsId: 'ecr:ap-southeast-1:devops', toolName: 'docker', url: 'https://' + ECR_REPO) {
+                    docker.image(ECR_REPO).push('latest')
+                }
+                withDockerRegistry(credentialsId: 'ecr:ap-southeast-1:devops', toolName: 'docker', url: 'https://'+ECR_REPO) {
+                    docker.image(ECR_REPO).push('dev-' + commitID)
+                }
+
+                sh 'sed -i "s/tag:.*$/tag: \"dev-' + commitID + '\"/" _infra/dev/helm-value.yaml'
+
+            }
+        }
+
+        stage('Helmfile Deploy'){
+            withEnv(["KUBECONFIG=$PATH_KUBECONFIG","PATH=$PATH"]) {
+                dir("_infra/dev"){
+                    sh '''
+                        kubectl config use-context arn:aws:eks:ap-southeast-1:0987612345:cluster/devopscorner-lab
+                        helmfile --version
+                        helmfile -f helmfile.yaml apply
+                    '''
+                }
+            }
+        }
+
+    } catch (err) {
+        echo 'Error: ' + err.toString()
+        cleanWs()
+    }
+
+    stage('Cleaning up workspace') {
+        cleanWs()
+    }
+
+    stage('Cleaning docker images'){
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
+            sh '''
+                docker rmi -f $(sudo docker images | grep ''' + ECR_REPO + ''' | awk '{print $3}')
+                docker rmi -f $(sudo docker images --filter="dangling=true" -q --no-trunc)
+            '''
+        }
+    }
+}

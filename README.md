@@ -51,11 +51,14 @@ Kubernetes Deployment for Simple Golang API
 - Workflow CI/CD Pipeline, go to [this](docs/workflow-cicd-bookstore-pipeline.md) link
 - GitOps & GitOps DevSecOps Flow (Azure DevOps Pipeline), go to [this](docs/gitops-devsecops-flow-azure.md) link
 - Deployments:
-  - **AWS Tools** (AWS CodeCommit, AWS CodeBuild & AWS CodePipeline), go to [this](docs/deployment-aws-tools.md) link
-  - **Azure DevOps Pipeline**, go to [this](docs/deployment-azure-devops.md) link
-  - **Bitbucket Pipeline**, go to [this](docs/deployment-bitbucket.md) link
-  - **GitHub Action**, go to [this](docs/deployment-github.md) link
-  - **GitLab CI/CD**, go to [this](docs/deployment-gitlab.md) link
+  - **AWS Developer Tools** (AWS CodeCommit, AWS CodeBuild & AWS CodePipeline), detail [here](docs/deployment-aws-developer-tools.md) link
+  - **Azure DevOps Pipeline**, detail [here](docs/deployment-azure-devops.md) link
+  - **Bitbucket Pipeline**, detail [here](docs/deployment-bitbucket.md) link
+  - **GitHub Action**, detail [here](docs/deployment-github.md) link
+  - **GitLab CI/CD**, detail [here](docs/deployment-gitlab.md) link
+  - **Jenkins CI & Spinnaker CD**, detail [here](docs/deployment-jenkins-spinnaker.md) link
+  - **Jenkins CI/CD**, detail [here](docs/deployment-jenkins.md) link
+
 
 ## Reproduce Testing
 

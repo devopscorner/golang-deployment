@@ -1,4 +1,4 @@
-# Golang Deployment - Deployment with AWS Tools
+# Golang Deployment - Deployment with AWS Developer Tools
 
 Kubernetes Deployment for Simple Golang API
 

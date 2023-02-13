@@ -32,11 +32,13 @@ Kubernetes Deployment for Simple Golang API
 - GitOps & GitOps DevSecOps Flow (Azure DevOps Pipeline), detail [here](gitops-devsecops-flow-azure.md) link
 
 - Deployments:
-  - **AWS Tools** (AWS CodeCommit, AWS CodeBuild & AWS CodePipeline), detail [here](deployment-aws-tools.md) link
+  - **AWS Developer Tools** (AWS CodeCommit, AWS CodeBuild & AWS CodePipeline), detail [here](deployment-aws-developer-tools.md) link
   - **Azure DevOps Pipeline**, detail [here](deployment-azure-devops.md) link
   - **Bitbucket Pipeline**, detail [here](deployment-bitbucket.md) link
   - **GitHub Action**, detail [here](deployment-github.md) link
   - **GitLab CI/CD**, detail [here](deployment-gitlab.md) link
+  - **Jenkins CI & Spinnaker CD**, detail [here](deployment-jenkins-spinnaker.md) link
+  - **Jenkins CI/CD**, detail [here](deployment-jenkins.md) link
 
 ## Reproduce Testing
 
