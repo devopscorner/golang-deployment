@@ -32,13 +32,22 @@ Kubernetes Deployment for Simple Golang API
 - GitOps & GitOps DevSecOps Flow (Azure DevOps Pipeline), detail [here](gitops-devsecops-flow-azure.md) link
 
 - Deployments:
+  - **ArgoCD**, detail [here](deployment-argocd.md) link
   - **AWS Developer Tools** (AWS CodeCommit, AWS CodeBuild & AWS CodePipeline), detail [here](deployment-aws-developer-tools.md) link
   - **Azure DevOps Pipeline**, detail [here](deployment-azure-devops.md) link
   - **Bitbucket Pipeline**, detail [here](deployment-bitbucket.md) link
+  - **CircleCI Pipeline**, detail [here](deployment-circleci.md) link
+  - **DroneCI Pipeline**, detail [here](deployment-droneci.md) link
   - **GitHub Action**, detail [here](deployment-github.md) link
   - **GitLab CI/CD**, detail [here](deployment-gitlab.md) link
   - **Jenkins CI & Spinnaker CD**, detail [here](deployment-jenkins-spinnaker.md) link
   - **Jenkins CI/CD**, detail [here](deployment-jenkins.md) link
+  - **OpenShift CI/CD**, detail [here](deployment-openshift.md) link
+  - **SemaphoreCI**, detail [here](deployment-semaphoreci.md) link
+  - **Spinnaker CD**, detail [here](deployment-spinnaker.md) link
+  - **Terraform AWS CodeBuild, AWS CodePipeline & Amazon SNS**, detail [here](deployment-terraform.md) link
+  - **TravisCI**, detail [here](deployment-travisci.md) link
+
 
 ## Reproduce Testing
 

@@ -1,0 +1,83 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: bookstore-build
+  labels:
+    app: bookstore
+spec:
+  source:
+    git:
+      uri: https://github.com/devopscorner/golang-deployment.git
+    contextDir: app
+  strategy:
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+    type: Docker
+  output:
+    to:
+      kind: ImageStreamTag
+      name: devopscorner/bookstore:${IS_TAG}
+  triggers:
+    - type: ConfigChange
+    - type: GitHub
+      github:
+        secret: my-secret
+    - type: Generic
+      generic:
+        secret: my-secret
+    - type: ImageChange
+      imageChange:
+        from:
+          kind: ImageStreamTag
+          name: devopscorner/bookstore:latest
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 500Mi
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment
+  labels:
+    app: bookstore
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+        - name: bookstore
+          image: devopscorner/bookstore:${IS_TAG}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: my-registry-credentials
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookstore-service
+  labels:
+    app: bookstore
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  selector:
+    app: bookstore
+  type: ClusterIP
