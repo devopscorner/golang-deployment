@@ -65,7 +65,7 @@ Kubernetes Deployment for Simple Golang API
   - **SemaphoreCI**, detail [here](docs/deployment-semaphoreci.md) link
   - **Spinnaker CD**, detail [here](docs/deployment-spinnaker.md) link
   - **Terraform AWS CodeBuild, AWS CodePipeline & Amazon SNS**, detail [here](docs/deployment-terraform.md) link
-  - **TravisCI**, detail [here](deployment-travisci.md) link
+  - **TravisCI**, detail [here](docs/deployment-travisci.md) link
 
 
 ## Reproduce Testing
