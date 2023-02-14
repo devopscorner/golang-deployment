@@ -1,7 +1,19 @@
 ## Changelog GO App
 
+### version 3.2
+
+- All features in version 3.1
+- Added sample script CI/CD Pipeline with semantic version (semver) docker build images
+  - AWS CodePipeline (`cicd-aws-codepipeline.yml`)
+  - Azure DevOps (`cicd-azure-devops.yml`)
+  - Bitbucket (`cicd-bitbucket.yml`)
+  - GitHub Action (`cicd-github.yml`)
+  - GitLab (`cicd-gitlab.yml`)
+  - Jenkins CI/CD (`cicd-jenkins.jenkinsfile`)
+
 ### version 3.1
 
+- All features in version 3.0
 - Upgrade golang version 1.19.5
 - Update `Dockerfile.alpine-3.15` for using golang version 1.19.3 for alpine-3.15 (`golang:1.19.3-alpine3.15`)
 - Update `Dockerfile.alpine-3.16` for using golang version 1.19.5 for alpine-3.16 (`golang:1.19.5-alpine3.16`)
@@ -21,6 +33,7 @@
 
 ### version 3.0
 
+- All features in version 2.3
 - Upgrade golang version 1.19
 - Update Dockerfile for using golang version 1.19 (`golang:1.19.2-alpine3.15` & `golang:1.19.2-alpine3.16`)
 - Added docker-compose configuration & running script docker-compose
