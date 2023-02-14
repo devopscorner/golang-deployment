@@ -26,8 +26,7 @@
   - Bitbucket (`.bitbucket`)
   - GitHub (`.github`)
   - GitLab (`.gitlab`)
-  - Jenkins CI & Spinnaker CD
-  - Jenkins CI/CD
+  - Jenkins (`.jenkins`) CI/CD with Spinnaker CD
 - Refactoring build, tag, push & pull script for DockerHub
 - Refactoring build, tag, push & pull script for ECR
 - Refactoring `makefile` script automation for build, tag, push & pull
