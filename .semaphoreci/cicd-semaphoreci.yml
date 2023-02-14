@@ -1,0 +1,38 @@
+version: v1.0
+
+agent:
+  machine:
+    type: e1-standard-2
+
+blocks:
+  - name: Build and Deploy
+    task:
+      jobs:
+        - name: Build and Push Docker Image
+          commands:
+            - checkout
+            - sem-version set
+            - if [[ "$SEMAPHORE_BRANCH_NAME" == "main" ]]; then
+                semver=1.0.0-${SEMAPHORE_GIT_SHA:0:8}
+              elif [[ "$SEMAPHORE_BRANCH_NAME" == "features/"* ]]; then
+                semver=1.0.0-${SEMAPHORE_BRANCH_NAME#features/}.${SEMAPHORE_GIT_SHA:0:8}
+              elif [[ "$SEMAPHORE_BRANCH_NAME" == "bugfix/"* ]]; then
+                semver=1.1.0-${SEMAPHORE_BRANCH_NAME#bugfix/}.${SEMAPHORE_GIT_SHA:0:8}
+              elif [[ "$SEMAPHORE_BRANCH_NAME" == "hotfix/"* ]]; then
+                semver=1.1.1-${SEMAPHORE_BRANCH_NAME#hotfix/}.${SEMAPHORE_GIT_SHA:0:8}
+              fi
+            - echo "Semantic version: $semver"
+            - echo "imageTag=$semver" >> $SEMAPHORE_WORKSPACE/variables.env
+            - sem-service aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+            - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$semver .
+            - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$semver
+            - docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$semver $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:latest
+            - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:latest
+        - name: Deploy to Kubernetes using Helmfile
+          commands:
+            - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+            - helmfile sync
+      environment:
+        AWS_REGION: ap-southeast-1
+        AWS_ACCOUNT_ID: 0987612345
+        IMAGE_NAME: devopscorner/bookstore
