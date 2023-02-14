@@ -51,13 +51,21 @@ Kubernetes Deployment for Simple Golang API
 - Workflow CI/CD Pipeline, go to [this](docs/workflow-cicd-bookstore-pipeline.md) link
 - GitOps & GitOps DevSecOps Flow (Azure DevOps Pipeline), go to [this](docs/gitops-devsecops-flow-azure.md) link
 - Deployments:
+  - **ArgoCD**, detail [here](docs/deployment-argocd.md) link
   - **AWS Developer Tools** (AWS CodeCommit, AWS CodeBuild & AWS CodePipeline), detail [here](docs/deployment-aws-developer-tools.md) link
   - **Azure DevOps Pipeline**, detail [here](docs/deployment-azure-devops.md) link
   - **Bitbucket Pipeline**, detail [here](docs/deployment-bitbucket.md) link
+  - **CircleCI Pipeline**, detail [here](docs/deployment-circleci.md) link
+  - **DroneCI Pipeline**, detail [here](docs/deployment-droneci.md) link
   - **GitHub Action**, detail [here](docs/deployment-github.md) link
   - **GitLab CI/CD**, detail [here](docs/deployment-gitlab.md) link
   - **Jenkins CI & Spinnaker CD**, detail [here](docs/deployment-jenkins-spinnaker.md) link
   - **Jenkins CI/CD**, detail [here](docs/deployment-jenkins.md) link
+  - **OpenShift CI/CD**, detail [here](docs/deployment-openshift.md) link
+  - **SemaphoreCI**, detail [here](docs/deployment-semaphoreci.md) link
+  - **Spinnaker CD**, detail [here](docs/deployment-spinnaker.md) link
+  - **Terraform AWS CodeBuild, AWS CodePipeline & Amazon SNS**, detail [here](docs/deployment-terraform.md) link
+  - **TravisCI**, detail [here](deployment-travisci.md) link
 
 
 ## Reproduce Testing
