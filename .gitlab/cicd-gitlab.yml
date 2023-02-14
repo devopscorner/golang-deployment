@@ -1,0 +1,48 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  imageName: 'devopcorner/bookstore'
+  ecrRegistry: '0987612345.dkr.ecr.ap-southeast-1.amazonaws.com'
+  helmReleaseName: 'bookstore'
+
+build:
+  stage: build
+  image: golang:1.17
+  script:
+    - go build -o app
+    - |
+      if [[ "$CI_COMMIT_REF_NAME" == "features/"* ]]; then
+        semver=1.0.0-${CI_COMMIT_REF_NAME#features/}.${CI_COMMIT_SHORT_SHA}
+      elif [[ "$CI_COMMIT_REF_NAME" == "bugfix/"* ]]; then
+        semver=1.1.0-${CI_COMMIT_REF_NAME#bugfix/}.${CI_COMMIT_SHORT_SHA}
+      elif [[ "$CI_COMMIT_REF_NAME" == "hotfix/"* ]]; then
+        semver=1.1.1-${CI_COMMIT_REF_NAME#hotfix/}.${CI_COMMIT_SHORT_SHA}
+      fi
+      echo "Semantic version: $semver"
+      echo "imageTag=$semver" >> $CI_ENVIRONMENT_URL/variables.env
+      docker build -t $ecrRegistry/$imageName:$semver .
+      docker push $ecrRegistry/$imageName:$semver
+      docker tag $ecrRegistry/$imageName:$semver $ecrRegistry/$imageName:latest
+      docker push $ecrRegistry/$imageName:latest
+  artifacts:
+    paths:
+      - app
+
+deploy:
+  stage: deploy
+  image: alpine/helm:3.7.0
+  script:
+    - apk add --update openssh-client
+    - ssh-keyscan $EKS_HOST >> ~/.ssh/known_hosts
+    - ssh -i $EKS_PRIVATE_KEY $EKS_USERNAME@$EKS_HOST "curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash"
+    - ssh -i $EKS_PRIVATE_KEY $EKS_USERNAME@$EKS_HOST "helmfile sync"
+  environment:
+    name: production
+    url: $CI_ENVIRONMENT_URL
+  dependencies:
+    - build
+  only:
+    - main
+  when: manual

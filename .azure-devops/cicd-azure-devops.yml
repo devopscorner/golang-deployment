@@ -1,0 +1,53 @@
+trigger:
+  branches:
+    include:
+    - features/*
+    - bugfix/*
+    - hotfix/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  imageName: 'devopcorner/bookstore'
+  ecrRegistry: '0987612345.dkr.ecr.ap-southeast-1.amazonaws.com'
+  helmReleaseName: 'bookstore'
+
+steps:
+- script: |
+    go build -o app
+  displayName: 'Build Go Application'
+
+- script: |
+    if [[ "$(Build.SourceBranch)" == "refs/heads/features/"* ]]; then
+      semver=1.0.0-$(Build.SourceBranchName).$(Build.SourceVersion)
+    elif [[ "$(Build.SourceBranch)" == "refs/heads/bugfix/"* ]]; then
+      semver=1.1.0-$(Build.SourceBranchName).$(Build.SourceVersion)
+    elif [[ "$(Build.SourceBranch)" == "refs/heads/hotfix/"* ]]; then
+      semver=1.1.1-$(Build.SourceBranchName).$(Build.SourceVersion)
+    fi
+    echo "Semantic version: $semver"
+    echo "##vso[task.setvariable variable=imageTag]$semver"
+  displayName: 'Set Semantic Version'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'ECR'
+    repository: $(imageName)
+    command: 'build'
+    Dockerfile: '$(System.DefaultWorkingDirectory)/Dockerfile'
+    tags: |
+      $(imageTag)
+      $(Build.SourceBranchName)-latest
+      latest
+  displayName: 'Build and Push Docker Image'
+
+- task: HelmInstaller@1
+  inputs:
+    helmVersionToInstall: 'v3.7.0'
+  displayName: 'Install Helm'
+
+- script: |
+    helmfile sync
+  workingDirectory: '$(System.DefaultWorkingDirectory)/helm'
+  displayName: 'Deploy to EKS using Helmfile'

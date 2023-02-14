@@ -1,0 +1,73 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+    - features/*
+    - bugfix/*
+    - hotfix/*
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      imageName: 'devopcorner/bookstore'
+      ecrRegistry: '0987612345.dkr.ecr.ap-southeast-1.amazonaws.com'
+      helmReleaseName: 'bookstore'
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+
+    - name: Build Go Application
+      run: go build -o app
+
+    - name: Set Semantic Version
+      run: |
+        if [[ "$GITHUB_REF" == "refs/heads/features/"* ]]; then
+          semver=1.0.0-${GITHUB_REF#refs/heads/features/}.${GITHUB_SHA::8}
+        elif [[ "$GITHUB_REF" == "refs/heads/bugfix/"* ]]; then
+          semver=1.1.0-${GITHUB_REF#refs/heads/bugfix/}.${GITHUB_SHA::8}
+        elif [[ "$GITHUB_REF" == "refs/heads/hotfix/"* ]]; then
+          semver=1.1.1-${GITHUB_REF#refs/heads/hotfix/}.${GITHUB_SHA::8}
+        fi
+        echo "::set-env name=imageTag::$semver"
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: |
+          ${{ env.imageName }}:${{ env.imageTag }}
+          ${{ env.imageName }}:${{ github.ref }}-latest
+          ${{ env.imageName }}:latest
+        registry: ${{ env.ecrRegistry }}
+        username: ${{ secrets.ECR_USERNAME }}
+        password: ${{ secrets.ECR_PASSWORD }}
+
+    - name: Install Helm
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EKS_HOST }}
+        username: ${{ secrets.EKS_USERNAME }}
+        key: ${{ secrets.EKS_PRIVATE_KEY }}
+        script: |
+          curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+    - name: Deploy to EKS using Helmfile
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EKS_HOST }}
+        username: ${{ secrets.EKS_USERNAME }}
+        key: ${{ secrets.EKS_PRIVATE_KEY }}
+        script: |
+          helmfile sync
