@@ -1,0 +1,32 @@
+pipelines:
+  - application: bookstore
+    name: bookstore-pipeline
+    triggers:
+      - type: git
+        branch: main
+        repo: https://github.com/devopscorner/golang-deployment.git
+        secretName: git-secret
+    stages:
+      - name: build
+        type: docker
+        inputArtifacts:
+          - name: source
+            account: github-account
+            id: '{{build.id}}'
+        docker:
+          dockerfile: Dockerfile
+        account: dockerhub-account
+        tags:
+          - ${TRAVIS_COMMIT:0:8}
+      - name: deploy
+        type: deployManifest
+        manifestArtifactAccount: kubernetes-account
+        manifestArtifactId: '{{build.id}}'
+        account: kubernetes-account
+        cloudProvider: kubernetes
+        source:
+          account: github-account
+          manifestName: bookstore.yml
+        trafficManagement:
+          options:
+            enableTraffic: true

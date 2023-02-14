@@ -1,0 +1,43 @@
+language: go
+
+services:
+  - docker
+
+env:
+  global:
+    - AWS_REGION=ap-southeast-1
+    - AWS_ACCOUNT_ID=0987612345
+    - IMAGE_NAME=devopscorner/bookstore
+
+before_script:
+  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+  - dep ensure
+
+script:
+  - if [[ "$TRAVIS_BRANCH" == "main" ]]; then
+      semver=1.0.0-${TRAVIS_COMMIT:0:8};
+    elif [[ "$TRAVIS_BRANCH" == "features/"* ]]; then
+      semver=1.0.0-${TRAVIS_BRANCH#features/}.${TRAVIS_COMMIT:0:8};
+    elif [[ "$TRAVIS_BRANCH" == "bugfix/"* ]]; then
+      semver=1.1.0-${TRAVIS_BRANCH#bugfix/}.${TRAVIS_COMMIT:0:8};
+    elif [[ "$TRAVIS_BRANCH" == "hotfix/"* ]]; then
+      semver=1.1.1-${TRAVIS_BRANCH#hotfix/}.${TRAVIS_COMMIT:0:8};
+    fi
+  - echo "Semantic version: $semver"
+  - echo "imageTag=$semver" >> $HOME/variables.env
+  - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$semver .
+  - docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$semver $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:latest
+  - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+  - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$semver
+  - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:latest
+
+after_success:
+  - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+  - helmfile sync
+
+branches:
+  only:
+    - main
+    - /^features\/.*$/
+    - /^bugfix\/.*$/
+    - /^hotfix\/.*$/

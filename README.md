@@ -7,7 +7,7 @@ Kubernetes Deployment for Simple Golang API
 ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-deployment?sort=semver)
 [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore.svg)](https://hub.docker.com/r/devopscorner/bookstore/)
 ![download all](https://img.shields.io/github/downloads/devopscorner/golang-deployment/total.svg)
-![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/3.2/total)
+![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/3.3/total)
 ![view](https://views.whatilearened.today/views/github/devopscorner/golang-deployment.svg)
 ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://github.com/devopscorner/golang-deployment/blob/master/clone.json?raw=True&logo=github)
 ![issues](https://img.shields.io/github/issues/devopscorner/golang-deployment)
@@ -51,13 +51,21 @@ Kubernetes Deployment for Simple Golang API
 - Workflow CI/CD Pipeline, go to [this](docs/workflow-cicd-bookstore-pipeline.md) link
 - GitOps & GitOps DevSecOps Flow (Azure DevOps Pipeline), go to [this](docs/gitops-devsecops-flow-azure.md) link
 - Deployments:
+  - **ArgoCD**, detail [here](docs/deployment-argocd.md) link
   - **AWS Developer Tools** (AWS CodeCommit, AWS CodeBuild & AWS CodePipeline), detail [here](docs/deployment-aws-developer-tools.md) link
   - **Azure DevOps Pipeline**, detail [here](docs/deployment-azure-devops.md) link
   - **Bitbucket Pipeline**, detail [here](docs/deployment-bitbucket.md) link
+  - **CircleCI Pipeline**, detail [here](docs/deployment-circleci.md) link
+  - **DroneCI Pipeline**, detail [here](docs/deployment-droneci.md) link
   - **GitHub Action**, detail [here](docs/deployment-github.md) link
   - **GitLab CI/CD**, detail [here](docs/deployment-gitlab.md) link
   - **Jenkins CI & Spinnaker CD**, detail [here](docs/deployment-jenkins-spinnaker.md) link
   - **Jenkins CI/CD**, detail [here](docs/deployment-jenkins.md) link
+  - **OpenShift CI/CD**, detail [here](docs/deployment-openshift.md) link
+  - **SemaphoreCI**, detail [here](docs/deployment-semaphoreci.md) link
+  - **Spinnaker CD**, detail [here](docs/deployment-spinnaker.md) link
+  - **Terraform AWS CodeBuild, AWS CodePipeline & Amazon SNS**, detail [here](docs/deployment-terraform.md) link
+  - **TravisCI**, detail [here](deployment-travisci.md) link
 
 
 ## Reproduce Testing
