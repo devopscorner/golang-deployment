@@ -20,3 +20,76 @@ Kubernetes Deployment for Simple Golang API
 ## Jenkins CI/CD
 
 - [Jenkins CI/CD](../.jenkins/jenkins-cicd.jenkinsfile)
+
+## Example CI/CD Script `cicd-jenkins.jenkinsfile`
+
+```
+pipeline {
+  agent any
+
+  environment {
+    AWS_REGION = 'ap-southeast-1'
+    AWS_ACCOUNT_ID = '0987612345'
+    IMAGE_NAME = 'devopscorner/bookstore'
+  }
+
+  stages {
+    stage('Build') {
+      steps {
+        sh 'go build -o app'
+        script {
+          if (env.BRANCH_NAME ==~ /features\/.*/) {
+            def semver = "1.0.0-${env.BRANCH_NAME.replace('features/', '')}.${env.GIT_COMMIT}"
+            echo "Semantic version: ${semver}"
+            sh "echo imageTag=${semver} >> variables.env"
+          } else if (env.BRANCH_NAME ==~ /bugfix\/.*/) {
+            def semver = "1.1.0-${env.BRANCH_NAME.replace('bugfix/', '')}.${env.GIT_COMMIT}"
+            echo "Semantic version: ${semver}"
+            sh "echo imageTag=${semver} >> variables.env"
+          } else if (env.BRANCH_NAME ==~ /hotfix\/.*/) {
+            def semver = "1.1.1-${env.BRANCH_NAME.replace('hotfix/', '')}.${env.GIT_COMMIT}"
+            echo "Semantic version: ${semver}"
+            sh "echo imageTag=${semver} >> variables.env"
+          } else if (env.BRANCH_NAME == 'main') {
+            def semver = "1.0.0-${env.GIT_COMMIT}"
+            echo "Semantic version: ${semver}"
+            sh "echo imageTag=${semver} >> variables.env"
+          }
+        }
+        withCredentials([usernamePassword(credentialsId: 'aws-ecr-login', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+          sh "aws ecr get-login-password --region ${env.AWS_REGION} | docker login --username AWS --password-stdin ${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
+          sh "docker build -t ${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/${env.IMAGE_NAME}:${imageTag} ."
+          sh "docker push ${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/${env.IMAGE_NAME}:${imageTag}"
+          sh "docker tag ${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/${env.IMAGE_NAME}:${imageTag} ${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/${env.IMAGE_NAME}:latest"
+          sh "docker push ${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/${env.IMAGE_NAME}:latest"
+        }
+        stash includes: 'app', name: 'app'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        unstash 'app'
+        withAWS(region: env.AWS_REGION, roleAccount: "${env.AWS_ACCOUNT_ID}") {
+          sh "curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash"
+          sh "helmfile sync"
+        }
+      }
+      environment {
+        DEPLOYMENT_ENVIRONMENT_URL = "http://your-deployment-environment-url"
+      }
+      post {
+        success {
+          script {
+            currentBuild.description = "Deployment completed successfully. Visit ${env.DEPLOYMENT_ENVIRONMENT_URL} for details."
+          }
+        }
+        failure {
+          script {
+            currentBuild.description = "Deployment failed. Visit ${env.DEPLOYMENT_ENVIRONMENT_URL} for details."
+          }
+        }
+      }
+    }
+  }
+}
+```

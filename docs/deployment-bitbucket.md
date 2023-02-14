@@ -16,3 +16,42 @@ Kubernetes Deployment for Simple Golang API
 [![license](https://img.shields.io/github/license/devopscorner/golang-deployment)](https://img.shields.io/github/license/devopscorner/golang-deployment)
 
 ---
+
+## Example CI/CD Script `cicd-bitbucket.yml`
+
+```
+pipelines:
+  default:
+    - step:
+        name: Build and Deploy
+        image: golang:1.17
+        script:
+          - go build -o app
+          - |
+            if [[ "$BITBUCKET_BRANCH" == "features/"* ]]; then
+              semver=1.0.0-${BITBUCKET_BRANCH#features/}.${BITBUCKET_COMMIT:0:8}
+            elif [[ "$BITBUCKET_BRANCH" == "bugfix/"* ]]; then
+              semver=1.1.0-${BITBUCKET_BRANCH#bugfix/}.${BITBUCKET_COMMIT:0:8}
+            elif [[ "$BITBUCKET_BRANCH" == "hotfix/"* ]]; then
+              semver=1.1.1-${BITBUCKET_BRANCH#hotfix/}.${BITBUCKET_COMMIT:0:8}
+            fi
+            echo "Semantic version: $semver"
+            echo "imageTag=$semver" >> $BITBUCKET_CLONE_DIR/variables.env
+            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+            docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$semver .
+            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$semver
+            docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$semver $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:latest
+            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:latest
+          artifacts:
+            - app
+        services:
+          - docker
+        caches:
+          - docker
+          - go
+        deployment: production
+        trigger: manual
+        environment:
+          name: production
+          url: $BITBUCKET_DEPLOYMENT_ENVIRONMENT_URL
+```

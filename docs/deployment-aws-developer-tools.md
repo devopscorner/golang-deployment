@@ -199,3 +199,56 @@ artifacts:
     - Makefile
   name: "artifact-$(date '+%Y%m%d-%H%M%S')"
 ```
+
+## Example CI/CD Script `cicd-aws-codepipeline.yml`
+
+```
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 19
+  build:
+    commands:
+      - go build -o app
+      - |
+        if [[ "$CODEBUILD_WEBHOOK_TRIGGER" == "branch/main" ]]; then
+          semver=1.0.0-${CODEBUILD_SOURCE_VERSION}
+        elif [[ "$CODEBUILD_WEBHOOK_TRIGGER" == "branch/features/"* ]]; then
+          semver=1.0.0-${CODEBUILD_WEBHOOK_TRIGGER#branch/features/}.${CODEBUILD_SOURCE_VERSION}
+        elif [[ "$CODEBUILD_WEBHOOK_TRIGGER" == "branch/bugfix/"* ]]; then
+          semver=1.1.0-${CODEBUILD_WEBHOOK_TRIGGER#branch/bugfix/}.${CODEBUILD_SOURCE_VERSION}
+        elif [[ "$CODEBUILD_WEBHOOK_TRIGGER" == "branch/hotfix/"* ]]; then
+          semver=1.1.1-${CODEBUILD_WEBHOOK_TRIGGER#branch/hotfix/}.${CODEBUILD_SOURCE_VERSION}
+        fi
+        echo "Semantic version: $semver"
+        echo "imageTag=$semver" >> $CODEBUILD_SRC_DIR/variables.env
+        $(aws ecr get-login --no-include-email --region $AWS_REGION)
+        docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$semver .
+        docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$semver
+        docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:$semver $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:latest
+        docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_NAME:latest
+  post_build:
+    commands:
+      - |
+        echo "Deploying to Kubernetes using Helm"
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+        helmfile sync
+
+artifacts:
+  files:
+    - _infra/*
+    - .aws/*
+    - docs/*
+    - src/*
+    - dockerhub-build.sh
+    - dockerhub-push.sh
+    - dockerhub-tag.sh
+    - ecr-build.sh
+    - ecr-push.sh
+    - ecr-tag.sh
+    - Makefile
+  name: "artifact-$(date '+%Y%m%d-%H%M%S')"
+  discard-paths: yes
+```
