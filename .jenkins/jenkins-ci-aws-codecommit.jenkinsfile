@@ -1,6 +1,6 @@
 def PATH_KUBECONFIG = '/home/ubuntu/.kube/config'
 def ECR_REPO = '0987612345.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore'
-def VCS_REPO = 'ssh://git-codecommit.ap-southeast-1.amazonaws.com/v1/repos/bookstore'
+def VCS_REPO = 'ssh://git-codecommit.ap-southeast-1.amazonaws.com/v1/repos/golang-deployment'
 def SPINNAKER_HOOK = 'https://spinnaker.awscb.id/webhooks/webhook/bookstore'
 def skipRemainingStages = false
 def nextVersionFromGit(scope) {

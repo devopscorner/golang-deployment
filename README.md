@@ -7,7 +7,7 @@ Kubernetes Deployment for Simple Golang API
 ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-deployment?sort=semver)
 [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore.svg)](https://hub.docker.com/r/devopscorner/bookstore/)
 ![download all](https://img.shields.io/github/downloads/devopscorner/golang-deployment/total.svg)
-![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/3.3/total)
+![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/3.4/total)
 ![view](https://views.whatilearened.today/views/github/devopscorner/golang-deployment.svg)
 ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://github.com/devopscorner/golang-deployment/blob/master/clone.json?raw=True&logo=github)
 ![issues](https://img.shields.io/github/issues/devopscorner/golang-deployment)
@@ -52,6 +52,7 @@ Kubernetes Deployment for Simple Golang API
 - GitOps & GitOps DevSecOps Flow (Azure DevOps Pipeline), go to [this](docs/gitops-devsecops-flow-azure.md) link
 - Deployments:
   - **ArgoCD**, detail [here](docs/deployment-argocd.md) link
+  - **AWS CloudFormation**, detail [here](docs/deployment-aws-cloudformation.md) link
   - **AWS Developer Tools** (AWS CodeCommit, AWS CodeBuild & AWS CodePipeline), detail [here](docs/deployment-aws-developer-tools.md) link
   - **Azure DevOps Pipeline**, detail [here](docs/deployment-azure-devops.md) link
   - **Bitbucket Pipeline**, detail [here](docs/deployment-bitbucket.md) link
