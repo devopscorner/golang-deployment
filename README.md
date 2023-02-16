@@ -52,6 +52,7 @@ Kubernetes Deployment for Simple Golang API
 - GitOps & GitOps DevSecOps Flow (Azure DevOps Pipeline), go to [this](docs/gitops-devsecops-flow-azure.md) link
 - Deployments:
   - **ArgoCD**, detail [here](docs/deployment-argocd.md) link
+  - **AWS CloudFormation**, detail [here](docs/deployment-aws-cloudformation.md) link
   - **AWS Developer Tools** (AWS CodeCommit, AWS CodeBuild & AWS CodePipeline), detail [here](docs/deployment-aws-developer-tools.md) link
   - **Azure DevOps Pipeline**, detail [here](docs/deployment-azure-devops.md) link
   - **Bitbucket Pipeline**, detail [here](docs/deployment-bitbucket.md) link
