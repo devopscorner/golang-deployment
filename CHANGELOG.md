@@ -32,7 +32,7 @@ Kubernetes Deployment for Simple Golang API
 
 ---
 
-### version 3.3
+### version 3.4
 
 - All features in version 3.2
 - Added Terraform script:
