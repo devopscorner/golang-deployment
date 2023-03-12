@@ -139,7 +139,8 @@ POST    : /v1/books
               --header 'Authorization: Bearer ${TOKEN}' \
               --data-raw '{
                   "title": "Mastering Go: Create Golang production applications using network libraries, concurrency, and advanced Go data structures",
-                  "author": "Mihalis Tsoukalos"
+                  "author": "Mihalis Tsoukalos",
+                  "year": "2023"
               }' | jq
 ```
 
@@ -153,7 +154,8 @@ POST    : /v1/books
               --header 'Authorization: Bearer ${TOKEN}' \
               --data-raw '{
                   "title": "Introducing Go: Build Reliable, Scalable Programs",
-                  "author": "Caleb Doxsey"
+                  "author": "Caleb Doxsey",
+                  "year": "2023"
               }' | jq
 ```
 
@@ -167,7 +169,8 @@ POST    : /v1/books
               --header 'Authorization: Bearer ${TOKEN}' \
               --data-raw '{
                   "title": "Learning Functional Programming in Go: Change the way you approach your applications using functional programming in Go",
-                  "author": "Lex Sheehan"
+                  "author": "Lex Sheehan",
+                  "year": "2023"
               }' | jq
 ```
 
@@ -180,8 +183,9 @@ PATCH   : /v1/books/3
               --header 'Content-Type: application/json' \
               --header 'Authorization: Bearer ${TOKEN}' \
               --data-raw '{
-                  "title": "Test Golang",
-                  "author": "ZeroC0D3Lab"
+                  "title": "DevOpsCorner",
+                  "author": "DevOpsCorner Indonesia",
+                  "year": "2023"
               }' | jq
 ```
 
