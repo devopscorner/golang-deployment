@@ -1,0 +1,8 @@
+bin/**
+build/**
+logs/**
+log/**
+src/.env
+src/*.db
+.env
+*.db

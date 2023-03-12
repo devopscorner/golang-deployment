@@ -34,6 +34,12 @@ ENV IMG_DESC="Docker GO App Alpine 3.16"
 ENV IMG_ARCH="amd64/x86_64"
 
 ENV ALPINE_VERSION="3.16"
+ENV GIN_MODE=release
+ENV PORT=${PORT:-8080}
+ENV DBNAME=${DBNAME:-go-bookstore.db}
+ENV AUTH_USERNAME=${AUTH_USERNAME:-devopscorner}
+ENV AUTH_PASSWORD=${AUTH_PASSWORD:-DevOpsCorner@2023}
+ENV JWT_SECRET=${JWT_SECRET:-s3cr3t}
 
 LABEL maintainer="$AUTHOR" \
         architecture="$IMG_ARCH" \
@@ -57,8 +63,12 @@ LABEL maintainer="$AUTHOR" \
         fr.hbis.docker.base.vendor="$VENDOR" \
         fr.hbis.docker.base.version="$BUILD_VERSION"
 
-ENV GIN_MODE=release
-COPY --from=builder /go/src/app/goapp /usr/local/bin/goapp
+WORKDIR /go
 
-ENTRYPOINT ["/usr/local/bin/goapp"]
-EXPOSE 8080
+COPY --from=builder /go/src/app/goapp /go/goapp
+COPY src /go/src
+COPY src/.env.example /go/.env
+COPY entrypoint.sh /go/entrypoint
+
+ENTRYPOINT ["/go/goapp"]
+EXPOSE 80 443 8080
