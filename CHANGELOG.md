@@ -2,7 +2,7 @@
 
 Kubernetes Deployment for Simple Golang API
 
-![goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-deployment) ![all contributors](https://img.shields.io/github/contributors/devopscorner/golang-deployment) ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-deployment?sort=semver) [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore.svg)](https://hub.docker.com/r/devopscorner/bookstore/) ![download all](https://img.shields.io/github/downloads/devopscorner/golang-deployment/total.svg) ![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/3.1/total) ![view](https://views.whatilearened.today/views/github/devopscorner/golang-deployment.svg) ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://github.com/devopscorner/golang-deployment/blob/master/clone.json?raw=True&logo=github) ![issues](https://img.shields.io/github/issues/devopscorner/golang-deployment) ![pull requests](https://img.shields.io/github/issues-pr/devopscorner/golang-deployment) ![forks](https://img.shields.io/github/forks/devopscorner/golang-deployment) ![stars](https://img.shields.io/github/stars/devopscorner/golang-deployment) [![license](https://img.shields.io/github/license/devopscorner/golang-deployment)](https://img.shields.io/github/license/devopscorner/golang-deployment)
+![goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-deployment/src) ![all contributors](https://img.shields.io/github/contributors/devopscorner/golang-deployment) ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-deployment?sort=semver) [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore.svg)](https://hub.docker.com/r/devopscorner/bookstore/) ![download all](https://img.shields.io/github/downloads/devopscorner/golang-deployment/total.svg) ![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/3.1/total) ![view](https://views.whatilearened.today/views/github/devopscorner/golang-deployment.svg) ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://github.com/devopscorner/golang-deployment/blob/master/clone.json?raw=True&logo=github) ![issues](https://img.shields.io/github/issues/devopscorner/golang-deployment) ![pull requests](https://img.shields.io/github/issues-pr/devopscorner/golang-deployment) ![forks](https://img.shields.io/github/forks/devopscorner/golang-deployment) ![stars](https://img.shields.io/github/stars/devopscorner/golang-deployment) [![license](https://img.shields.io/github/license/devopscorner/golang-deployment)](https://img.shields.io/github/license/devopscorner/golang-deployment)
 
 ## Available Tags
 
@@ -32,9 +32,58 @@ Kubernetes Deployment for Simple Golang API
 
 ---
 
+### version 3.5
+
+- All features in version 3.4
+- Refactoring all folders for MVC Repository Pattern
+  ```
+    .
+    ├── config
+    │   ├── config.go
+    │   └── config_test.go
+    ├── controller
+    │   ├── book_controller.go
+    │   ├── book_controller_test.go
+    │   ├── login_controller.go
+    │   └── login_controller_test.go
+    ├── go-bookstore.db
+    ├── go.mod
+    ├── go.sum
+    ├── main.go
+    ├── main_test.go
+    ├── middleware
+    │   ├── auth_middleware.go
+    │   └── auth_middleware_test.go
+    ├── migrate_book_v1.go
+    ├── migrate_book_v2.go
+    ├── model
+    │   ├── book.go
+    │   └── sqlite.go
+    ├── repository
+    │   └── book_repository.go
+    └── routes
+        └── book_routes.go
+
+    6 directories, 19 files
+  ```
+- Added JWT Token for security authentification as Middleware
+- Added Unit Test for Contoller, Repository & Main
+- Added Default Environment Variables:
+  ```
+  PORT=8080
+  DBNAME=go-bookstore.db
+  GIN_MODE=release
+  AUTH_USERNAME=devopscorner
+  AUTH_PASSWORD=DevOpsCorner@2023
+  JWT_SECRET=s3cr3t
+  ```
+- Update Postman Collection for Automation Testing
+
+---
+
 ### version 3.4
 
-- All features in version 3.2
+- All features in version 3.3
 - Added Terraform script:
   - GitHub, AWS CodeBuild, AWS CodePipeline & Amazon SNS
   - AWS CodeCommit, AWS CodeBuild, AWS CodePipeline & Amazon SNS

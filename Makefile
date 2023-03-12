@@ -28,7 +28,7 @@ SOURCES        = $(shell find . -name '*.go' | grep -v /vendor/)
 VERSION       ?= $(shell git describe --tags --always --dirty)
 GOPKGS         = $(shell go list ./ | grep -v /vendor/)
 BUILD_FLAGS   ?=
-LDFLAGS       ?= -X github.com/devopscorner/golang-deployment/config.Version=$(VERSION) -w -s
+LDFLAGS       ?= -X github.com/devopscorner/golang-deployment/src/config.Version=$(VERSION) -w -s
 TAG           ?= "v0.3.0"
 GOARCH        ?= amd64
 GOOS          ?= linux

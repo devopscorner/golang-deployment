@@ -47,6 +47,50 @@ go run main.go
 go run main_test.go
 ```
 
+## Folder Structure
+
+```
+.
+├── config
+│   ├── config.go
+│   └── config_test.go
+├── controller
+│   ├── book_controller.go
+│   ├── book_controller_test.go
+│   ├── login_controller.go
+│   └── login_controller_test.go
+├── go-bookstore.db
+├── go.mod
+├── go.sum
+├── main.go
+├── main_test.go
+├── middleware
+│   ├── auth_middleware.go
+│   └── auth_middleware_test.go
+├── migrate_book_v1.go
+├── migrate_book_v2.go
+├── model
+│   ├── book.go
+│   └── sqlite.go
+├── repository
+│   └── book_repository.go
+└── routes
+    └── book_routes.go
+
+6 directories, 19 files
+```
+
+## Default Environment Variables
+
+```
+PORT=8080
+DBNAME=go-bookstore.db
+GIN_MODE=release
+AUTH_USERNAME=devopscorner
+AUTH_PASSWORD=DevOpsCorner@2023
+JWT_SECRET=s3cr3t
+```
+
 ## API Test
 
 - Generate JWT Token
