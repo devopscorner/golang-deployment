@@ -62,4 +62,4 @@ COPY --from=builder /go/src/app/goapp /usr/local/bin/goapp
 COPY src/.env.example /usr/local/bin/.env
 
 ENTRYPOINT ["/usr/local/bin/goapp"]
-EXPOSE 8080
+EXPOSE 80 443 8080
