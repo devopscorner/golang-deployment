@@ -1,12 +1,15 @@
-package model
+package driver
 
 import (
 	"log"
 
 	"github.com/devopscorner/golang-deployment/src/config"
+	"github.com/devopscorner/golang-deployment/src/model"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
+
+var DB *gorm.DB
 
 func ConnectDatabase() {
 	_, err := config.LoadConfig()
@@ -20,5 +23,8 @@ func ConnectDatabase() {
 		panic("Failed to connect to database!")
 	}
 
-	database.AutoMigrate(&Book{})
+	// Migrate the schema
+	database.AutoMigrate(&model.Book{})
+
+	DB = database
 }

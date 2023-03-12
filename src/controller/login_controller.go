@@ -14,7 +14,7 @@ type LoginRequest struct {
 	Password string `json:"password" binding:"required"`
 }
 
-func CreateToken() (string, error) {
+func CreateToken(secret string, issuer string) (string, error) {
 	// Set the expiration time to 1 hour from now
 	expirationTime := time.Now().Add(time.Hour * 1).Unix()
 

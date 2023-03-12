@@ -52,6 +52,20 @@ func DbName() string {
 	return config.DbName
 }
 
+func AuthUsername() string {
+	config := &Config{
+		AuthUsername: viper.GetString("AUTH_USERNAME"),
+	}
+	return config.AuthUsername
+}
+
+func AuthPassword() string {
+	config := &Config{
+		AuthPassword: viper.GetString("AUTH_PASSWORD"),
+	}
+	return config.AuthPassword
+}
+
 func JWTIssuer() string {
 	config := &Config{
 		AuthUsername: viper.GetString("AUTH_USERNAME"),

@@ -7,5 +7,10 @@ import (
 
 func main() {
 	router := gin.Default()
+
+	// Activate: Production Mode
+	// gin.SetMode(gin.ReleaseMode)
+
+	// Set Router
 	routes.SetupRoutes(router)
 }

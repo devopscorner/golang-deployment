@@ -2,32 +2,22 @@ package routes
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/devopscorner/golang-deployment/src/config"
 	"github.com/devopscorner/golang-deployment/src/controller"
-	"github.com/devopscorner/golang-deployment/src/middleware"
-	"github.com/devopscorner/golang-deployment/src/model"
-	"github.com/devopscorner/golang-deployment/src/repository"
+	"github.com/devopscorner/golang-deployment/src/driver"
 	"github.com/gin-gonic/gin"
 	validator "github.com/go-playground/validator/v10"
-	"gorm.io/gorm"
+	"github.com/spf13/viper"
 )
 
-var db *gorm.DB
-
 func SetupRoutes(router *gin.Engine) {
-	cfg, err := config.LoadConfig()
-	if err != nil {
-		log.Fatalf("error loading config: %v", err)
-	}
+	// Load Config
+	config.LoadConfig()
 
 	// Connect to database
-	model.ConnectDatabase()
-
-	bookRepo := repository.NewBookRepository(cfg, db)
-	bookCtrl := controller.NewBookController(bookRepo)
+	driver.ConnectDatabase()
 
 	// Routes Healthcheck
 	router.GET("/health", func(c *gin.Context) {
@@ -37,7 +27,8 @@ func SetupRoutes(router *gin.Engine) {
 	router.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Welcome to Simple API Bookstore!")
 	})
-	// Routes Login
+
+	// Login route to create basic auth JWT token
 	router.POST("/login", func(c *gin.Context) {
 		var loginRequest controller.LoginRequest
 		if err := c.BindJSON(&loginRequest); err != nil {
@@ -51,12 +42,13 @@ func SetupRoutes(router *gin.Engine) {
 			return
 		}
 
-		if !controller.ValidateCredentials(loginRequest.Username, loginRequest.Password) {
+		if loginRequest.Username != viper.GetString("AUTH_USERNAME") ||
+			loginRequest.Password != viper.GetString("AUTH_PASSWORD") {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 			return
 		}
 
-		token, err := controller.CreateToken()
+		token, err := controller.CreateToken(viper.GetString("JWT_SECRET"), viper.GetString("AUTH_USERNAME"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
@@ -65,20 +57,18 @@ func SetupRoutes(router *gin.Engine) {
 		c.JSON(http.StatusOK, gin.H{"token": token})
 	})
 
-	auth := router.Group("/v1", middleware.AuthMiddleware())
+	api := router.Group("/v1")
 	{
-		auth.GET("/books", bookCtrl.GetAllBooks)
-		auth.GET("/books/:id", bookCtrl.GetBookByID)
-		auth.POST("/books", bookCtrl.CreateBook)
-		auth.PUT("/books/:id", bookCtrl.UpdateBook)
-		auth.DELETE("/books/:id", bookCtrl.DeleteBook)
+		// Book routes
+		api.GET("/books", controller.GetAllBooks)
+		api.GET("/books/:id", controller.GetBookByID)
+		api.POST("/books", controller.CreateBook)
+		api.PUT("/books/:id", controller.UpdateBook)
+		api.DELETE("/books/:id", controller.DeleteBook)
+
 	}
 
 	// Run the server
 	port := fmt.Sprintf(":%v", config.Port())
 	router.Run(port)
-
-	if err != nil {
-		log.Fatalf("error running server: %v", err)
-	}
 }
