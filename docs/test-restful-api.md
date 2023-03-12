@@ -119,12 +119,22 @@ TOKEN=$(curl --request POST \
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2Nzg2MTc5MzN9.p92DDMXVJPA8VTRDzDb-0NtzyfpdOtm5o6cJHMuZv44
 ```
 
-- Get Books
+- List Books
 
 ```
 GET     : /v1/books
           curl --request GET \
               --location '0.0.0.0:8080/v1/books' \
+              --header 'Content-Type: application/json' \
+              --header 'Authorization: Bearer ${TOKEN}'  | jq
+```
+
+- Find Book ID
+
+```
+GET     : /v1/books/${id}
+          curl --request GET \
+              --location '0.0.0.0:8080/v1/books/${id}' \
               --header 'Content-Type: application/json' \
               --header 'Authorization: Bearer ${TOKEN}'  | jq
 ```
