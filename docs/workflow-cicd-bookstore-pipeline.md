@@ -2,7 +2,7 @@
 
 Kubernetes Deployment for Simple Golang API
 
-![goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-deployment)
+![goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-deployment/src)
 ![all contributors](https://img.shields.io/github/contributors/devopscorner/golang-deployment)
 ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-deployment?sort=semver)
 [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore.svg)](https://hub.docker.com/r/devopscorner/bookstore/)
@@ -38,9 +38,9 @@ Kubernetes Deployment for Simple Golang API
 
 - Create `Dockerfile` for Container GO App CI/CD
 - Create Script CI/CD
-  - `ecr-build-alpine.sh`
-  - `ecr-push-alpine.sh`
-  - `ecr-tag-alpine.sh`
+  - `ecr-build.sh`
+  - `ecr-push.sh`
+  - `ecr-tag.sh`
   - `git-clone.sh`
   - `Makefile`
 

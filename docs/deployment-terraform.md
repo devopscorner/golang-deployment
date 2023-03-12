@@ -2,7 +2,7 @@
 
 Kubernetes Deployment for Simple Golang API
 
-![goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-deployment)
+![goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-deployment/src)
 ![all contributors](https://img.shields.io/github/contributors/devopscorner/golang-deployment)
 ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-deployment?sort=semver)
 [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore.svg)](https://hub.docker.com/r/devopscorner/bookstore/)
@@ -21,14 +21,14 @@ Kubernetes Deployment for Simple Golang API
 
 ### This script includes:
 
-  - ECR repository creation
-  - SNS topic creation and subscription
-  - CodeBuild project creation for production and staging environments
-  - CodePipeline creation with four stages: Source, Build, ManualApproval, and Deploy (two times)
-  - ECS task definition and service creation for staging environment
-  - CloudWatch Event rule and target for manual approval notification
-  - Outputs for the staging and production URLs, build number, and semantic versions for staging and production.
-  - Using custom image AWS CodeBuild `devopscorner/cicd:codebuild-4.0`
+- ECR repository creation
+- SNS topic creation and subscription
+- CodeBuild project creation for production and staging environments
+- CodePipeline creation with four stages: Source, Build, ManualApproval, and Deploy (two times)
+- ECS task definition and service creation for staging environment
+- CloudWatch Event rule and target for manual approval notification
+- Outputs for the staging and production URLs, build number, and semantic versions for staging and production.
+- Using custom image AWS CodeBuild `devopscorner/cicd:codebuild-4.0`
 
 ```
 ### Golang Terraform Pipeline (GitHub, AWS CodeBuild, AWS Pipeline, Amazon SNS) ###

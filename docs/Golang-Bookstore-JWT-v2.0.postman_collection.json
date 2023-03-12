@@ -1,0 +1,263 @@
+{
+	"info": {
+		"_postman_id": "fd2f9bc6-fbc7-46da-a3ae-2bfafb792bb3",
+		"name": "Golang-Bookstore-JWT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "260154"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ----------------------------------------- //",
+							"//  JSON Response Body                       //",
+							"// ----------------------------------------- //",
+							"/*",
+							"{",
+							"  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1Mzc0ODQ4MTMsImlkIjoiMTAwIiwibmFtZSI6Im5ha2FtYSJ9.9DtpcUWGKda2Mcclj7sfww_6EYzc1DQegJtqT4YE3Bo\"",
+							"}",
+							"*/",
+							"",
+							"// ----------------------------------------- //",
+							"//  JSON Schema References                   //                              ",
+							"// ----------------------------------------- //",
+							"//  References: https://spacetelescope.github.io/understanding-json-schema/structuring.html",
+							"",
+							"var schema_test = {",
+							"    \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+							"    ",
+							"    \"title\":\"Auth Token\",",
+							"    \"description\":\"Get authentification token (jwt)\",",
+							"    ",
+							"    \"type\": \"object\",",
+							"    \"properties\": { ",
+							"        \"data\":",
+							"        {",
+							"            \"type\": \"object\",",
+							"            \"properties\": {",
+							"                \"token\": { \"type\": \"string\" },",
+							"            },",
+							"        },",
+							"        \"additionalProperties\": false,",
+							"    }",
+							"};",
+							"",
+							"// ----------------------------------------- //",
+							"//  TESTCASE PostmanBDD                      //",
+							"// ----------------------------------------- //",
+							"//  Load external library from Environment   //",
+							"// ----------------------------------------- //",
+							"eval(postman.getGlobalVariable('module:postmanBDD'));",
+							"",
+							"var jsonData            = JSON.parse(responseBody); //tv4",
+							"var response_data_error = response.body.error;",
+							"var title_data          = \"token authentification (jwt)\";",
+							"",
+							"if (!response_data_error) {",
+							"  describe('Get '+title_data+' info => ', function() {",
+							"    var jsonData       = response.body; ",
+							"    var token          = jsonData.token;",
+							"      ",
+							"    it('should return '+title_data+' data', function() {",
+							"       response.should.have.status(200);",
+							"       response.should.be.json;",
+							"       response.body.should.not.be.empty;",
+							"    });",
+							"        ",
+							"    it('should have token (token: '+token+')' , function() {",
+							"       jsonData.should.be.an('object');",
+							"       jsonData.should.have.property('token').and.not.empty;",
+							"    });",
+							"    ",
+							"    it('should validated format data', function() {",
+							"       response.body.should.have.schema(schema_test)",
+							"    });",
+							"",
+							"    // ----------------------------------------- //",
+							"    //  Set Global Variable Token                //",
+							"    // ----------------------------------------- //",
+							"    postman.setGlobalVariable(\"auth_token\", token);",
+							"  });  ",
+							"",
+							"}",
+							"",
+							"//tv4",
+							"tests[\"Token succesfully generated token (jwt)\"] = !response_data_error;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"devopscorner\",\n    \"password\": \"DevOpsCorner@2023\"\n}"
+				},
+				"url": "0.0.0.0:8080/login",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "List Books",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": "0.0.0.0:8080/v1/books",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Books 1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Mastering Go: Create Golang production applications using network libraries, concurrency, and advanced Go data structures\",\n    \"author\": \"Mihalis Tsoukalos\",\n    \"year\": \"2023\"\n}"
+				},
+				"url": "0.0.0.0:8080/v1/books",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Books 2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Introducing Go: Build Reliable, Scalable Programs\",\n    \"author\": \"Caleb Doxsey\",\n    \"year\": \"2023\"\n}\n"
+				},
+				"url": "0.0.0.0:8080/v1/books",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Books 3",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Learning Functional Programming in Go: Change the way you approach your applications using functional programming in Go\",\n    \"author\": \"Lex Sheehan\",\n    \"year\": \"2023\"\n}"
+				},
+				"url": "0.0.0.0:8080/v1/books",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Books 3 ",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"DevOpsCorner\",\n    \"author\": \"DevOpsCorner Indonesia\",\n    \"year\": \"2023\"\n}"
+				},
+				"url": "0.0.0.0:8080/v1/books/3",
+				"description": "localhost:8080/books/3"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Books 3",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Test Book\",\n    \"author\": \"Zeroc0D3 Lab\"\n}"
+				},
+				"url": "0.0.0.0:8080/v1/books/3",
+				"description": "localhost:8080/books/3"
+			},
+			"response": []
+		}
+	]
+}

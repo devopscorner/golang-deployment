@@ -2,7 +2,7 @@
 
 Kubernetes Deployment for Simple Golang API
 
-![goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-deployment)
+![goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-deployment/src)
 ![all contributors](https://img.shields.io/github/contributors/devopscorner/golang-deployment)
 ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-deployment?sort=semver)
 [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore.svg)](https://hub.docker.com/r/devopscorner/bookstore/)
@@ -34,7 +34,7 @@ Kubernetes Deployment for Simple Golang API
 - Set Environment Variable
 
   ```
-  export ALPINE_VERSION=3.16   # 3.15 | 3.16
+  export ALPINE_VERSION=3.17   # 3.15 | 3.16 | 3.17
   export BASE_IMAGE="alpine"
   export IMAGE="devopscorner/bookstore"
   export TAG="latest"
@@ -43,25 +43,31 @@ Kubernetes Deployment for Simple Golang API
 - Execute Build Image
 
   ```
-  # Golang 1.18 - Alpine 3.15
+  # Golang 1.19.3 - Alpine 3.15
   docker build -f Dockerfile -t ${IMAGE}:alpine .
   docker build -f Dockerfile.alpine-3.15 -t ${IMAGE}:alpine-3.15 .
-  docker build -f Dockerfile.alpine-3.15 -t ${IMAGE}:golang1.18-alpine3.15 .
+  docker build -f Dockerfile.alpine-3.15 -t ${IMAGE}:golang1.19.3-alpine3.15 .
 
-  # Golang 1.18 - Alpine 3.16
+  # Golang 1.19.5 - Alpine 3.16
   docker build -f Dockerfile -t ${IMAGE}:alpine .
   docker build -f Dockerfile.alpine-3.16 -t ${IMAGE}:alpine-3.16 .
-  docker build -f Dockerfile.alpine-3.16 -t ${IMAGE}:golang1.18-alpine3.16 .
+  docker build -f Dockerfile.alpine-3.16 -t ${IMAGE}:golang1.19.5-alpine3.16 .
+
+  # Golang 1.19.5 - Alpine 3.17
+  docker build -f Dockerfile -t ${IMAGE}:alpine .
+  docker build -f Dockerfile.alpine-3.17 -t ${IMAGE}:alpine-3.17 .
+  docker build -f Dockerfile.alpine-3.17 -t ${IMAGE}:golang1.19.5-alpine3.17 .
 
   -- or --
 
   dockerhub-build.sh alpine Dockerfile ${ALPINE_VERSION}
   dockerhub-build.sh alpine Dockerfile.alpine-3.15 ${ALPINE_VERSION}
   dockerhub-build.sh alpine Dockerfile.alpine-3.16 ${ALPINE_VERSION}
+  dockerhub-build.sh alpine Dockerfile.alpine-3.17 ${ALPINE_VERSION}
 
   -- or --
 
-  # default: 3.16
+  # default: 3.17
   make dockerhub-build-alpine
   ```
 
