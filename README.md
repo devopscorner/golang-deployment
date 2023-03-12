@@ -69,6 +69,50 @@ Kubernetes Deployment for Simple Golang API
   - **TravisCI**, detail [here](docs/deployment-travisci.md) link
 
 
+## GO Repository Pattern
+
+- Folder Structure
+  ```
+      .
+      ├── config
+      │   ├── config.go
+      │   └── config_test.go
+      ├── controller
+      │   ├── book_controller.go
+      │   ├── book_controller_test.go
+      │   ├── login_controller.go
+      │   └── login_controller_test.go
+      ├── driver
+      │   └── sqlite.go
+      ├── go-bookstore.db
+      ├── go.mod
+      ├── go.sum
+      ├── main.go
+      ├── main_test.go
+      ├── middleware
+      │   ├── auth_middleware.go
+      │   └── auth_middleware_test.go
+      ├── migrate_book.go
+      ├── model
+      │   └── book.go
+      ├── repository
+      │   └── book_repository.go
+      └── routes
+          └── book_routes.go
+
+      7 directories, 18 files
+  ```
+
+- Environment Variables (Default)
+  ```
+  PORT=8080
+  DBNAME=go-bookstore.db
+  GIN_MODE=release
+  AUTH_USERNAME=devopscorner
+  AUTH_PASSWORD=DevOpsCorner@2023
+  JWT_SECRET=s3cr3t
+  ```
+
 ## Reproduce Testing
 
 - RESTful API Testing, go to [this](docs/test-restful-api.md) link
@@ -130,6 +174,21 @@ Kubernetes Deployment for Simple Golang API
   tfenv -v
   ---
   tfenv 2.2.2
+  ```
+
+- Golang Version Manager (GVM)
+
+  ```
+  gvm version
+  ---
+  Go Version Manager v1.0.22 installed at /Users/devopscorner/.gvm
+  ```
+
+- Golang Version
+  ```
+  go version
+  ---
+  go version go1.19.5 darwin/arm64
   ```
 
 ## Security Check
