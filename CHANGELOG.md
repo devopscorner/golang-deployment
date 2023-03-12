@@ -78,6 +78,8 @@ Kubernetes Deployment for Simple Golang API
   JWT_SECRET=s3cr3t
   ```
 - Update Postman Collection for Automation Testing
+- Setup .env to default entryoint
+- Added environment variable for docker-compose.yml
 
 ---
 
