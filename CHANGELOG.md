@@ -46,6 +46,8 @@ Kubernetes Deployment for Simple Golang API
     │   ├── book_controller_test.go
     │   ├── login_controller.go
     │   └── login_controller_test.go
+    ├── driver
+    │   └── sqlite.go
     ├── go-bookstore.db
     ├── go.mod
     ├── go.sum
@@ -54,17 +56,15 @@ Kubernetes Deployment for Simple Golang API
     ├── middleware
     │   ├── auth_middleware.go
     │   └── auth_middleware_test.go
-    ├── migrate_book_v1.go
-    ├── migrate_book_v2.go
+    ├── migrate_book.go
     ├── model
-    │   ├── book.go
-    │   └── sqlite.go
+    │   └── book.go
     ├── repository
     │   └── book_repository.go
     └── routes
         └── book_routes.go
 
-    6 directories, 19 files
+    7 directories, 18 files
   ```
 - Added JWT Token for security authentification as Middleware
 - Added Unit Test for Contoller, Repository & Main
