@@ -63,8 +63,12 @@ LABEL maintainer="$AUTHOR" \
         fr.hbis.docker.base.vendor="$VENDOR" \
         fr.hbis.docker.base.version="$BUILD_VERSION"
 
-COPY --from=builder /go/src/app/goapp /usr/local/bin/goapp
-COPY entrypoint.sh /
+WORKDIR /go
 
-ENTRYPOINT ["/entrypoint.sh"]
+COPY --from=builder /go/src/app/goapp /go/goapp
+COPY src /go/src
+COPY src/.env.example /go/.env
+COPY entrypoint.sh /go/entrypoint
+
+ENTRYPOINT ["/go/goapp"]
 EXPOSE 80 443 8080
