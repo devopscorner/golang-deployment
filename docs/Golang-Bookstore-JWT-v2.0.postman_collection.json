@@ -135,6 +135,27 @@
 			"response": []
 		},
 		{
+			"name": "Find Book ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": "0.0.0.0:8080/v1/books/8",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
 			"name": "Add Books 1",
 			"request": {
 				"method": "POST",
@@ -212,7 +233,7 @@
 		{
 			"name": "Edit Books 3 ",
 			"request": {
-				"method": "PATCH",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -227,9 +248,9 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"DevOpsCorner\",\n    \"author\": \"DevOpsCorner Indonesia\",\n    \"year\": \"2023\"\n}"
+					"raw": "{\n    \"title\": \"DevOpsCorner\",\n    \"author\": \"DevOpsCorner Indonesia\",\n    \"year\": \"2024\"\n}"
 				},
-				"url": "0.0.0.0:8080/v1/books/3",
+				"url": "0.0.0.0:8080/v1/books/24",
 				"description": "localhost:8080/books/3"
 			},
 			"response": []
@@ -237,7 +258,7 @@
 		{
 			"name": "Delete Books 3",
 			"request": {
-				"method": "PATCH",
+				"method": "DELETE",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -254,7 +275,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"title\": \"Test Book\",\n    \"author\": \"Zeroc0D3 Lab\"\n}"
 				},
-				"url": "0.0.0.0:8080/v1/books/3",
+				"url": "0.0.0.0:8080/v1/books/10",
 				"description": "localhost:8080/books/3"
 			},
 			"response": []
