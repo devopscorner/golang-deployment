@@ -18,10 +18,40 @@ Actions:
         - WorkflowSource
     Configuration:
       Steps:
-        - name: Hello_world_action
-          uses: actions/hello-world-javascript-action@v1.1
+        - name: Checkout Code
+          uses: actions/checkout@v2
           with:
-            who-to-greet: Mona the Octocat
+            fetch-depth: 1
+        - name: Set up Go
+          uses: actions/setup-go@v2
+          with:
+            go-version: 1.19
+        - name: Install Module
+          run: cd src && go mod tidy
+        - name: Build Go Application
+          run: go build -o app
+        - name: Set Semantic Version
+          run: |
+            if [[ "$GITHUB_REF" == "refs/heads/features/"* ]]; then
+              semver=1.0.0-${GITHUB_REF#refs/heads/features/}.${GITHUB_SHA::8}
+            elif [[ "$GITHUB_REF" == "refs/heads/bugfix/"* ]]; then
+              semver=1.1.0-${GITHUB_REF#refs/heads/bugfix/}.${GITHUB_SHA::8}
+            elif [[ "$GITHUB_REF" == "refs/heads/hotfix/"* ]]; then
+              semver=1.1.1-${GITHUB_REF#refs/heads/hotfix/}.${GITHUB_SHA::8}
+            fi
+            echo "::set-env name=imageTag::$semver"
+        - name: Build and Push Docker Image
+          uses: docker/build-push-action@v2
+          with:
+            context: .
+            push: true
+            tags: |
+              ${{ env.imageName }}:${{ env.imageTag }}
+              ${{ env.imageName }}:${{ github.ref }}-latest
+              ${{ env.imageName }}:latest
+            registry: ${{ env.ecrRegistry }}
+            username: ${{ secrets.ECR_USERNAME }}
+            password: ${{ secrets.ECR_PASSWORD }}
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
