@@ -20,6 +20,7 @@ Actions:
       Steps:
         - name: Set Semantic Version
           run: |
+            COMMIT_HASH=$(git log -1 --format=format:"%H")
             if [[ "$GITHUB_REF" == "refs/heads/features/"* ]]; then
               semver=1.0.0-${GITHUB_REF#refs/heads/features/}.${GITHUB_SHA::8}
             elif [[ "$GITHUB_REF" == "refs/heads/bugfix/"* ]]; then
@@ -28,7 +29,7 @@ Actions:
               semver=1.1.1-${GITHUB_REF#refs/heads/hotfix/}.${GITHUB_SHA::8}
             fi
         - name: Build Container GO Apps
-          run: ./dockerhub-build.sh devopscorner/bookstore latest alpine-$semver
+          run: ./dockerhub-build.sh Dockerfile devopscorner/bookstore latest alpine-$COMMIT_HASH
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
