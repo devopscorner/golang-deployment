@@ -5,7 +5,7 @@ SchemaVersion: "1.0"
 Triggers:
   - Type: PUSH
     Branches:
-      - main
+      - master
       - "release-.*"
   - Type: PULLREQUEST
     Branches:
