@@ -35,7 +35,10 @@ Actions:
         - name: Build Container GO Apps
           run: |
             COMMIT_HASH=$(git log -1 --format=format:"%H")            
-            ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine latest alpine-$COMMIT_HASH
+            ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $COMMIT_HASH
+        - name: List Container Images
+          run: |
+            docker images | grep "devopscorner/bookstore-codecatalyst"
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
