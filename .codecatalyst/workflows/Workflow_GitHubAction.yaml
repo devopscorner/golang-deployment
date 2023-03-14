@@ -18,18 +18,6 @@ Actions:
         - WorkflowSource
     Configuration:
       Steps:
-        - name: Checkout Code
-          uses: actions/checkout@v2
-          with:
-            fetch-depth: 1
-        - name: Set up Go
-          uses: actions/setup-go@v2
-          with:
-            go-version: 1.19
-        - name: Install Module
-          run: cd src && go mod tidy
-        - name: Build Go Application
-          run: go build -o app
         - name: Set Semantic Version
           run: |
             if [[ "$GITHUB_REF" == "refs/heads/features/"* ]]; then
@@ -40,18 +28,8 @@ Actions:
               semver=1.1.1-${GITHUB_REF#refs/heads/hotfix/}.${GITHUB_SHA::8}
             fi
             echo "::set-env name=imageTag::$semver"
-        - name: Build and Push Docker Image
-          uses: docker/build-push-action@v2
-          with:
-            context: .
-            push: true
-            tags: |
-              ${{ env.imageName }}:${{ env.imageTag }}
-              ${{ env.imageName }}:${{ github.ref }}-latest
-              ${{ env.imageName }}:latest
-            registry: ${{ env.ecrRegistry }}
-            username: ${{ secrets.ECR_USERNAME }}
-            password: ${{ secrets.ECR_PASSWORD }}
+        - name: Build Container GO Apps
+          run: ./dockerhub-build.sh devopscorner/bookstore alpine-$semver
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
