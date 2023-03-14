@@ -1,11 +1,13 @@
-Name: Workflow_9639
+Name: Workflow_GitHubActions_Deployment
 SchemaVersion: "1.0"
 
 # Optional - Set automatic triggers.
 Triggers:
-  - Type: Push
+  - Type: PULLREQUEST
     Branches:
-      - main
+      - master
+    Events:
+      - REVISION
 
 # Required - Define action configurations.
 Actions:
