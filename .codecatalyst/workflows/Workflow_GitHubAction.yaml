@@ -27,9 +27,8 @@ Actions:
             elif [[ "$GITHUB_REF" == "refs/heads/hotfix/"* ]]; then
               semver=1.1.1-${GITHUB_REF#refs/heads/hotfix/}.${GITHUB_SHA::8}
             fi
-            echo "::set-env name=imageTag::$semver"
         - name: Build Container GO Apps
-          run: ./dockerhub-build.sh devopscorner/bookstore alpine-$semver
+          run: ./dockerhub-build.sh devopscorner/bookstore latest alpine-$semver
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
