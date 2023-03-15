@@ -23,14 +23,14 @@ func TestAuthMiddleware(t *testing.T) {
 	})
 
 	c.Request, _ = http.NewRequest(http.MethodGet, "/v1/books", nil)
-	c.Request.Header.Set("Authorization", "Bearer "+generateToken())
+	c.Request.Header.Set("Authorization", "Bearer "+generateToken_Test())
 
 	r.ServeHTTP(w, c.Request)
 
 	assert.Equal(t, http.StatusOK, w.Code)
 }
 
-func generateToken() string {
+func generateToken_Test() string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user_id": "123",
 	})

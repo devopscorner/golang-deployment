@@ -1,11 +1,13 @@
 module github.com/devopscorner/golang-deployment/src
 
-go 1.19
+go 1.20
 
 require (
+	github.com/aws/aws-sdk-go v1.44.221
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-playground/validator/v10 v10.11.2
 	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/guregu/dynamo v1.18.2
 	github.com/spf13/viper v1.15.0
 	github.com/stretchr/testify v1.8.2
 	gorm.io/driver/sqlite v1.4.4
@@ -14,6 +16,7 @@ require (
 
 require (
 	github.com/bytedance/sonic v1.8.0 // indirect
+	github.com/cenkalti/backoff/v4 v4.1.2 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
@@ -24,6 +27,7 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
