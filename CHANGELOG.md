@@ -32,6 +32,82 @@ Kubernetes Deployment for Simple Golang API
 
 ---
 
+### version 4.0
+
+- All features in version 3.5
+- Refactoring folder MVC with multiple driver ORM
+  ```
+      .
+      ├── config
+      │   ├── config.go
+      │   └── config_test.go
+      ├── controller
+      │   ├── book_controller.go
+      │   ├── book_controller_test.go
+      │   ├── login_controller.go
+      │   └── login_controller_test.go
+      ├── driver
+      │   ├── db.go
+      │   ├── dynamo.go
+      │   ├── mysql.go
+      │   ├── psql.go
+      │   └── sqlite.go
+      ├── go-bookstore.db
+      ├── go.mod
+      ├── go.sum
+      ├── main.go
+      ├── main_test.go
+      ├── middleware
+      │   ├── auth_middleware.go
+      │   └── auth_middleware_test.go
+      ├── migrate_book.go.example
+      ├── migrate_book_dynamo.go.example
+      ├── model
+      │   └── book.go
+      ├── repository
+      │   └── book_repository.go
+      └── routes
+          └── book_routes.go
+
+      8 directories, 23 files
+  ```
+- Refactoring default environment variable
+  ```
+  GIN_MODE=release
+  APP_URL=http://localhost
+  APP_PORT=8080
+  DB_CONNECTION=sqlite
+  DB_REGION=ap-southeast-1
+  DB_HOST=localhost
+  DB_PORT=
+  DB_DATABASE=go-bookstore.db
+  DB_USERNAME=root
+  DB_PASSWORD=
+  JWT_AUTH_USERNAME=devopscorner
+  JWT_AUTH_PASSWORD=DevOpsCorner@2023
+  JWT_SECRET=s3cr3t
+  ```
+- Added multi driver database connection via ORM
+  ```
+  DB_CONNECTION=sqlite
+  ---
+  Available for:
+  - sqlite
+  - mysql
+  - postgres
+  - dynamo
+  ```
+
+- DynamoDB Connection
+  ```
+  DB_CONNECTION=dynamo
+  ---
+  DB_DATABASE --> Dynamo Table
+  DB_REGION   --> Dynamo Region
+  ```
+
+---
+
 ### version 3.5
 
 - All features in version 3.4

@@ -7,7 +7,7 @@ Kubernetes Deployment for Simple Golang API
 ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-deployment?sort=semver)
 [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore.svg)](https://hub.docker.com/r/devopscorner/bookstore/)
 ![download all](https://img.shields.io/github/downloads/devopscorner/golang-deployment/total.svg)
-![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/3.5/total)
+![download latest](https://img.shields.io/github/downloads/devopscorner/golang-deployment/4.0/total)
 ![view](https://views.whatilearened.today/views/github/devopscorner/golang-deployment.svg)
 ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://github.com/devopscorner/golang-deployment/blob/master/clone.json?raw=True&logo=github)
 ![issues](https://img.shields.io/github/issues/devopscorner/golang-deployment)
@@ -83,6 +83,10 @@ Kubernetes Deployment for Simple Golang API
       │   ├── login_controller.go
       │   └── login_controller_test.go
       ├── driver
+      │   ├── db.go
+      │   ├── dynamo.go
+      │   ├── mysql.go
+      │   ├── psql.go
       │   └── sqlite.go
       ├── go-bookstore.db
       ├── go.mod
@@ -92,7 +96,8 @@ Kubernetes Deployment for Simple Golang API
       ├── middleware
       │   ├── auth_middleware.go
       │   └── auth_middleware_test.go
-      ├── migrate_book.go
+      ├── migrate_book.go.example
+      ├── migrate_book_dynamo.go.example
       ├── model
       │   └── book.go
       ├── repository
@@ -100,17 +105,43 @@ Kubernetes Deployment for Simple Golang API
       └── routes
           └── book_routes.go
 
-      7 directories, 18 files
+      8 directories, 23 files
   ```
 
 - Environment Variables (Default)
   ```
-  PORT=8080
-  DBNAME=go-bookstore.db
   GIN_MODE=release
-  AUTH_USERNAME=devopscorner
-  AUTH_PASSWORD=DevOpsCorner@2023
+  APP_URL=http://localhost
+  APP_PORT=8080
+  DB_CONNECTION=sqlite
+  DB_REGION=ap-southeast-1
+  DB_HOST=localhost
+  DB_PORT=
+  DB_DATABASE=go-bookstore.db
+  DB_USERNAME=root
+  DB_PASSWORD=
+  JWT_AUTH_USERNAME=devopscorner
+  JWT_AUTH_PASSWORD=DevOpsCorner@2023
   JWT_SECRET=s3cr3t
+  ```
+
+- Multi Driver Connection
+  ```
+  DB_CONNECTION=sqlite
+  ---
+  Available for:
+  - sqlite
+  - mysql
+  - postgres
+  - dynamo
+  ```
+
+- DynamoDB Connection
+  ```
+  DB_CONNECTION=dynamo
+  ---
+  DB_DATABASE --> Dynamo Table
+  DB_REGION   --> Dynamo Region
   ```
 
 ## Reproduce Testing
@@ -188,7 +219,7 @@ Kubernetes Deployment for Simple Golang API
   ```
   go version
   ---
-  go version go1.19.5 darwin/arm64
+  go version go1.19.6 darwin/arm64
   ```
 
 ## Security Check
