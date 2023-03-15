@@ -9,9 +9,9 @@ import (
 	"gorm.io/gorm"
 )
 
-var DB_SQLite *gorm.DB
+var DB_PSQL *gorm.DB
 
-func ConnectSQLite() {
+func ConnectPSQL() {
 	_, err := config.LoadConfig()
 	if err != nil {
 		log.Fatalf("error loading config: %v", err)
@@ -25,5 +25,5 @@ func ConnectSQLite() {
 
 	// Migrate the schema
 	database.AutoMigrate(&model.Book{})
-	DB_SQLite = database
+	DB_PSQL = database
 }
