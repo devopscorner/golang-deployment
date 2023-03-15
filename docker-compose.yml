@@ -68,10 +68,17 @@ services:
       - TZ="Asia/Jakarta"
       - ALPINE_VERSION=${ALPINE_VERSION:-3.17}
       - GIN_MODE=release
-      - PORT=${PORT:-8080}
-      - DBNAME=${DBNAME:-go-bookstore.db}
-      - AUTH_USERNAME=${AUTH_USERNAME:-devopscorner}
-      - AUTH_PASSWORD=${AUTH_PASSWORD:-DevOpsCorner@2023}
+      - APP_URL=${APP_URL:-http://localhost}
+      - APP_PORT=${APP_PORT:-8080}
+      - DB_CONNECTION=${DB_CONNECTION:-sqlite}
+      - DB_REGION=${DB_REGION:-ap-southeast-1}
+      - DB_HOST=${DB_HOST:-localhost}
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_DATABASE:-go-bookstore.db}
+      - DB_USERNAME=${DB_USERNAME:-root}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - JWT_AUTH_USERNAME=${JWT_AUTH_USERNAME:-devopscorner}
+      - JWT_AUTH_PASSWORD=${JWT_AUTH_PASSWORD:-DevOpsCorner@2023}
       - JWT_SECRET=${JWT_SECRET:-s3cr3t}
     privileged: true
     tty: true

@@ -60,6 +60,10 @@ go run main_test.go
 │   ├── login_controller.go
 │   └── login_controller_test.go
 ├── driver
+│   ├── db.go
+│   ├── dynamo.go
+│   ├── mysql.go
+│   ├── psql.go
 │   └── sqlite.go
 ├── go-bookstore.db
 ├── go.mod
@@ -69,7 +73,8 @@ go run main_test.go
 ├── middleware
 │   ├── auth_middleware.go
 │   └── auth_middleware_test.go
-├── migrate_book.go
+├── migrate_book.go.example
+├── migrate_book_dynamo.go.example
 ├── model
 │   └── book.go
 ├── repository
@@ -77,18 +82,46 @@ go run main_test.go
 └── routes
     └── book_routes.go
 
-7 directories, 18 files
+8 directories, 23 files
 ```
 
-## Default Environment Variables
+## Environment Variables (Default)
 
 ```
-PORT=8080
-DBNAME=go-bookstore.db
 GIN_MODE=release
-AUTH_USERNAME=devopscorner
-AUTH_PASSWORD=DevOpsCorner@2023
+APP_URL=http://localhost
+APP_PORT=8080
+DB_CONNECTION=sqlite
+DB_REGION=ap-southeast-1
+DB_HOST=localhost
+DB_PORT=
+DB_DATABASE=go-bookstore.db
+DB_USERNAME=root
+DB_PASSWORD=
+JWT_AUTH_USERNAME=devopscorner
+JWT_AUTH_PASSWORD=DevOpsCorner@2023
 JWT_SECRET=s3cr3t
+```
+
+## Multi Driver Connection
+
+```
+DB_CONNECTION=sqlite
+---
+Available for:
+- sqlite
+- mysql
+- postgres
+- dynamo
+```
+
+## DynamoDB Connection
+
+```
+DB_CONNECTION=dynamo
+---
+DB_DATABASE --> Dynamo Table
+DB_REGION   --> Dynamo Region
 ```
 
 ## API Test

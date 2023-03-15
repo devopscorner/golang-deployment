@@ -5,11 +5,9 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"testing"
 
 	"github.com/devopscorner/golang-deployment/src/config"
-	"github.com/devopscorner/golang-deployment/src/controller"
 	"github.com/devopscorner/golang-deployment/src/model"
 	"github.com/devopscorner/golang-deployment/src/routes"
 	"github.com/gin-gonic/gin"
@@ -17,16 +15,14 @@ import (
 )
 
 var (
-	router *gin.Engine
+	routerBook *gin.Engine
 )
 
 func TestBookController_Main() {
 	gin.SetMode(gin.TestMode)
-	config.Init()
-	router = gin.Default()
-	routes.SetupRoutes(router)
-	code := m.Run()
-	os.Exit(code)
+	config.LoadConfig()
+	routerBook = gin.Default()
+	routes.SetupRoutes(routerBook)
 }
 
 func TestBookController_GetAllBooks(t *testing.T) {
@@ -35,12 +31,12 @@ func TestBookController_GetAllBooks(t *testing.T) {
 
 	// Make the request to the test server
 	w := httptest.NewRecorder()
-	router.ServeHTTP(w, req)
+	routerBook.ServeHTTP(w, req)
 
 	// Check the response code and body
 	assert.Equal(t, http.StatusOK, w.Code)
 
-	var books []models.Book
+	var books []model.Book
 	err := json.Unmarshal(w.Body.Bytes(), &books)
 	assert.NoError(t, err)
 
@@ -49,16 +45,16 @@ func TestBookController_GetAllBooks(t *testing.T) {
 
 func TestBookController_GetBookByID(t *testing.T) {
 	// Set up the test request
-	req, _ := http.NewRequest(http.MethodGet, "/api/books/1", nil)
+	req, _ := http.NewRequest(http.MethodGet, "/v1/books/1", nil)
 
 	// Make the request to the test server
 	w := httptest.NewRecorder()
-	router.ServeHTTP(w, req)
+	routerBook.ServeHTTP(w, req)
 
 	// Check the response code and body
 	assert.Equal(t, http.StatusOK, w.Code)
 
-	var book models.Book
+	var book model.Book
 	err := json.Unmarshal(w.Body.Bytes(), &book)
 	assert.NoError(t, err)
 
@@ -70,19 +66,19 @@ func TestBookController_GetBookByID(t *testing.T) {
 
 func TestBookController_CreateBook(t *testing.T) {
 	// Set up the test request
-	book := models.Book{Title: "Test Book", Author: "Test Author", Year: 2021}
+	book := model.Book{Title: "Test Book", Author: "Test Author", Year: 2021}
 	jsonBook, _ := json.Marshal(book)
 	req, _ := http.NewRequest(http.MethodPost, "/v1/books", bytes.NewBuffer(jsonBook))
 	req.Header.Set("Content-Type", "application/json")
 
 	// Make the request to the test server
 	w := httptest.NewRecorder()
-	router.ServeHTTP(w, req)
+	routerBook.ServeHTTP(w, req)
 
 	// Check the response code and body
 	assert.Equal(t, http.StatusCreated, w.Code)
 
-	var createdBook models.Book
+	var createdBook model.Book
 	err := json.Unmarshal(w.Body.Bytes(), &createdBook)
 	assert.NoError(t, err)
 
@@ -93,19 +89,19 @@ func TestBookController_CreateBook(t *testing.T) {
 
 func TestBookController_UpdateBook(t *testing.T) {
 	// Set up the test request
-	book := models.Book{Title: "New Test Book", Author: "New Test Author", Year: 2022}
+	book := model.Book{Title: "New Test Book", Author: "New Test Author", Year: 2022}
 	jsonBook, _ := json.Marshal(book)
-	req, _ := http.NewRequest(http.MethodPut, "/api/books/1", bytes.NewBuffer(jsonBook))
+	req, _ := http.NewRequest(http.MethodPut, "/v1/books/1", bytes.NewBuffer(jsonBook))
 	req.Header.Set("Content-Type", "application/json")
 
 	// Make the request to the test server
 	w := httptest.NewRecorder()
-	router.ServeHTTP(w, req)
+	routerBook.ServeHTTP(w, req)
 
 	// Check the response code and body
 	assert.Equal(t, http.StatusOK, w.Code)
 
-	var updatedBook models.Book
+	var updatedBook model.Book
 	err := json.Unmarshal(w.Body.Bytes(), &updatedBook)
 	assert.NoError(t, err)
 
@@ -121,12 +117,12 @@ func TestBookController_DeleteBook(t *testing.T) {
 
 	// Make the request to the test server
 	w := httptest.NewRecorder()
-	router.ServeHTTP(w, req)
+	routerBook.ServeHTTP(w, req)
 
 	// Check the response code and body
 	assert.Equal(t, http.StatusOK, w.Code)
 
-	var deletedBook models.Book
+	var deletedBook model.Book
 	err := json.Unmarshal(w.Body.Bytes(), &deletedBook)
 	assert.NoError(t, err)
 

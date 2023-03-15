@@ -42,13 +42,13 @@ func SetupRoutes(router *gin.Engine) {
 			return
 		}
 
-		if loginRequest.Username != viper.GetString("AUTH_USERNAME") ||
-			loginRequest.Password != viper.GetString("AUTH_PASSWORD") {
+		if loginRequest.Username != viper.GetString("JWT_AUTH_USERNAME") ||
+			loginRequest.Password != viper.GetString("JWT_AUTH_PASSWORD") {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 			return
 		}
 
-		token, err := controller.CreateToken(viper.GetString("JWT_SECRET"), viper.GetString("AUTH_USERNAME"))
+		token, err := controller.CreateToken(viper.GetString("JWT_SECRET"), viper.GetString("JWT_AUTH_USERNAME"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
@@ -69,6 +69,6 @@ func SetupRoutes(router *gin.Engine) {
 	}
 
 	// Run the server
-	port := fmt.Sprintf(":%v", config.Port())
+	port := fmt.Sprintf(":%v", config.AppPort())
 	router.Run(port)
 }

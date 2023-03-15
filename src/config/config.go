@@ -5,11 +5,19 @@ import (
 )
 
 type Config struct {
-	PortNumber   string
-	DbName       string
-	AuthUsername string
-	AuthPassword string
-	JwtSecret    string
+	AppUrl          string
+	AppPort         string
+	DbConnection    string
+	DbRegion        string
+	DbHost          string
+	DbPort          string
+	DbDatabase      string
+	DbUsername      string
+	DbPassword      string
+	JwtAuthUsername string
+	JwtAuthPassword string
+	JwtIssuer       string
+	JwtSecret       string
 }
 
 func LoadConfig() (*Config, error) {
@@ -21,56 +29,119 @@ func LoadConfig() (*Config, error) {
 		return nil, err
 	}
 
-	viper.SetDefault("PORT", "8080")
-	viper.SetDefault("DB_NAME", "go-bookstore.db")
-	viper.SetDefault("AUTH_USERNAME", "devopscorner")
-	viper.SetDefault("AUTH_PASSWORD", "DevOpsCorner@2023")
+	viper.SetDefault("APP_URL", "http://localhost")
+	viper.SetDefault("APP_PORT", "8080")
+	viper.SetDefault("DB_CONNECTION", "sqlite")
+	viper.SetDefault("DB_REGION", "ap-southeast-1")
+	viper.SetDefault("DB_HOST", "localhost")
+	viper.SetDefault("DB_PORT", "")
+	viper.SetDefault("DB_DATABASE", "go-bookstore")
+	viper.SetDefault("DB_USERNAME", "root")
+	viper.SetDefault("DB_PASSWORD", "")
+	viper.SetDefault("JWT_AUTH_USERNAME", "devopscorner")
+	viper.SetDefault("JWT_AUTH_PASSWORD", "DevOpsCorner@2023")
 	viper.SetDefault("JWT_SECRET", "s3cr3t")
 
 	config := &Config{
-		PortNumber:   viper.GetString("PORT"),
-		DbName:       viper.GetString("DB_NAME"),
-		AuthUsername: viper.GetString("AUTH_USERNAME"),
-		AuthPassword: viper.GetString("AUTH_PASSWORD"),
-		JwtSecret:    viper.GetString("JWT_SECRET"),
+		AppUrl:          viper.GetString("APP_URL"),
+		AppPort:         viper.GetString("APP_PORT"),
+		DbConnection:    viper.GetString("DB_CONNECTION"),
+		DbRegion:        viper.GetString("DB_REGION"),
+		DbHost:          viper.GetString("DB_HOST"),
+		DbPort:          viper.GetString("DB_PORT"),
+		DbDatabase:      viper.GetString("DB_DATABASE"),
+		DbUsername:      viper.GetString("DB_USERNAME"),
+		DbPassword:      viper.GetString("DB_PASSWORD"),
+		JwtAuthUsername: viper.GetString("JWT_AUTH_USERNAME"),
+		JwtAuthPassword: viper.GetString("JWT_AUTH_PASSWORD"),
+		JwtSecret:       viper.GetString("JWT_SECRET"),
 	}
 
 	return config, nil
 }
 
-func Port() string {
+func AppUrl() string {
 	config := &Config{
-		PortNumber: viper.GetString("PORT"),
+		AppUrl: viper.GetString("APP_URL"),
 	}
-	return config.PortNumber
+	return config.AppUrl
 }
 
-func DbName() string {
+func AppPort() string {
 	config := &Config{
-		DbName: viper.GetString("DB_NAME"),
+		AppPort: viper.GetString("APP_PORT"),
 	}
-	return config.DbName
+	return config.AppPort
 }
 
-func AuthUsername() string {
+func DbConnection() string {
 	config := &Config{
-		AuthUsername: viper.GetString("AUTH_USERNAME"),
+		DbConnection: viper.GetString("DB_CONNECTION"),
 	}
-	return config.AuthUsername
+	return config.DbConnection
 }
 
-func AuthPassword() string {
+func DbRegion() string {
 	config := &Config{
-		AuthPassword: viper.GetString("AUTH_PASSWORD"),
+		DbRegion: viper.GetString("DB_REGION"),
 	}
-	return config.AuthPassword
+	return config.DbRegion
+}
+
+func DbHost() string {
+	config := &Config{
+		DbHost: viper.GetString("DB_HOST"),
+	}
+	return config.DbHost
+}
+
+func DbPort() string {
+	config := &Config{
+		DbPort: viper.GetString("DB_PORT"),
+	}
+	return config.DbPort
+}
+
+func DbDatabase() string {
+	config := &Config{
+		DbDatabase: viper.GetString("DB_DATABASE"),
+	}
+	return config.DbDatabase
+}
+
+func DbUsername() string {
+	config := &Config{
+		DbUsername: viper.GetString("DB_USERNAME"),
+	}
+	return config.DbUsername
+}
+
+func DbPassword() string {
+	config := &Config{
+		DbPassword: viper.GetString("DB_PASSWORD"),
+	}
+	return config.DbPassword
+}
+
+func JWTAuthUsername() string {
+	config := &Config{
+		JwtAuthUsername: viper.GetString("JWT_AUTH_USERNAME"),
+	}
+	return config.JwtAuthUsername
+}
+
+func JWTAuthPassword() string {
+	config := &Config{
+		JwtAuthPassword: viper.GetString("JWT_AUTH_PASSWORD"),
+	}
+	return config.JwtAuthPassword
 }
 
 func JWTIssuer() string {
 	config := &Config{
-		AuthUsername: viper.GetString("AUTH_USERNAME"),
+		JwtIssuer: viper.GetString("JWT_AUTH_USERNAME"),
 	}
-	return config.JwtSecret
+	return config.JwtIssuer
 }
 
 func JWTSecret() string {

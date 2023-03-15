@@ -9,22 +9,21 @@ import (
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
+var DB_SQLite *gorm.DB
 
-func ConnectDatabase() {
+func ConnectSQLite() {
 	_, err := config.LoadConfig()
 	if err != nil {
 		log.Fatalf("error loading config: %v", err)
 	}
 
-	database, err := gorm.Open(sqlite.Open(config.DbName()), &gorm.Config{})
+	database, err := gorm.Open(sqlite.Open(config.DbDatabase()), &gorm.Config{})
 
 	if err != nil {
-		panic("Failed to connect to database!")
+		panic("Failed to connect to SQLite!")
 	}
 
 	// Migrate the schema
 	database.AutoMigrate(&model.Book{})
-
-	DB = database
+	DB_SQLite = database
 }
