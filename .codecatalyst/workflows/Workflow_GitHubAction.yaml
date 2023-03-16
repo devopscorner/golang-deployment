@@ -32,13 +32,20 @@ Actions:
             elif [[ "$GITHUB_REF" == "refs/heads/hotfix/"* ]]; then
               semver=1.1.1-${GITHUB_REF#refs/heads/hotfix/}.${GITHUB_SHA::8}
             fi
+            COMMIT_HASH=$(git log -1 --format=format:"%H")
         - name: Build Container GO Apps
           run: |
-            COMMIT_HASH=$(git log -1 --format=format:"%H")            
-            ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $COMMIT_HASH
+            if [[ -z "$semver" ]];
+            then
+              ## Semver Unknown ##
+              ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $COMMIT_HASH
+            else
+              ## Semver Trigger ##
+              ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $semver
+            fi
         - name: List Container Images
           run: |
-            docker images | grep "devopscorner/bookstore-codecatalyst"
+            docker images
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
