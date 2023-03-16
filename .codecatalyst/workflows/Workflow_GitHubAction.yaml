@@ -44,13 +44,24 @@ Actions:
             fi
 
             if [[ -z "$semver" ]]; then
-              ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $COMMIT_HASH
+              ## DockerHub
+              ## ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $COMMIT_HASH
+              ./ecr-build.sh "${Secrets.AWS_ACCOUNT_ID}" Dockerfile devopscorner/bookstore-codecatalyst alpine $COMMIT_HASH
             else
-              ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $semver
+              ## DockerHub
+              ## ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $semver
+              ## ECR
+              ./ecr-build.sh "${Secrets.AWS_ACCOUNT_ID}" Dockerfile devopscorner/bookstore-codecatalyst alpine $semver
             fi
         - name: List Container Images
           run: |
             docker images | grep "devopscorner/bookstore-codecatalyst"
+        - name: Push to ECR (Container Registry)
+          run: |
+            ./ecr-push.sh "${Secrets.AWS_ACCOUNT_ID}" devopscorner/bookstore-codecatalyst alpine
+        - name: Deploy to ECS
+          run: |
+            echo "Deploy to ECS cluster..."
     Outputs:
       Artifacts:
       - Name: "MyArtifact"
@@ -83,5 +94,5 @@ Actions:
     Environment:
       Connections:
         - Role: CodeCatalystPreviewDevelopmentAdministrator-5nxysr
-          Name: "085546766396"
+          Name: "${Secrets.AWS_ACCOUNT_ID}"
       Name: staging-dev
