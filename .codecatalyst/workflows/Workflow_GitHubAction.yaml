@@ -23,29 +23,61 @@ Actions:
         - WorkflowSource
     Configuration:
       Steps:
-        - name: Set Semantic Version
-          run: |
-            if [[ "$GITHUB_REF" == "refs/heads/features/"* ]]; then
-              semver=1.0.0-${GITHUB_REF#refs/heads/features/}.${GITHUB_SHA::8}
-            elif [[ "$GITHUB_REF" == "refs/heads/bugfix/"* ]]; then
-              semver=1.1.0-${GITHUB_REF#refs/heads/bugfix/}.${GITHUB_SHA::8}
-            elif [[ "$GITHUB_REF" == "refs/heads/hotfix/"* ]]; then
-              semver=1.1.1-${GITHUB_REF#refs/heads/hotfix/}.${GITHUB_SHA::8}
-            fi
-            COMMIT_HASH=$(git log -1 --format=format:"%H")
         - name: Build Container GO Apps
           run: |
+            GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+            latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+            if [[ -z "$latestTag" ]] then latestTag=1.0.0 fi
+
+            if [[ "$GIT_BRANCH" == "features/"* ]]
+            then
+              semver=$latestTag-features.${GITHUB_SHA::8}
+            elif [[ "$GIT_BRANCH" == "bugfix/"* ]]
+            then
+              semver=$latestTag-bugfix.${GITHUB_SHA::8}
+            elif [[ "$GIT_BRANCH" == "hotfix/"* ]]
+            then
+              semver=$latestTag-beta.${GITHUB_SHA::8}
+            else
+              semver=$latestTag.${GITHUB_SHA::8}
+            fi
+            COMMIT_HASH=$(git log -1 --format=format:"%H")
+
+            ## Semver Unknown -- Commit Hash ##
             if [[ -z "$semver" ]];
             then
-              ## Semver Unknown ##
               ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $COMMIT_HASH
+            ## Semver Tags ##
             else
-              ## Semver Trigger ##
               ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $semver
             fi
         - name: List Container Images
           run: |
             docker images
+    Outputs:
+      Artifacts:
+      - Name: "artifact-$(date '+%Y%m%d-%H%M%S')"
+        Files:
+          - ".codecatalyst/**"
+          - "docs/**"
+          - docker-compose.yml
+          - Dockerfile
+          - Dockerfile.alpine-3.15
+          - Dockerfile.alpine-3.16
+          - Dockerfile.alpine-3.17
+          - dockerhub-build.sh
+          - dockerhub-push.sh
+          - dockerhub-tag.sh
+          - ecr-build.sh
+          - ecr-push.sh
+          - ecr-pull.sh
+          - ecr-tag.sh
+          - entrypoint.sh
+          - git-clone.sh
+          - Makefile
+          - run-docker.sh
+          - start-build.sh
+          - "src/**"
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
