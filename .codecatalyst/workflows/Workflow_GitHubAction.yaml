@@ -58,6 +58,8 @@ Actions:
       Artifacts:
       - Name: "artifact-$(date '+%Y%m%d-%H%M%S')"
         Files:
+          - "_infra/**"
+          - ".aws/**"
           - ".codecatalyst/**"
           - "docs/**"
           - docker-compose.yml
