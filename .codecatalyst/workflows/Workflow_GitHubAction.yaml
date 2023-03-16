@@ -50,10 +50,7 @@ Actions:
             fi
         - name: List Container Images
           run: |
-            docker images
-        - name: Cleanup Unknown Tags
-          run: |
-            docker images -a | grep none | awk '{ print $3; }' | xargs docker rmi
+            docker images | grep "devopscorner/bookstore-codecatalyst"
     Outputs:
       Artifacts:
       - Name: "MyArtifact"
