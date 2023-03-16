@@ -1,0 +1,117 @@
+Name: Workflow_GitHubActions_Deployment
+SchemaVersion: "1.0"
+
+# Optional - Set automatic triggers.
+Triggers:
+  - Type: PUSH
+    Branches:
+      - master
+      - "release-.*"
+  - Type: PULLREQUEST
+    Branches:
+      - master
+    Events:
+      - OPEN
+      - REVISION
+
+# Required - Define action configurations.
+Actions:
+  GitHubActions_Deployment:
+    Identifier: aws/github-actions-runner@v1
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Configuration:
+      Steps:
+        - name: Build Container GO Apps
+          run: |
+            GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+            COMMIT_HASH=$(git log -1 --format=format:"%H")
+
+            latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+            if [[ -z "$latestTag" ]]; then
+              latestTag=1.0.0
+            fi
+
+            if [[ "$GIT_BRANCH" == "features/"* ]]; then
+              semver="$latestTag-features.${COMMIT_HASH}"
+            elif [[ "$GIT_BRANCH" == "bugfix/"* ]]; then
+              semver="$latestTag-bugfix.${COMMIT_HASH}"
+            elif [[ "$GIT_BRANCH" == "hotfix/"* ]]; then
+              semver="$latestTag-beta.${COMMIT_HASH}"
+            else
+              semver="$latestTag.${COMMIT_HASH}"
+            fi
+
+            if [[ -z "$semver" ]]; then
+              ## DockerHub
+              ## ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $COMMIT_HASH
+              ./ecr-build.sh "${Secrets.AWS_ACCOUNT_ID}" Dockerfile devopscorner/bookstore-codecatalyst alpine $COMMIT_HASH
+            else
+              ## DockerHub
+              ## ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $semver
+              ## ECR
+              ./ecr-build.sh "${Secrets.AWS_ACCOUNT_ID}" Dockerfile devopscorner/bookstore-codecatalyst alpine $semver
+            fi
+        - name: List Container Images
+          run: |
+            docker images | grep "devopscorner/bookstore-codecatalyst"
+        - name: Push to ECR (Container Registry)
+          run: |
+            ./ecr-push.sh "${Secrets.AWS_ACCOUNT_ID}" devopscorner/bookstore-codecatalyst alpine
+        - name: Deploy to ECS
+          run: |
+            echo "Deploy to ECS cluster..."
+    Outputs:
+      Artifacts:
+      - Name: "MyArtifact"
+        Files:
+          - "_infra/**"
+          - ".aws/**"
+          - ".codecatalyst/**"
+          - "docs/**"
+          - "docker-compose.yml"
+          - "Dockerfile"
+          - "Dockerfile.alpine-3.15"
+          - "Dockerfile.alpine-3.16"
+          - "Dockerfile.alpine-3.17"
+          - "dockerhub-build.sh"
+          - "dockerhub-push.sh"
+          - "dockerhub-tag.sh"
+          - "ecr-build.sh"
+          - "ecr-push.sh"
+          - "ecr-pull.sh"
+          - "ecr-tag.sh"
+          - "entrypoint.sh"
+          - "git-clone.sh"
+          - "Makefile"
+          - "run-docker.sh"
+          - "start-build.sh"
+          - "src/**"
+    Compute:
+      Type: EC2
+      Fleet: Linux.x86-64.Large
+    Environment:
+      Connections:
+        - Role: CodeCatalystPreviewDevelopmentAdministrator-5nxysr
+          Name: "085546766396"
+      Name: staging-dev
+
+  DeployToECS:
+    DependsOn:
+      - GitHubActions_Deployment
+    Identifier: aws/ecs-deploy@v1
+    Environment:
+      Name: codecatalyst-ecs-environment
+      Connections:
+        - Name: bookstore-account-connection
+          Role: bookstore-ecs-deploy-role
+    Inputs:
+      Sources: []
+      Artifacts:
+        - MyArtifact
+    Configuration:
+      region: us-west-2
+      cluster: bookstore-ecs-cluster
+      service: bookstore-ecs-service
+      task-definition: taskdef.json
