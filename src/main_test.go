@@ -1,14 +1,13 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"testing"
 
 	"github.com/devopscorner/golang-deployment/src/config"
-	"github.com/devopscorner/golang-deployment/src/controller"
-	"github.com/devopscorner/golang-deployment/src/repository"
+	"github.com/devopscorner/golang-deployment/src/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )

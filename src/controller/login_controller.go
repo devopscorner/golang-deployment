@@ -35,5 +35,5 @@ func CreateToken(secret string, issuer string) (string, error) {
 }
 
 func ValidateCredentials(username string, password string) bool {
-	return username == viper.GetString("AUTH_USERNAME") && password == viper.GetString("AUTH_PASSWORD")
+	return username == viper.GetString("JWT_AUTH_USERNAME") && password == viper.GetString("JWT_AUTH_PASSWORD")
 }

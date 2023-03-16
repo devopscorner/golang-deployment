@@ -1,11 +1,18 @@
 #!/usr/bin/env ash
 
-export ALPINE_VERSION=${ALPINE_VERSION:-3.17}
+export ALPINE_VERSION=3.17
 export GIN_MODE=release
-export PORT=${PORT:-8080}
-export DBNAME=${DBNAME:-go-bookstore.db}
-export AUTH_USERNAME=${AUTH_USERNAME:-devopscorner}
-export AUTH_PASSWORD=${AUTH_PASSWORD:-DevOpsCorner@2023}
-export JWT_SECRET=${JWT_SECRET:-s3cr3t}
+export APP_URL=http://localhost
+export APP_PORT=8080
+export DB_CONNECTION=sqlite
+export DB_REGION=ap-southeast-1
+export DB_HOST=localhost
+export DB_PORT=
+export DB_DATABASE=go-bookstore.db
+export DB_USERNAME=root
+export DB_PASSWORD=
+export JWT_AUTH_USERNAME=devopscorner
+export JWT_AUTH_PASSWORD=DevOpsCorner@2023
+export JWT_SECRET=s3cr3t
 
-exec /usr/local/bin/goapp
+/go/goapp
