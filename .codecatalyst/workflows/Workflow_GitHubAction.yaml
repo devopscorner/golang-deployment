@@ -54,6 +54,30 @@ Actions:
         - name: List Container Images
           run: |
             docker images
+    Outputs:
+      Artifacts:
+      - Name: "artifact-$(date '+%Y%m%d-%H%M%S')"
+        Files:
+          - ".codecatalyst/**"
+          - "docs/**"
+          - docker-compose.yml
+          - Dockerfile
+          - Dockerfile.alpine-3.15
+          - Dockerfile.alpine-3.16
+          - Dockerfile.alpine-3.17
+          - dockerhub-build.sh
+          - dockerhub-push.sh
+          - dockerhub-tag.sh
+          - ecr-build.sh
+          - ecr-push.sh
+          - ecr-pull.sh
+          - ecr-tag.sh
+          - entrypoint.sh
+          - git-clone.sh
+          - Makefile
+          - run-docker.sh
+          - start-build.sh
+          - "src/**"
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
