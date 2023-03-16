@@ -29,16 +29,13 @@ Actions:
             COMMIT_HASH=$(git log -1 --format=format:"%H")
 
             latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
-            if [[ -z "$latestTag" ]] then latestTag=1.0.0 fi
+            if [[ -z "$latestTag" ]]; then latestTag=1.0.0 fi
 
-            if [[ "$GIT_BRANCH" == "features/"* ]]
-            then
+            if [[ "$GIT_BRANCH" == "features/"* ]]; then
               semver="$latestTag-features.${COMMIT_HASH}"
-            elif [[ "$GIT_BRANCH" == "bugfix/"* ]]
-            then
+            elif [[ "$GIT_BRANCH" == "bugfix/"* ]]; then
               semver=$latestTag-bugfix.${COMMIT_HASH}
-            elif [[ "$GIT_BRANCH" == "hotfix/"* ]]
-            then
+            elif [[ "$GIT_BRANCH" == "hotfix/"* ]]; then
               semver=$latestTag-beta.${COMMIT_HASH}
             else
               semver=$latestTag.${COMMIT_HASH}
