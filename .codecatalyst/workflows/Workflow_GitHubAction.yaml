@@ -56,7 +56,7 @@ Actions:
             docker images
     Outputs:
       Artifacts:
-      - Name: "artifact-$(date '+%Y%m%d-%H%M%S')"
+      - Name: "MyArtifact"
         Files:
           - "_infra/**"
           - ".aws/**"
