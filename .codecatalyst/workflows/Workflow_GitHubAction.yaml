@@ -45,8 +45,7 @@ Actions:
             echo "commit hash --> $COMMIT_HASH"
 
             ## Semver Unknown -- Commit Hash ##
-            if [[ -z "$semver" ]];
-            then
+            if [[ -z "$semver" ]]; then
               ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $COMMIT_HASH
             ## Semver Tags ##
             else
