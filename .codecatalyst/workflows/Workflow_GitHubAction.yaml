@@ -26,26 +26,27 @@ Actions:
         - name: Build Container GO Apps
           run: |
             GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+            COMMIT_HASH=$(git log -1 --format=format:"%H")
+
             latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
             if [[ -z "$latestTag" ]] then latestTag=1.0.0 fi
 
             if [[ "$GIT_BRANCH" == "features/"* ]]
             then
-              semver=$latestTag-features.${GITHUB_SHA::8}
+              semver="$latestTag-features.${COMMIT_HASH}"
             elif [[ "$GIT_BRANCH" == "bugfix/"* ]]
             then
-              semver=$latestTag-bugfix.${GITHUB_SHA::8}
+              semver=$latestTag-bugfix.${COMMIT_HASH}
             elif [[ "$GIT_BRANCH" == "hotfix/"* ]]
             then
-              semver=$latestTag-beta.${GITHUB_SHA::8}
+              semver=$latestTag-beta.${COMMIT_HASH}
             else
-              semver=$latestTag.${GITHUB_SHA::8}
+              semver=$latestTag.${COMMIT_HASH}
             fi
-            COMMIT_HASH=$(git log -1 --format=format:"%H")
 
             echo "semver      --> $semver"
             echo "commit hash --> $COMMIT_HASH"
-            
+
             ## Semver Unknown -- Commit Hash ##
             if [[ -z "$semver" ]];
             then
