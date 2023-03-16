@@ -9,7 +9,7 @@
 
 export PATH_DOCKER="."
 export PROJECT_NAME="bookstore"
-export AWS_DEFAULT_REGION="ap-southeast-1"
+export AWS_DEFAULT_REGION="us-west-2"
 
 export CI_REGISTRY     ?= $(ARGS).dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
 export CI_PROJECT_PATH ?= devopscorner

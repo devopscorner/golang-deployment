@@ -32,7 +32,7 @@ func LoadConfig() (*Config, error) {
 	viper.SetDefault("APP_URL", "http://localhost")
 	viper.SetDefault("APP_PORT", "8080")
 	viper.SetDefault("DB_CONNECTION", "sqlite")
-	viper.SetDefault("DB_REGION", "ap-southeast-1")
+	viper.SetDefault("DB_REGION", "us-west-2")
 	viper.SetDefault("DB_HOST", "localhost")
 	viper.SetDefault("DB_PORT", "")
 	viper.SetDefault("DB_DATABASE", "go-bookstore")

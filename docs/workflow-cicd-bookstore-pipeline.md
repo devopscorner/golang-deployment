@@ -29,9 +29,9 @@ Kubernetes Deployment for Simple Golang API
   - `secretref`
   - `svcrole`
 - Deploy HelmChart Template Global to S3
-  - `AWS_REGION=ap-southeast-1 helm repo add devopscorner-lab s3://devopscorner-helm-chart/lab`
-  - `AWS_REGION=ap-southeast-1 helm repo add devopscorner-staging s3://devopscorner-helm-chart/staging`
-  - `AWS_REGION=ap-southeast-1 helm repo add devopscorner-prod s3://devopscorner-helm-chart/prod`
+  - `AWS_REGION=us-west-2 helm repo add devopscorner-lab s3://devopscorner-helm-chart/lab`
+  - `AWS_REGION=us-west-2 helm repo add devopscorner-staging s3://devopscorner-helm-chart/staging`
+  - `AWS_REGION=us-west-2 helm repo add devopscorner-prod s3://devopscorner-helm-chart/prod`
 - Create HelmChart Template for GO App
   - Helm template GO App (`_infra/{env}/helm-template.yml`)
   - Helm value GO App (`_infra/{env}/helm-value.yml`)
@@ -75,6 +75,6 @@ Kubernetes Deployment for Simple Golang API
     - Environment Type: `Linux`
     - Buildspec: `.aws/buildspec-build.yml`
   - Deploy Container
-    - Environment Image: `devopscorner/cicd:codebuild-4.0` or `YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/cicd:codebuild-4.0`
+    - Environment Image: `devopscorner/cicd:codebuild-4.0` or `YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/cicd:codebuild-4.0`
     - Environment Type: `Linux`
     - Buildspec: `.aws/buildspec-deploy.yml`

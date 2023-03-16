@@ -36,7 +36,7 @@ Kubernetes Deployment for Simple Golang API
   ```
   export ALPINE_VERSION=3.17   # 3.15 | 3.16 | 3.17
   export BASE_IMAGE="alpine"
-  export IMAGE="YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore"
+  export IMAGE="YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore"
   export TAG="latest"
   ```
 
@@ -78,11 +78,11 @@ Kubernetes Deployment for Simple Golang API
 
     ```
     # Alpine
-    docker tag YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore:alpine YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore:latest
+    docker tag YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore:alpine YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore:latest
 
-    docker tag YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore:alpine YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore:alpine-latest
+    docker tag YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore:alpine YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore:alpine-latest
 
-    docker tag YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore:alpine YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore:alpine-3.16
+    docker tag YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore:alpine YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore:alpine-3.16
     ```
 
   - With Script:
@@ -107,11 +107,11 @@ Kubernetes Deployment for Simple Golang API
 
     ```
     # Alpine
-    docker push YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore:alpine
+    docker push YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore:alpine
 
-    docker push YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore:alpine-latest
+    docker push YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore:alpine-latest
 
-    docker push YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore:alpine-3.16
+    docker push YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore:alpine-3.16
     ```
 
 - With Script:

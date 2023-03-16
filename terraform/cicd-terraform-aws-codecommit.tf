@@ -22,7 +22,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "ap-southeast-1"
+  region = "us-west-2"
 }
 
 data "aws_caller_identity" "current" {}
@@ -56,7 +56,7 @@ resource "aws_codebuild_project" "bookstore-prod" {
     type  = "LINUX_CONTAINER"
     environment_variable {
       name  = "AWS_REGION"
-      value = "ap-southeast-1"
+      value = "us-west-2"
     }
     environment_variable {
       name  = "ENVIRONMENT"
@@ -90,7 +90,7 @@ resource "aws_codebuild_project" "bookstore-staging" {
     type  = "LINUX_CONTAINER"
     environment_variable {
       name  = "AWS_REGION"
-      value = "ap-southeast-1"
+      value = "us-west-2"
     }
     environment_variable {
       name  = "ENVIRONMENT"

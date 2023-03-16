@@ -56,7 +56,7 @@ steps:
   - name: publish
     image: plugins/ecr
     settings:
-      region: ap-southeast-1
+      region: us-west-2
       access_key:
         from_secret: aws_access_key
       secret_key:

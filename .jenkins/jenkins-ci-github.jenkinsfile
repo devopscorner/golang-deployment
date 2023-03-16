@@ -1,5 +1,5 @@
 def PATH_KUBECONFIG = '/home/ubuntu/.kube/config'
-def ECR_REPO = '0987612345.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore'
+def ECR_REPO = '0987612345.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore'
 def VCS_REPO = 'git@github.com:devopscorner/golang-deployment.git'
 def SPINNAKER_HOOK = 'https://spinnaker.awscb.id/webhooks/webhook/bookstore'
 def skipRemainingStages = false
@@ -50,7 +50,7 @@ def currentVersionFromGit() {
 }
 
 def pushImage(tagName, repo ) {
-    withDockerRegistry(credentialsId: 'ecr:ap-southeast-1:devops', toolName: 'docker', url: 'https://'+ repo) {
+    withDockerRegistry(credentialsId: 'ecr:us-west-2:devops', toolName: 'docker', url: 'https://'+ repo) {
         docker.image(repo).push(tagName)
     }
 }

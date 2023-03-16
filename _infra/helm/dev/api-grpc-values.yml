@@ -22,7 +22,7 @@ configMap:
       export GIN_MODE=release
 
 image:
-  repository: YOUR_AWS_ACCOUNT.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore-grpc
+  repository: YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore-grpc
   pullPolicy: Always
   tag: "latest"
 

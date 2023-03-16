@@ -26,7 +26,7 @@ stages:
 
 variables:
   imageName: 'devopcorner/bookstore'
-  ecrRegistry: '0987612345.dkr.ecr.ap-southeast-1.amazonaws.com'
+  ecrRegistry: '0987612345.dkr.ecr.us-west-2.amazonaws.com'
   helmReleaseName: 'bookstore'
 
 build:

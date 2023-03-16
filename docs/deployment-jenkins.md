@@ -28,7 +28,7 @@ pipeline {
   agent any
 
   environment {
-    AWS_REGION = 'ap-southeast-1'
+    AWS_REGION = 'us-west-2'
     AWS_ACCOUNT_ID = '0987612345'
     IMAGE_NAME = 'devopscorner/bookstore'
   }

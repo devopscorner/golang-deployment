@@ -38,7 +38,7 @@
                 "servicecatalog:UpdateProduct"
             ],
             "Resource": [
-                "arn:aws:ecr:ap-southeast-1:YOUR_AWS_ACCOUNT:repository/*"
+                "arn:aws:ecr:us-west-2:YOUR_AWS_ACCOUNT:repository/*"
             ]
         },
         {

@@ -114,7 +114,7 @@ Kubernetes Deployment for Simple Golang API
   APP_URL=http://localhost
   APP_PORT=8080
   DB_CONNECTION=sqlite
-  DB_REGION=ap-southeast-1
+  DB_REGION=us-west-2
   DB_HOST=localhost
   DB_PORT=
   DB_DATABASE=go-bookstore.db

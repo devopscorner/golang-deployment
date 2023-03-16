@@ -1,5 +1,5 @@
 def PATH_KUBECONFIG = '/home/ubuntu/.kube/config'
-def ECR_REPO = '0987612345.dkr.ecr.ap-southeast-1.amazonaws.com/devopscorner/bookstore'
+def ECR_REPO = '0987612345.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore'
 def VCS_REPO = 'git@github.com:devopscorner/golang-deployment.git'
 
 node {
@@ -19,10 +19,10 @@ node {
 
                 sh 'docker build -f Dockerfile -t ' + ECR_REPO + ' .'
 
-                withDockerRegistry(credentialsId: 'ecr:ap-southeast-1:devops', toolName: 'docker', url: 'https://' + ECR_REPO) {
+                withDockerRegistry(credentialsId: 'ecr:us-west-2:devops', toolName: 'docker', url: 'https://' + ECR_REPO) {
                     docker.image(ECR_REPO).push('latest')
                 }
-                withDockerRegistry(credentialsId: 'ecr:ap-southeast-1:devops', toolName: 'docker', url: 'https://'+ECR_REPO) {
+                withDockerRegistry(credentialsId: 'ecr:us-west-2:devops', toolName: 'docker', url: 'https://'+ECR_REPO) {
                     docker.image(ECR_REPO).push('dev-' + commitID)
                 }
 
@@ -35,7 +35,7 @@ node {
             withEnv(["KUBECONFIG=$PATH_KUBECONFIG","PATH=$PATH"]) {
                 dir("_infra/dev"){
                     sh '''
-                        kubectl config use-context arn:aws:eks:ap-southeast-1:0987612345:cluster/devopscorner-lab
+                        kubectl config use-context arn:aws:eks:us-west-2:0987612345:cluster/devopscorner-lab
                         helmfile --version
                         helmfile -f helmfile.yaml apply
                     '''

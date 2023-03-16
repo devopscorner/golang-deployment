@@ -5,8 +5,8 @@
       "Effect": "Allow",
       "Action": ["kms:GenerateDataKey"],
       "Resource": [
-        "arn:aws:kms:ap-southeast-1:YOUR_AWS_ACCOUNT:key/CMK_STAGING_HASH_ID",
-        "arn:aws:kms:ap-southeast-1:YOUR_AWS_ACCOUNT:key/CMK_PROD_HASH_ID"
+        "arn:aws:kms:us-west-2:YOUR_AWS_ACCOUNT:key/CMK_STAGING_HASH_ID",
+        "arn:aws:kms:us-west-2:YOUR_AWS_ACCOUNT:key/CMK_PROD_HASH_ID"
       ]
     }
   ]

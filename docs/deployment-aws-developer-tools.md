@@ -47,7 +47,7 @@ env:
   # ===================================== #
   variables:
     ENV_CICD: "dev"
-    AWS_DEFAULT_REGION: "ap-southeast-1"
+    AWS_DEFAULT_REGION: "us-west-2"
     INFRA_CICD: "terraform/environment/providers/aws/infra/resources"
     INFRA_CICD_PATH: "bookstore"
     INFRA_ECR_PATH: "devopscorner/bookstore"
@@ -137,7 +137,7 @@ env:
   # ===================================== #
   variables:
     ENV_CICD: "dev"
-    AWS_DEFAULT_REGION: "ap-southeast-1"
+    AWS_DEFAULT_REGION: "us-west-2"
     INFRA_CICD: "terraform/environment/providers/aws/infra/resources"
     INFRA_CICD_PATH: "bookstore"
     INFRA_ECR_PATH: "devopscorner/bookstore"

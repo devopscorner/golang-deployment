@@ -14,7 +14,7 @@
             ],
             "Condition": {
                 "StringEquals": {
-                    "aws:SourceArn": "arn:aws:codebuild:ap-southeast-1:YOUR_AWS_ACCOUNT:project/*",
+                    "aws:SourceArn": "arn:aws:codebuild:us-west-2:YOUR_AWS_ACCOUNT:project/*",
                     "aws:SourceAccount": "YOUR_AWS_ACCOUNT"
                 }
             }

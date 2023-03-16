@@ -71,7 +71,7 @@ Resources:
         Type: LINUX_CONTAINER
         EnvironmentVariables:
           - Name: AWS_REGION
-            Value: ap-southeast-1
+            Value: us-west-2
           - Name: ENVIRONMENT
             Value: !If [IsStaging, "staging", "production"]
           - Name: ECR_REPOSITORY_URI
@@ -96,7 +96,7 @@ Resources:
         #         - echo "IMAGE_TAG=$IMAGE_TAG" >> build.env
         #       finally:
         #         - echo "Pushing Docker image to ECR..."
-        #         - $(aws ecr get-login --no-include-email --region ap-southeast-1)
+        #         - $(aws ecr get-login --no-include-email --region us-west-2)
         #         - docker push !Join ['', [!GetAtt ECRRepo.RepositoryUri, ':', !Ref Image
         #       Tag]]
       artifacts:
@@ -291,7 +291,7 @@ Resources:
           commands:
             - echo "Post build phase"
             - echo "Pushing Docker image to ECR..."
-            - $(aws ecr get-login --no-include-email --region ap-southeast-1)
+            - $(aws ecr get-login --no-include-email --region us-west-2)
             - docker push !Join ['', [!GetAtt ECRRepo.RepositoryUri, ':', !Ref ImageTag]]
             - echo "Pushed Docker image to ECR successfully."
 
