@@ -1,0 +1,49 @@
+Name: Workflow_GitHubActions_Deployment
+SchemaVersion: "1.0"
+
+# Optional - Set automatic triggers.
+Triggers:
+  - Type: PUSH
+    Branches:
+      - master
+      - "release-.*"
+  - Type: PULLREQUEST
+    Branches:
+      - master
+    Events:
+      - OPEN
+      - REVISION
+
+# Required - Define action configurations.
+Actions:
+  GitHubActions_Deployment:
+    Identifier: aws/github-actions-runner@v1
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Configuration:
+      Steps:
+        - name: Set Semantic Version
+          run: |
+            if [[ "$GITHUB_REF" == "refs/heads/features/"* ]]; then
+              semver=1.0.0-${GITHUB_REF#refs/heads/features/}.${GITHUB_SHA::8}
+            elif [[ "$GITHUB_REF" == "refs/heads/bugfix/"* ]]; then
+              semver=1.1.0-${GITHUB_REF#refs/heads/bugfix/}.${GITHUB_SHA::8}
+            elif [[ "$GITHUB_REF" == "refs/heads/hotfix/"* ]]; then
+              semver=1.1.1-${GITHUB_REF#refs/heads/hotfix/}.${GITHUB_SHA::8}
+            fi
+        - name: Build Container GO Apps
+          run: |
+            COMMIT_HASH=$(git log -1 --format=format:"%H")            
+            ./dockerhub-build.sh Dockerfile devopscorner/bookstore-codecatalyst alpine $COMMIT_HASH
+        - name: List Container Images
+          run: |
+            docker images | grep "devopscorner/bookstore-codecatalyst"
+    Compute:
+      Type: EC2
+      Fleet: Linux.x86-64.Large
+    Environment:
+      Connections:
+        - Role: CodeCatalystPreviewDevelopmentAdministrator-5nxysr
+          Name: "085546766396"
+      Name: staging-dev
