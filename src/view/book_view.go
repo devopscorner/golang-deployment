@@ -7,36 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ----- Error Response -----
-
-func ErrorBadRequest(ctx *gin.Context, err error) {
-	ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-}
-
-func ErrorInternalServer(ctx *gin.Context, err error) {
-	ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
-}
-
-func ErrorInvalidId(ctx *gin.Context) {
-	ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid book ID"})
-}
-
-func ErrorNotFound(ctx *gin.Context) {
-	ctx.JSON(http.StatusNotFound, gin.H{"error": "Book not found!"})
-}
-
-func ErrorInvalidRequest(ctx *gin.Context) {
-	ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
-}
-
-func ErrorUpdate(ctx *gin.Context) {
-	ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update book"})
-}
-
-func ErrorDelete(ctx *gin.Context) {
-	ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete book"})
-}
-
 // ----- View Response -----
 
 // GET /books
