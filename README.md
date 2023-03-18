@@ -88,6 +88,8 @@ Kubernetes Deployment for Simple Golang API
       │   ├── mysql.go
       │   ├── psql.go
       │   └── sqlite.go
+      ├── .env
+      ├── .env.example
       ├── go-bookstore.db
       ├── go.mod
       ├── go.sum
@@ -102,10 +104,12 @@ Kubernetes Deployment for Simple Golang API
       │   └── book.go
       ├── repository
       │   └── book_repository.go
-      └── routes
-          └── book_routes.go
+      ├── routes
+      │   └── book_routes.go
+      └── view
+          └── book_view.go
 
-      8 directories, 23 files
+      9 directories, 26 files
   ```
 
 - Environment Variables (Default)

@@ -65,6 +65,8 @@ go run main_test.go
 │   ├── mysql.go
 │   ├── psql.go
 │   └── sqlite.go
+├── .env
+├── .env.example
 ├── go-bookstore.db
 ├── go.mod
 ├── go.sum
@@ -79,10 +81,12 @@ go run main_test.go
 │   └── book.go
 ├── repository
 │   └── book_repository.go
-└── routes
-    └── book_routes.go
+├── routes
+│   └── book_routes.go
+└── view
+    └── book_view.go
 
-8 directories, 23 files
+9 directories, 26 files
 ```
 
 ## Environment Variables (Default)
