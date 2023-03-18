@@ -65,7 +65,6 @@ func SetupRoutes(router *gin.Engine) {
 		api.POST("/books", controller.CreateBook)
 		api.PUT("/books/:id", controller.UpdateBook)
 		api.DELETE("/books/:id", controller.DeleteBook)
-
 	}
 
 	// Run the server

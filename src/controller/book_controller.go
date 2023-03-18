@@ -1,11 +1,11 @@
 package controller
 
 import (
-	"net/http"
 	"strconv"
 
 	"github.com/devopscorner/golang-deployment/src/model"
 	"github.com/devopscorner/golang-deployment/src/repository"
+	"github.com/devopscorner/golang-deployment/src/view"
 	"github.com/gin-gonic/gin"
 	validator "github.com/go-playground/validator/v10"
 )
@@ -26,7 +26,7 @@ type UpdateBookInput struct {
 // Find all books
 func GetAllBooks(ctx *gin.Context) {
 	books := repository.GetAll()
-	ctx.JSON(http.StatusOK, gin.H{"data": books})
+	view.ViewGetAllBooks(ctx, books)
 }
 
 // GET /books/:id
@@ -34,20 +34,20 @@ func GetAllBooks(ctx *gin.Context) {
 func GetBookByID(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid book ID"})
+		view.ErrorInvalidId(ctx)
 		return
 	}
 
 	book, err := repository.GetByID(strconv.Itoa(id))
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		view.ErrorInternalServer(ctx, err)
 		return
 	}
 	if book == nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"error": "Book not found!"})
+		view.ErrorNotFound(ctx)
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": book})
+	view.ViewGetBookByID(ctx, book)
 }
 
 // POST /books
@@ -56,7 +56,7 @@ func CreateBook(ctx *gin.Context) {
 	// Validate input
 	var input CreateBookInput
 	if err := ctx.ShouldBindJSON(&input); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		view.ErrorBadRequest(ctx, err)
 		return
 	}
 
@@ -64,16 +64,16 @@ func CreateBook(ctx *gin.Context) {
 
 	validate := validator.New()
 	if err := validate.Struct(book); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		view.ErrorBadRequest(ctx, err)
 		return
 	}
 
 	err := repository.Create(&book)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		view.ErrorInternalServer(ctx, err)
 		return
 	}
-	ctx.JSON(http.StatusCreated, gin.H{"data": book})
+	view.ViewCreateBook(ctx, book)
 }
 
 // PUT /books/:id
@@ -81,27 +81,27 @@ func CreateBook(ctx *gin.Context) {
 func UpdateBook(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid book ID"})
+		view.ErrorInvalidId(ctx)
 		return
 	}
 
 	book, err := repository.GetByID(strconv.Itoa(id))
 	if err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"error": "Book not found!"})
+		view.ErrorNotFound(ctx)
 		return
 	}
 
 	if err := ctx.ShouldBindJSON(&book); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
+		view.ErrorInvalidRequest(ctx)
 		return
 	}
 
 	if err := repository.Update(book); err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update book"})
+		view.ErrorUpdate(ctx)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"data": book})
+	view.ViewUpdateBook(ctx, book)
 }
 
 // DELETE /books/:id
@@ -109,14 +109,14 @@ func UpdateBook(ctx *gin.Context) {
 func DeleteBook(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid book ID"})
+		view.ErrorInvalidId(ctx)
 		return
 	}
 
 	if err := repository.Delete(strconv.Itoa(id)); err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete book"})
+		view.ErrorDelete(ctx)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"data": true})
+	view.ViewDeleteBook(ctx)
 }
