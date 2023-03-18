@@ -51,42 +51,45 @@ go run main_test.go
 
 ```
 .
-├── config
-│   ├── config.go
-│   └── config_test.go
-├── controller
-│   ├── book_controller.go
-│   ├── book_controller_test.go
-│   ├── login_controller.go
-│   └── login_controller_test.go
-├── driver
-│   ├── db.go
-│   ├── dynamo.go
-│   ├── mysql.go
-│   ├── psql.go
-│   └── sqlite.go
 ├── .env
 ├── .env.example
+├── config
+│   ├── config.go
+│   ├── config_test.go
+│   └── const.go
+├── controller
+│   ├── book_controller.go
+│   ├── book_controller_test.go
+│   ├── login_controller.go
+│   └── login_controller_test.go
+├── driver
+│   ├── db.go
+│   ├── dynamo.go
+│   ├── mysql.go
+│   ├── psql.go
+│   └── sqlite.go
 ├── go-bookstore.db
 ├── go.mod
 ├── go.sum
 ├── main.go
 ├── main_test.go
 ├── middleware
-│   ├── auth_middleware.go
-│   └── auth_middleware_test.go
+│   ├── auth_middleware.go
+│   └── auth_middleware_test.go
 ├── migrate_book.go.example
 ├── migrate_book_dynamo.go.example
 ├── model
-│   └── book.go
+│   └── book.go
 ├── repository
-│   └── book_repository.go
+│   └── book_repository.go
 ├── routes
-│   └── book_routes.go
+│   └── book_routes.go
 └── view
-    └── book_view.go
+    ├── book_view.go
+    ├── error_view.go
+    └── login_view.go
 
-9 directories, 26 files
+9 directories, 29 files
 ```
 
 ## Environment Variables (Default)

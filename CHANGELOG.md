@@ -32,10 +32,69 @@ Kubernetes Deployment for Simple Golang API
 
 ---
 
+### version 4.1
+
+- All features in version 4.0
+- Refactoring routes for endpoint login into LoginController (validate JSON Token & rendering result token)
+- Refactoring folder `Repository Pattern` with View for rendering JSON parse response and Const for error response
+  ```
+      .
+      ├── .env
+      ├── .env.example
+      ├── config
+      │   ├── config.go
+      │   ├── config_test.go
+      │   └── const.go
+      ├── controller
+      │   ├── book_controller.go
+      │   ├── book_controller_test.go
+      │   ├── login_controller.go
+      │   └── login_controller_test.go
+      ├── driver
+      │   ├── db.go
+      │   ├── dynamo.go
+      │   ├── mysql.go
+      │   ├── psql.go
+      │   └── sqlite.go
+      ├── go-bookstore.db
+      ├── go.mod
+      ├── go.sum
+      ├── main.go
+      ├── main_test.go
+      ├── middleware
+      │   ├── auth_middleware.go
+      │   └── auth_middleware_test.go
+      ├── migrate_book.go.example
+      ├── migrate_book_dynamo.go.example
+      ├── model
+      │   └── book.go
+      ├── repository
+      │   └── book_repository.go
+      ├── routes
+      │   └── book_routes.go
+      └── view
+          ├── book_view.go
+          ├── error_view.go
+          └── login_view.go
+
+      9 directories, 29 files
+  ```
+- Added Const definition `config/const.go`
+  ```
+  ERR_INVALID_BOOK_ID         = "Invalid book ID"
+  ERR_INVALID_REQUEST_PAYLOAD = "Invalid request payload"
+  ERR_INVALID_CREDENTIALS     = "Invalid credentials"
+  ERR_BOOK_NOT_FOUND          = "Book not found!"
+  ERR_UPDATE_BOOK             = "Failed to update book"
+  ERR_DELETE_BOOK             = "Failed to delete book"
+  ```
+
+---
+
 ### version 4.0
 
 - All features in version 3.5
-- Refactoring folder MVC with multiple driver ORM
+- Refactoring folder `Repository Pattern` with multiple driver ORM
   ```
       .
       ├── config
