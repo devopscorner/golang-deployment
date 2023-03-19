@@ -1,0 +1,24 @@
+{
+    "executionRoleArn": "arn:aws:iam::YOUR_AWS_ACCOUNT:role/codecatalyst-ecs-task-execution-role",
+    "containerDefinitions": [
+        {
+            "name": "codecatalyst-ecs-container",
+            "image": "YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore-codecatalyst:alpine",
+            "essential": true,
+            "portMappings": [
+                {
+                    "hostPort": 8080,
+                    "protocol": "tcp",
+                    "containerPort": 8080
+                }
+            ]
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "family": "bookstore-ecs-task-def",
+    "memory": "512",
+    "networkMode": "awsvpc"
+}
