@@ -34,6 +34,7 @@ Kubernetes Deployment for Simple Golang API
 - Deployments:
   - **ArgoCD**, detail [here](deployment-argocd.md) link
   - **AWS Developer Tools** (AWS CodeCommit, AWS CodeBuild & AWS CodePipeline), detail [here](deployment-aws-developer-tools.md) link
+  - **Amazon CodeCatalyst Pipeline**, detail [here](deployment-amazon-codecatalyst.md) link
   - **Azure DevOps Pipeline**, detail [here](deployment-azure-devops.md) link
   - **Bitbucket Pipeline**, detail [here](deployment-bitbucket.md) link
   - **CircleCI Pipeline**, detail [here](deployment-circleci.md) link
@@ -52,4 +53,3 @@ Kubernetes Deployment for Simple Golang API
 ## Reproduce Testing
 
 - RESTful API Testing, detail [here](test-restful-api.md) link
-- gRPC API Testing, detail [here](test-grpc-api.md) link
