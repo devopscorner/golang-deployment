@@ -7,6 +7,7 @@ import (
 	"github.com/devopscorner/golang-deployment/src/config"
 	"github.com/devopscorner/golang-deployment/src/controller"
 	"github.com/devopscorner/golang-deployment/src/driver"
+	"github.com/devopscorner/golang-deployment/src/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -27,9 +28,9 @@ func SetupRoutes(router *gin.Engine) {
 	})
 
 	// Login route to create basic auth JWT token
-	router.POST("/login", controller.LoginUser)
+	router.POST("/v1/login", controller.LoginUser)
 
-	api := router.Group("/v1")
+	api := router.Group("/v1", middleware.AuthMiddleware())
 	{
 		// Book routes
 		api.GET("/books", controller.GetAllBooks)

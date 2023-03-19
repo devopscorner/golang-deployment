@@ -1,28 +1,31 @@
 package middleware
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/devopscorner/golang-deployment/src/config"
 	"github.com/gin-gonic/gin"
-	jwt "github.com/golang-jwt/jwt"
+	"github.com/golang-jwt/jwt"
+	"github.com/spf13/viper"
 )
 
 func AuthMiddleware() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		authHeader := c.GetHeader("Authorization")
+	return func(ctx *gin.Context) {
+		authHeader := ctx.GetHeader("Authorization")
 		if authHeader == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Missing authorization header"})
-			c.Abort()
+			ctx.JSON(http.StatusUnauthorized, gin.H{"error": config.ERR_MISSING_AUTH_HEADER})
+			ctx.Abort()
 			return
 		}
 
 		authHeaderParts := strings.Split(authHeader, " ")
 		if len(authHeaderParts) != 2 || strings.ToLower(authHeaderParts[0]) != "bearer" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid authorization header"})
-			c.Abort()
+			ctx.JSON(http.StatusUnauthorized, gin.H{"error": config.ERR_MISSING_AUTH_HEADER})
+			ctx.Abort()
 			return
 		}
 
@@ -35,26 +38,42 @@ func AuthMiddleware() gin.HandlerFunc {
 		})
 
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
-			c.Abort()
+			ctx.JSON(http.StatusUnauthorized, gin.H{"error": config.ERR_INVALID_TOKEN})
+			ctx.Abort()
 			return
 		}
 
 		if !token.Valid {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Token is not valid"})
-			c.Abort()
+			ctx.JSON(http.StatusUnauthorized, gin.H{"error": config.ERR_INVALID_TOKEN})
+			ctx.Abort()
 			return
 		}
 
-		c.Set("user_id", token.Claims.(jwt.MapClaims)["user_id"])
-		c.Next()
+		ctx.Set("Issuer", token.Claims.(jwt.MapClaims)[config.JWTIssuer()])
+		ctx.Next()
 	}
 }
 
-func generateToken() string {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user_id": "9999",
-	})
-	tokenString, _ := token.SignedString([]byte(config.JWTSecret()))
-	return tokenString
+func GenerateToken(secret string, issuer string) (string, error) {
+	// Set the expiration time to 1 hour from now
+	expirationTime := time.Now().Add(time.Hour * 1).Unix()
+
+	// Create the JWT claims
+	claims := jwt.StandardClaims{
+		Issuer:    config.JWTIssuer(),
+		ExpiresAt: expirationTime,
+	}
+
+	// Create the JWT token with the claims and secret
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString([]byte(config.JWTSecret()))
+	if err != nil {
+		return "", errors.New("Failed to generate token")
+	}
+
+	return tokenString, nil
+}
+
+func ValidateCredentials(username string, password string) bool {
+	return username == viper.GetString("JWT_AUTH_USERNAME") && password == viper.GetString("JWT_AUTH_PASSWORD")
 }
