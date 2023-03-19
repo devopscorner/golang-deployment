@@ -137,7 +137,7 @@ DB_REGION   --> Dynamo Region
 
 ```
 POST    : /login
-          curl --location '0.0.0.0:8080/login' \
+          curl --location '0.0.0.0:8080/v1/login' \
               --header 'Content-Type: application/json' \
               --data-raw '{
                   "username": "devopscorner",
@@ -149,7 +149,7 @@ POST    : /login
 }
 
 TOKEN=$(curl --request POST \
-              --location '0.0.0.0:8080/login' \
+              --location '0.0.0.0:8080/v1/login' \
               --header 'Content-Type: application/json' \
               --data-raw '{
                   "username": "devopscorner",
