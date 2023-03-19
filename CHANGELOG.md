@@ -88,6 +88,9 @@ Kubernetes Deployment for Simple Golang API
   ERR_UPDATE_BOOK             = "Failed to update book"
   ERR_DELETE_BOOK             = "Failed to delete book"
   ```
+- Added Amazon CodeCatalyst workflow CI/CD in `.codecatalyst` folder
+- Refactoring middleware routes
+- Added unit test Postman collection
 
 ---
 
