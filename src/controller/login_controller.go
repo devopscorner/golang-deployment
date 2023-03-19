@@ -32,8 +32,7 @@ func LoginUser(ctx *gin.Context) {
 	}
 
 	validCred := ValidateCredentials(loginRequest.Username, loginRequest.Password)
-	if loginRequest.Username != validCred.username ||
-		loginRequest.Password != viper.GetString("JWT_AUTH_PASSWORD") {
+	if validCred != true {
 		view.ErrorInvalidCredentials(ctx)
 		return
 	}
