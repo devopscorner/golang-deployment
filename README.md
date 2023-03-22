@@ -16,6 +16,8 @@ Kubernetes Deployment for Simple Golang API
 ![stars](https://img.shields.io/github/stars/devopscorner/golang-deployment)
 [![license](https://img.shields.io/github/license/devopscorner/golang-deployment)](https://img.shields.io/github/license/devopscorner/golang-deployment)
 
+---
+
 ## Available Tags
 
 ### Alpine
@@ -42,6 +44,7 @@ Kubernetes Deployment for Simple Golang API
 | `devopscorner/bookstore:go1.18-alpine3.15` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.18-alpine3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.18-alpine3.15) |
 | `devopscorner/bookstore:go1.18-alpine3.16` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.18-alpine3.16.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.18-alpine3.16) |
 
+---
 
 ## Documentation
 
