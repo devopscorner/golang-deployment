@@ -16,14 +16,16 @@ Kubernetes Deployment for Simple Golang API
 ![stars](https://img.shields.io/github/stars/devopscorner/golang-deployment)
 [![license](https://img.shields.io/github/license/devopscorner/golang-deployment)](https://img.shields.io/github/license/devopscorner/golang-deployment)
 
+---
+
 ## Available Tags
 
 ### Alpine
 
 | Image name | Size |
 |------------|------|
-| `devopscorner/bookstore:latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/latest.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=latest) |
-| `devopscorner/bookstore:alpine` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine) |
+| `devopscorner/bookstore:latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/latest.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=latest) ![default-latest](https://img.shields.io/static/v1?label=latest&message=default&color=brightgreen) ![latest](https://img.shields.io/static/v1?label=latest&message=alpine&color=orange) |
+| `devopscorner/bookstore:alpine` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine) ![latest](https://img.shields.io/static/v1?label=latest&message=alpine&color=orange) |
 | `devopscorner/bookstore:alpine-latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine-latest.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine-latest) |
 | `devopscorner/bookstore:alpine-3.15` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/alpine-3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=alpine-3.15) |
 | `devopscorner/bookstore:go1.19-alpine3.15` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.19-alpine3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.19-alpine3.15) |
@@ -42,6 +44,7 @@ Kubernetes Deployment for Simple Golang API
 | `devopscorner/bookstore:go1.18-alpine3.15` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.18-alpine3.15.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.18-alpine3.15) |
 | `devopscorner/bookstore:go1.18-alpine3.16` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore/go1.18-alpine3.16.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore/tags?page=1&ordering=last_updated&name=go1.18-alpine3.16) |
 
+---
 
 ## Documentation
 
