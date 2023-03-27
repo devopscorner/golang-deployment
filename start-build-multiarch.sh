@@ -126,7 +126,7 @@ docker_clean() {
 }
 
 main() {
-  # create_stack
+  create_stack
   use_stack
   docker_build
   docker_clean
