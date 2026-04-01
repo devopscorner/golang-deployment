@@ -1,12 +1,7 @@
 {
-  "count": 541,
-  "uniques": 233,
+  "count": 554,
+  "uniques": 240,
   "clones": [
-    {
-      "timestamp": "2026-03-17T00:00:00Z",
-      "count": 36,
-      "uniques": 15
-    },
     {
       "timestamp": "2026-03-18T00:00:00Z",
       "count": 38,
@@ -71,6 +66,11 @@
       "timestamp": "2026-03-30T00:00:00Z",
       "count": 33,
       "uniques": 31
+    },
+    {
+      "timestamp": "2026-03-31T00:00:00Z",
+      "count": 49,
+      "uniques": 27
     }
   ]
 }
